@@ -76,14 +76,16 @@ namespace SpellWork.Spell
 
                 foreach (TreeNode node in familyTree.Nodes)
                 {
-                    var mask = new uint[3];
+                    var mask = new uint[4];
 
                     if (node.Index < 32)
                         mask[0] = 1U << node.Index;
                     else if (node.Index < 64)
                         mask[1] = 1U << (node.Index - 32);
-                    else
+                    else if (node.Index < 96)
                         mask[2] = 1U << (node.Index - 64);
+                    else
+                        mask[3] = 1U << (node.Index - 96);
 
                     if ((!spell.SpellFamilyFlags.ContainsElement(mask)))
                         continue;

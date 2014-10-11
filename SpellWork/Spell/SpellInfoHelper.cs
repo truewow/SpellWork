@@ -342,7 +342,7 @@ namespace SpellWork.Spell
                 SpellFamilyFlags = (uint[])classOptions.SpellFamilyFlags.Clone();
             }
             else
-                SpellFamilyFlags = new uint[3];
+                SpellFamilyFlags = new uint[4];
 
             // SpellTotems.dbc
             /*var totems = dbcData.Totems;
