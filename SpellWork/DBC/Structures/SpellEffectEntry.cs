@@ -34,6 +34,7 @@ namespace SpellWork.DBC.Structures
         public uint SpellId;
         public uint Index;
         public uint Unk0;
+        public uint UnkWod;
 
         public SpellEffectScalingEntry SpellEffectScalingEntry
         {

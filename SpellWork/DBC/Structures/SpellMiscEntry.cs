@@ -4,9 +4,7 @@ namespace SpellWork.DBC.Structures
 {
     public sealed class SpellMiscEntry
     {
-        public uint Id = 0;                                           // 0        m_ID
-        public uint SpellId = 0;                                      // 1
-        public uint Unk = 0;                                          // 2
+        public uint Id = 0;                                           // 0        m_ID                                         // 2
         public uint Attributes = 0;                                   // 3        m_attribute
         public uint AttributesEx = 0;                                 // 4        m_attributesEx
         public uint AttributesEx2 = 0;                                // 5        m_attributesExB
@@ -30,5 +28,6 @@ namespace SpellWork.DBC.Structures
         public uint SpellIconID = 0;                                  // 23       m_spellIconID
         public uint ActiveIconID = 0;                                 // 24       m_activeIconID
         public uint SchoolMask = 0;                                   // 25       m_schoolMask
+        public uint UnkWod;
     }
 }

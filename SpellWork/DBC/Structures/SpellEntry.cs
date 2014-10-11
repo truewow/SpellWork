@@ -16,7 +16,7 @@ namespace SpellWork.DBC.Structures
         public uint RuneCostID;
         public uint SpellMissileID;
         public uint SpellDescriptionVariableID;
-        public uint SpellDifficultyId;
+        //public uint SpellDifficultyId;
         public uint SpellScalingId;
         public uint SpellAuraOptionsId;
         public uint SpellAuraRestrictionsId;
@@ -34,7 +34,7 @@ namespace SpellWork.DBC.Structures
         public uint ResearchProject;
         public uint SpellMiscId;
 
-        public List<SpellPowerEntry> SpellPowerList
+        /*public List<SpellPowerEntry> SpellPowerList
         {
             get
             {
@@ -42,7 +42,7 @@ namespace SpellWork.DBC.Structures
                     return DBC._spellPower[Id];
                 return null;
             }
-        }
+        }*/
 
         public SpellMiscEntry MiscEntry
         {

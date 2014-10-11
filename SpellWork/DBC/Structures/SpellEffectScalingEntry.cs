@@ -11,7 +11,6 @@ namespace SpellWork.DBC.Structures
         public float Multiplier;                                       // 2
         public float RandomPointsMultiplier;                           // 3
         public float OtherMultiplier;                                  // 4
-        public float UnkMultiplierMop;                                 // 5
-        public uint SpellEffectId;                                     // 6
+        public uint SpellEffectId;                                     // 5
     }
 }

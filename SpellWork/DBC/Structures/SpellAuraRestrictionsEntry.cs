@@ -3,8 +3,8 @@
     public sealed class SpellAuraRestrictionsEntry
     {
         public uint Id;
-        public uint spellId;                                      // 1  - Pandaria
-        public uint Difficulty;                                   // 2  - Pandaria, difficulty?
+        //public uint spellId;                                      // 1  - Pandaria
+        //public uint Difficulty;                                   // 2  - Pandaria, difficulty?
         public uint CasterAuraState;
         public uint TargetAuraState;
         public uint CasterAuraStateNot;

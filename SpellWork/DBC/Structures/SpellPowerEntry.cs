@@ -3,8 +3,6 @@
     public sealed class SpellPowerEntry
     {
         public uint Id;
-        public uint SpellId;                                      // 1  - Pandaria
-        public uint Difficulty;                                   // 2  - Pandaria
         public uint PowerType;
         public uint ManaCost;
         public uint ManaCostPerlevel;
@@ -15,5 +13,8 @@
         public float UnkMop1; // Pandaria
         public uint RequiredAura; // Pandaria
         public float UnkMop2; // Pandaria
+        public uint UnkWod1;
+        public uint UnkWod2;
+        public uint UnkWod3;
     }
 }

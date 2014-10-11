@@ -16,5 +16,6 @@
         public uint Unk9;
         public uint Unk10;
         public uint Unk11;
+        public uint Unk12;
     }
 }

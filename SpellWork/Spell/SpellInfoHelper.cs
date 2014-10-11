@@ -96,9 +96,9 @@ namespace SpellWork.Spell
         public uint SpellMissileID = 0;                               // 227      m_spellMissileID not used
         public uint PowerDisplayId = 0;                               // 228      PowerDisplay.dbc, new in 3.1
         public uint SpellDescriptionVariableID = 0;                   // 232      3.2.0
-        public uint SpellDifficultyId = 0;                            // 233      3.3.0                           // 239      3.3.0
+        //public uint SpellDifficultyId = 0;                            // 233      3.3.0                           // 239      3.3.0
         public SpellScalingEntry Scaling;
-        public List<SpellPowerEntry> SpellPowerList;
+        //public List<SpellPowerEntry> SpellPowerList;
         public List<SpellTargetRestrictionsEntry> SpellTargetRestrictionsList;
         public SpellRuneCostEntry RuneCost;
 
@@ -238,7 +238,7 @@ namespace SpellWork.Spell
             RuneCostID = dbcData.RuneCostID;
             SpellMissileID = dbcData.SpellMissileID;
             SpellDescriptionVariableID = dbcData.SpellDescriptionVariableID;
-            SpellDifficultyId = dbcData.SpellDifficultyId;
+            //SpellDifficultyId = dbcData.SpellDifficultyId;
 
             if (DBC.DBC.SpellRuneCost.ContainsKey(RuneCostID))
                 RuneCost = DBC.DBC.SpellRuneCost[RuneCostID];
@@ -330,7 +330,7 @@ namespace SpellWork.Spell
                 SpellLevel = levels.SpellLevel;
             }
 
-            SpellPowerList = dbcData.SpellPowerList;
+            //SpellPowerList = dbcData.SpellPowerList;
 
 
             // SpellClassOptions.dbc

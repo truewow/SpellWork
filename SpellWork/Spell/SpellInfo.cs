@@ -209,7 +209,7 @@ namespace SpellWork.Spell
                     _rtb.AppendFormatLine("Rune Cost: {0}, {1}, {2}, {3}, Power Gain: {4}", _spell.RuneCost.RuneCost[0], _spell.RuneCost.RuneCost[1], _spell.RuneCost.RuneCost[2], _spell.RuneCost.UnkMop, _spell.RuneCost.RunicPowerGain);
                 }
 
-                if (_spell.SpellPowerList != null)
+                /*if (_spell.SpellPowerList != null)
                 {
                     foreach (var spellPower in _spell.SpellPowerList)
                     {
@@ -235,7 +235,7 @@ namespace SpellWork.Spell
                             _rtb.AppendLine();
                         }
                     }
-                }
+                }*/
 
                 _rtb.AppendFormatLine("Interrupt Flags: 0x{0:X8}, AuraIF 0x{1:X8}, ChannelIF 0x{2:X8}",
                     _spell.InterruptFlags, _spell.AuraInterruptFlags, _spell.ChannelInterruptFlags);

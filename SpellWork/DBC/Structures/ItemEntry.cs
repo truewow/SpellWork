@@ -12,5 +12,6 @@ namespace SpellWork.DBC.Structures
         public uint DisplayId;
         public uint InventoryType;
         public uint Sheath;
+        public uint UnkWod1;
     }
 }
