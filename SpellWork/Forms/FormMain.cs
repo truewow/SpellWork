@@ -340,15 +340,21 @@ namespace SpellWork.Forms
 
         private void GetProcAttribute(SpellInfoHelper spell)
         {
-            var spellFamilyFlags = _tvFamilyTree.GetMask();
-            var statusproc =
-                String.Format(
-                    "Spell ({0}) {1}. Proc Event ==> SchoolMask 0x{2:X2}, SpellFamily {3}, 0x{4:X8} {5:X8} {6:X8} {7:X8}, procFlag 0x{8:X8}, procEx 0x{9:X8}, PPMRate {10}",
-                    spell.ID, spell.SpellNameRank, _clbSchools.GetFlagsValue(), _cbProcFitstSpellFamily.ValueMember,
-                    spellFamilyFlags[0], spellFamilyFlags[1], spellFamilyFlags[2], spellFamilyFlags[3], _clbProcFlags.GetFlagsValue(),
-                    _clbProcFlagEx.GetFlagsValue(), _tbPPM.Text.ToFloat());
+            uint[] SpellFamilyFlags = _tvFamilyTree.GetMask();
+            var statusproc = String.Format("Spell ({0}) {1}. Proc Event ==> SchoolMask 0x{2:X2}, SpellFamily {3}, 0x{4:X8} {5:X8} {6:X8} {7:X8}, procFlag 0x{8:X8}, procEx 0x{9:X8}, PPMRate {10}",
+                spell.ID,
+                spell.SpellNameRank,
+                _clbSchools.GetFlagsValue(),
+                _cbProcFitstSpellFamily.SelectedValue,
+                SpellFamilyFlags[0],
+                SpellFamilyFlags[1],
+                SpellFamilyFlags[2],
+                SpellFamilyFlags[3],
+                _clbProcFlags.GetFlagsValue(),
+                _clbProcFlagEx.GetFlagsValue(),
+                _tbPPM.Text.ToFloat());
 
-            _gSpellProcEvent.Text = @"Spell Proc Event    " + statusproc;
+            _gSpellProcEvent.Text = "Spell Proc Event    " + statusproc;
         }
 
         private void Search()

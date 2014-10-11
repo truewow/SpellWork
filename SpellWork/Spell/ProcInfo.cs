@@ -30,20 +30,22 @@ namespace SpellWork.Spell
                              skillLine
                          };
 
-            for (var i = 0; i < 96; ++i)
+            for (var i = 0; i < 128; ++i)
             {
-                var mask = new uint[3];
+                var mask = new uint[4];
 
                 if (i < 32)
                     mask[0] = 1U << i;
                 else if (i < 64)
                     mask[1] = 1U << (i - 32);
-                else
+                else if (i < 96)
                     mask[2] = 1U << (i - 64);
+                else
+                    mask[3] = 1U << (i - 96);
 
                 var node   = new TreeNode
                 {
-                    Text = String.Format("0x{0:X8} {1:X8} {2:X8}", mask[2], mask[1], mask[0]),
+                    Text = String.Format("0x{0:X8} {1:X8} {2:X8} {3:X8}", mask[3], mask[2], mask[1], mask[0]),
                     ImageKey = @"family.ico"
                 };
                 familyTree.Nodes.Add(node);
