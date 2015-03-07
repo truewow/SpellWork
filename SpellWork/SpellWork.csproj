@@ -89,7 +89,7 @@
     </Compile>
     <Compile Include="Database\Structures.cs" />
     <Compile Include="DBC\DataStoreFileNameAttribute.cs" />
-    <Compile Include="DBC\Structures\AreaGroupEntry.cs" />
+    <Compile Include="DBC\Structures\AreaGroupMemberEntry.cs" />
     <Compile Include="DBC\Structures\AreaTableEntry.cs" />
     <Compile Include="DBC\Structures\gtSpellScalingEntry.cs" />
     <Compile Include="DBC\Structures\ItemEntry.cs" />

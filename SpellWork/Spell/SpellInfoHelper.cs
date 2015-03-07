@@ -344,8 +344,8 @@ namespace SpellWork.Spell
             else
                 SpellFamilyFlags = new uint[4];
 
-            // SpellTotems.dbc
-            /*var totems = dbcData.Totems;
+            // SpellTotems.db2
+            var totems = dbcData.Totems;
             if (totems != null)
             {
                 Totem = (uint[])totems.Totem.Clone();
@@ -355,7 +355,7 @@ namespace SpellWork.Spell
             {
                 Totem = new uint[2];
                 TotemCategory = new uint[2];
-            }*/
+            }
 
             // SpellReagents.dbc
             var reagents = dbcData.Reagents;

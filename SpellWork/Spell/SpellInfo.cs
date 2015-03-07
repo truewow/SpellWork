@@ -644,34 +644,24 @@ namespace SpellWork.Spell
                 return;
 
             var areaGroupId = (uint)_spell.AreaGroupId;
-            if (!DBC.DBC.AreaGroup.ContainsKey(areaGroupId))
+            var areas = DBC.DBC.AreaGroupMember.Values.Where(ag => ag.AreaGroupId == areaGroupId).ToList();
+            if (areas.Count == 0)
             {
-                _rtb.AppendFormatLine("Cannot find area group id {0} in AreaGroup.dbc!", _spell.AreaGroupId);
+                _rtb.AppendFormatLine("Cannot find area group id {0} in AreaGroupMember.db2!", _spell.AreaGroupId);
                 return;
             }
 
             _rtb.AppendLine();
             _rtb.SetBold();
             _rtb.AppendLine("Allowed areas:");
-            while (DBC.DBC.AreaGroup.ContainsKey(areaGroupId))
+            foreach (var areaGroupMember in areas)
             {
-                var groupEntry = DBC.DBC.AreaGroup[areaGroupId];
-                for (var i = 0; i < 6; ++i)
+                var areaId = areaGroupMember.AreaId;
+                if (DBC.DBC.AreaTable.ContainsKey(areaId))
                 {
-                    var areaId = groupEntry.AreaId[i];
-                    if (DBC.DBC.AreaTable.ContainsKey(areaId))
-                    {
-                        var areaEntry = DBC.DBC.AreaTable[areaId];
-                        _rtb.AppendFormatLine("{0} - {1} (Map: {2})", areaId, areaEntry.Name, areaEntry.MapId);
-                    }
+                    var areaEntry = DBC.DBC.AreaTable[areaId];
+                    _rtb.AppendFormatLine("{0} - {1} (Map: {2})", areaId, areaEntry.Name, areaEntry.MapId);
                 }
-
-
-                if (groupEntry.NextGroup == 0)
-                    break;
-
-                // Try search in next group
-                areaGroupId = groupEntry.NextGroup;
             }
 
             _rtb.AppendLine();

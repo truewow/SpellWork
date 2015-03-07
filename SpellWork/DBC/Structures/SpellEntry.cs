@@ -16,7 +16,6 @@ namespace SpellWork.DBC.Structures
         public uint RuneCostID;
         public uint SpellMissileID;
         public uint SpellDescriptionVariableID;
-        //public uint SpellDifficultyId;
         public uint SpellScalingId;
         public uint SpellAuraOptionsId;
         public uint SpellAuraRestrictionsId;

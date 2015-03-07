@@ -12,14 +12,14 @@ namespace SpellWork.DBC
 {
     public static class DBC
     {
-        public const string Version = "SpellWork 6.x.x (19000)";
+        public const string Version = "SpellWork 6.1.0 (19702)";
         public const uint MaxLevel  = 100;
 
         public const int MaxDbcLocale                 = 16;
         //public const int MaxEffectIndex               = 32;
         public const int SpellEntryForDetectLocale    = 1;
 
-        public static DBCStorage<AreaGroupEntry> AreaGroup = new DBCStorage<AreaGroupEntry>();
+        public static DB2Storage<AreaGroupMemberEntry> AreaGroupMember = new DB2Storage<AreaGroupMemberEntry>();
         public static DBCStorage<AreaTableEntry> AreaTable = new DBCStorage<AreaTableEntry>();
         public static DBCStorage<gtSpellScalingEntry> gtSpellScaling = new DBCStorage<gtSpellScalingEntry>();
         public static DB2Storage<OverrideSpellDataEntry> OverrideSpellData = new DB2Storage<OverrideSpellDataEntry>();
@@ -65,7 +65,7 @@ namespace SpellWork.DBC
         public static Dictionary<uint, SpellInfoHelper> SpellInfoStore = new Dictionary<uint, SpellInfoHelper>();
         public static Dictionary<uint, List<SpellEffectEntry>> SpellEffectLists = new Dictionary<uint, List<SpellEffectEntry>>();
         public static Dictionary<uint, List<uint>> SpellTriggerStore = new Dictionary<uint, List<uint>>();
-        
+
         public static void Load()
         {
             if (!Directory.Exists(Settings.Default.DbcPath))
@@ -174,7 +174,7 @@ namespace SpellWork.DBC
                     Entry = item.Id,
                     Name = item.Name,
                     Description = item.Description,
-                    /*SpellId = new[] 
+                    /*SpellId = new[]
                     {
                         item.SpellId[0],
                         item.SpellId[1],
