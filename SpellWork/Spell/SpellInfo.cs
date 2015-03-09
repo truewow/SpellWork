@@ -369,9 +369,9 @@ namespace SpellWork.Spell
                 _rtb.AppendFormatLine("Effect {0}: Id {1} ({2}) {3}", effect.Index, effect.Type, (SpellEffects)effect.Type, (Difficulty)effect.Difficulty);
                 _rtb.SetDefaultStyle();
 
-                if (effect.SpellEffectScalingEntry != null && effect.SpellEffectScalingEntry.Multiplier != 0.0f && _spell.Scaling != null && _spell.Scaling.PlayerClass != 0 && _spell.Scaling.PlayerClass != 1000 && _spell.Scaling.PlayerClass >= -1) // seems like class 1000 is not using any scaling, -2 and smaller is..no idea
+                if (effect.SpellEffectScalingEntry != null && effect.SpellEffectScalingEntry.Multiplier != 0.0f && _spell.Scaling != null && _spell.Scaling.PlayerClass != 0)
                 {
-                    var gtEntry = (uint)((_spell.Scaling.PlayerClass != -1 ? _spell.Scaling.PlayerClass - 1 : 12) * 100) + DBC.DBC.SelectedLevel - 1;
+                    var gtEntry = (uint)(((_spell.Scaling.PlayerClass > 0 ? _spell.Scaling.PlayerClass : 11 - _spell.Scaling.PlayerClass) - 1) * 123) + DBC.DBC.SelectedLevel - 1;
                     var gtMultiplier = DBC.DBC.gtSpellScaling[gtEntry].Multiplier;
                     if (_spell.Scaling.MaxCastTime > 0 && _spell.Scaling.MaxCastTimeLevel > DBC.DBC.SelectedLevel)
                         gtMultiplier *= (float)(_spell.Scaling.MinCastTime + (DBC.DBC.SelectedLevel - 1) * (_spell.Scaling.MaxCastTime - _spell.Scaling.MinCastTime) / (_spell.Scaling.MaxCastTimeLevel - 1)) / (float)_spell.Scaling.MaxCastTime;
