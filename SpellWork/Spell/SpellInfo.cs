@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using SpellWork.Database;
 using SpellWork.DBC;
 using SpellWork.Extensions;
 
@@ -211,7 +210,6 @@ namespace SpellWork.Spell
             }
 
             AppendSpellEffectInfo();
-            AppendItemInfo();
             AppendDifficultyInfo();
 
             AppendSpellVisualInfo();
@@ -593,34 +591,6 @@ namespace SpellWork.Spell
             }
 
             _rtb.AppendLine();
-        }
-
-        private void AppendItemInfo()
-        {
-            if (!MySqlConnection.Connected)
-                return;
-
-            var items = from item in DBC.DBC.ItemTemplate
-                        where  item.SpellId.ContainsElement((int)_spell.ID)
-                        select item;
-
-            if (items.Count() == 0)
-                return;
-
-            _rtb.AppendLine(_line);
-            _rtb.SetStyle(Color.Blue, FontStyle.Bold);
-            _rtb.AppendLine("Items using this spell:");
-            _rtb.SetDefaultStyle();
-
-            foreach (var item in items)
-            {
-                var name = string.IsNullOrEmpty(item.LocalesName) ? item.Name : item.LocalesName;
-                var desc = string.IsNullOrEmpty(item.LocalesDescription) ? item.Description : item.LocalesDescription;
-
-                desc = string.IsNullOrEmpty(desc) ? string.Empty : string.Format(" - \"{0}\"", desc);
-
-                _rtb.AppendFormatLine(@"   {0}: {1} {2}", item.Entry, name, desc);
-            }
         }
     }
 }
