@@ -1,10 +1,10 @@
 ﻿using System;
-using SpellWork.DBC;
-using SpellWork.Spell;
+using SpellWorkLib.DBC;
+using SpellWorkLib.Spell;
 
-namespace SpellWork
+namespace SpellWorkLib
 {
-    class Loader
+    public class Loader
     {
         public Loader()
         {

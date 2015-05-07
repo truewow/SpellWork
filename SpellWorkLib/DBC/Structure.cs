@@ -1,10 +1,10 @@
 using System;
 using System.Text;
 using System.Runtime.InteropServices;
-using SpellWork.Extensions;
-using SpellWork.Spell;
+using SpellWorkLib.Extensions;
+using SpellWorkLib.Spell;
 
-namespace SpellWork.DBC
+namespace SpellWorkLib.DBC
 {
     public struct DbcHeader
     {

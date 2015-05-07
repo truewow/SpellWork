@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace SpellWork.Extensions
+namespace SpellWorkLib.Extensions
 {
     public enum CompareType
     {

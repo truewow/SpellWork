@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SpellWork.Spell
+namespace SpellWorkLib.Spell
 {
     // ReSharper disable InconsistentNaming
     public enum LocalesDBC

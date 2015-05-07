@@ -3,9 +3,9 @@ using System.Text;
 using System.IO;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using SpellWork.Extensions;
+using SpellWorkLib.Extensions;
 
-namespace SpellWork.DBC
+namespace SpellWorkLib.DBC
 {
     static class DBCReader
     {

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using SpellWork.DBC;
+using SpellWorkLib.DBC;
+using SpellWorkLib.Extensions;
 using SpellWork.Extensions;
-using SpellWork.Spell;
+using SpellWorkLib.Spell;
 
 namespace SpellWork.Forms
 {
@@ -38,7 +39,7 @@ namespace SpellWork.Forms
             var ic = _tbIcon.Text.ToUInt32();
             var at = _tbAttribute.Text.ToUInt32();
 
-            _spellList = (from spell in DBC.DBC.Spell.Values
+            _spellList = (from spell in DBC.Spell.Values
                           where
                               ((id == 0 || spell.ID == id) && (ic == 0 || spell.SpellIconID == ic) &&
                                (at == 0 || (spell.Attributes & at) != 0 || (spell.AttributesEx & at) != 0 ||
@@ -75,7 +76,7 @@ namespace SpellWork.Forms
             var bTarget2 = _cbTarget2.SelectedIndex != 0;
             var fTarget2 = _cbTarget2.SelectedValue.ToInt32();
 
-            _spellList = (from spell in DBC.DBC.Spell.Values
+            _spellList = (from spell in DBC.Spell.Values
                           where
                               (!bFamilyNames || spell.SpellFamilyName == fFamilyNames) &&
                               (!bSpellEffect || spell.Effect.ContainsElement((uint)fSpellEffect)) &&

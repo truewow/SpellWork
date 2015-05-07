@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SpellWork.Extensions
+namespace SpellWorkLib.Extensions
 {
     public static class RichTextBoxExtensions
     {
@@ -89,41 +89,6 @@ namespace SpellWork.Extensions
         {
             textbox.SelectionFont = new Font(DefaultFamily, DefaultSize, FontStyle.Regular);
             textbox.SelectionColor = Color.Black;
-        }
-
-        public static void ColorizeCode(this RichTextBox rtb)
-        {
-            string[] keywords = { "INSERT", "INTO", "DELETE", "FROM", "IN", "VALUES", "WHERE" };
-            var text = rtb.Text;
-
-            rtb.SelectAll();
-            rtb.SelectionColor = rtb.ForeColor;
-
-            foreach (var keyword in keywords)
-            {
-                var keywordPos = rtb.Find(keyword, RichTextBoxFinds.MatchCase | RichTextBoxFinds.WholeWord);
-
-                while (keywordPos != -1)
-                {
-                    var commentPos = text.LastIndexOf("-- ", keywordPos, StringComparison.OrdinalIgnoreCase);
-                    var newLinePos = text.LastIndexOf("\n", keywordPos, StringComparison.OrdinalIgnoreCase);
-
-                    var quoteCount = 0;
-                    var quotePos = text.IndexOf("\"", newLinePos + 1, keywordPos - newLinePos, StringComparison.OrdinalIgnoreCase);
-
-                    for (; quotePos != -1; quoteCount++)
-                        quotePos = text.IndexOf("\"", quotePos + 1, keywordPos - (quotePos + 1), StringComparison.OrdinalIgnoreCase);
-
-                    if (newLinePos >= commentPos && quoteCount % 2 == 0)
-                        rtb.SelectionColor = Color.Blue;
-                    else if (newLinePos == commentPos)
-                        rtb.SelectionColor = Color.Green;
-
-                    keywordPos = rtb.Find(keyword, keywordPos + rtb.SelectionLength, RichTextBoxFinds.MatchCase | RichTextBoxFinds.WholeWord);
-                }
-            }
-
-            rtb.Select(0, 0);
         }
     }
 }

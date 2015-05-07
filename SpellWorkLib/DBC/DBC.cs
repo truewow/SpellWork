@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using SpellWork.Spell;
+using SpellWorkLib.Spell;
 
-namespace SpellWork.DBC
+namespace SpellWorkLib.DBC
 {
     public static class DBC
     {
@@ -29,15 +29,12 @@ namespace SpellWork.DBC
         public static Dictionary<uint, SpellRadiusEntry>            SpellRadius;
         public static Dictionary<uint, SpellRangeEntry>             SpellRange;
 
-        public static Dictionary<uint, string> AreaStrings             = new Dictionary<uint, string>();
-        public static Dictionary<uint, string> SpellStrings            = new Dictionary<uint, string>();
-        public static Dictionary<uint, string> SkillLineStrings        = new Dictionary<uint, string>();
-        public static Dictionary<uint, string> SpellRangeStrings       = new Dictionary<uint, string>();
-        public static Dictionary<uint, string> ScreenEffectStrings     = new Dictionary<uint, string>();
-        public static Dictionary<uint, string> SpellMissileMotionStrings = new Dictionary<uint, string>();
-
-        // DB
-        public static List<Item> ItemTemplate = new List<Item>();
+        public static readonly Dictionary<uint, string> AreaStrings             = new Dictionary<uint, string>();
+        public static readonly Dictionary<uint, string> SpellStrings            = new Dictionary<uint, string>();
+        public static readonly Dictionary<uint, string> SkillLineStrings        = new Dictionary<uint, string>();
+        public static readonly Dictionary<uint, string> SpellRangeStrings       = new Dictionary<uint, string>();
+        public static readonly Dictionary<uint, string> ScreenEffectStrings     = new Dictionary<uint, string>();
+        public static readonly Dictionary<uint, string> SpellMissileMotionStrings = new Dictionary<uint, string>();
 
         // Locale
         public static LocalesDBC Locale { get; set; }

@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using SpellWork.DBC;
-using SpellWork.Extensions;
+using SpellWorkLib.DBC;
+using SpellWorkLib.Extensions;
 
-namespace SpellWork.Spell
+namespace SpellWorkLib.Spell
 {
     class SpellInfo
     {
@@ -210,6 +210,7 @@ namespace SpellWork.Spell
             }
 
             AppendSpellEffectInfo();
+            AppendItemInfo();
             AppendDifficultyInfo();
 
             AppendSpellVisualInfo();
@@ -278,7 +279,7 @@ namespace SpellWork.Spell
                 return;
 
             var skill = query.First().skillLineAbility.Value;
-            var line =  query.First().skillLine.Value;
+            var line = query.First().skillLine.Value;
 
             _rtb.AppendFormatLine("Skill (Id {0}) \"{1}\"", skill.SkillId, line.Name);
             _rtb.AppendFormat("    ReqSkillValue {0}", skill.ReqSkillValue);
@@ -351,8 +352,9 @@ namespace SpellWork.Spell
                                 from skill in temp.DefaultIfEmpty()
                                 select new
                                 {
-                                    SpellID   = spell.ID,
-                                    SpellName = spell.SpellNameRank, skill.Value.SkillId
+                                    SpellID = spell.ID,
+                                    SpellName = spell.SpellNameRank,
+                                    skill.Value.SkillId
                                 };
 
                     foreach (var row in query)
@@ -360,7 +362,7 @@ namespace SpellWork.Spell
                         if (row.SkillId > 0)
                         {
                             _rtb.SelectionColor = Color.Blue;
-                            _rtb.AppendFormatLine("\t+ {0} - {1}",  row.SpellID, row.SpellName);
+                            _rtb.AppendFormatLine("\t+ {0} - {1}", row.SpellID, row.SpellName);
                         }
                         else
                         {
@@ -402,7 +404,7 @@ namespace SpellWork.Spell
                 _rtb.AppendFormatLineIfNotNull("EffectChainTarget = {0}", _spell.EffectChainTarget[effectIndex]);
                 _rtb.AppendFormatLineIfNotNull("EffectItemType = {0}", _spell.EffectItemType[effectIndex]);
 
-                if((Mechanics)_spell.EffectMechanic[effectIndex] != Mechanics.MECHANIC_NONE)
+                if ((Mechanics)_spell.EffectMechanic[effectIndex] != Mechanics.MECHANIC_NONE)
                     _rtb.AppendFormatLine("Effect Mechanic = {0} ({1})", _spell.EffectMechanic[effectIndex], (Mechanics)_spell.EffectMechanic[effectIndex]);
 
                 _rtb.AppendLine();
@@ -448,14 +450,14 @@ namespace SpellWork.Spell
 
         private void AuraModTypeName(int index)
         {
-            var aura    = (AuraType)_spell.EffectApplyAuraName[index];
-            var misc          = _spell.EffectMiscValue[index];
+            var aura = (AuraType)_spell.EffectApplyAuraName[index];
+            var misc = _spell.EffectMiscValue[index];
 
             if (_spell.EffectApplyAuraName[index] == 0)
             {
                 _rtb.AppendFormatLineIfNotNull("EffectMiscValueA = {0}", _spell.EffectMiscValue[index]);
                 _rtb.AppendFormatLineIfNotNull("EffectMiscValueB = {0}", _spell.EffectMiscValueB[index]);
-                _rtb.AppendFormatLineIfNotNull("EffectAmplitude = {0}",  _spell.EffectAmplitude[index]);
+                _rtb.AppendFormatLineIfNotNull("EffectAmplitude = {0}", _spell.EffectAmplitude[index]);
 
                 return;
             }
@@ -591,6 +593,34 @@ namespace SpellWork.Spell
             }
 
             _rtb.AppendLine();
+        }
+
+        private void AppendItemInfo()
+        {
+            if (!MySqlConnection.Connected)
+                return;
+
+            var items = from item in DBC.DBC.ItemTemplate
+                        where item.SpellId.ContainsElement((int)_spell.ID)
+                        select item;
+
+            if (items.Count() == 0)
+                return;
+
+            _rtb.AppendLine(_line);
+            _rtb.SetStyle(Color.Blue, FontStyle.Bold);
+            _rtb.AppendLine("Items using this spell:");
+            _rtb.SetDefaultStyle();
+
+            foreach (var item in items)
+            {
+                var name = string.IsNullOrEmpty(item.LocalesName) ? item.Name : item.LocalesName;
+                var desc = string.IsNullOrEmpty(item.LocalesDescription) ? item.Description : item.LocalesDescription;
+
+                desc = string.IsNullOrEmpty(desc) ? string.Empty : string.Format(" - \"{0}\"", desc);
+
+                _rtb.AppendFormatLine(@"   {0}: {1} {2}", item.Entry, name, desc);
+            }
         }
     }
 }

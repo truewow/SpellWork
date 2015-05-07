@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using SpellWork.DBC;
+using SpellWorkLib.DBC;
 using SpellWork.Extensions;
-using SpellWork.Spell;
+using SpellWorkLib.Extensions;
+using SpellWorkLib.Spell;
 
 namespace SpellWork.Forms
 {
@@ -16,7 +17,7 @@ namespace SpellWork.Forms
             InitializeComponent();
             splitContainer3.SplitterDistance = 128;
 
-            Text = DBC.DBC.Version;
+            Text = DBC.Version;
 
             _cbSpellFamilyName.SetEnumValues<SpellFamilyNames>("SpellFamilyName");
             _cbSpellAura.SetEnumValues<AuraType>("Aura");
@@ -24,7 +25,7 @@ namespace SpellWork.Forms
             _cbTarget1.SetEnumValues<Targets>("Target A");
             _cbTarget2.SetEnumValues<Targets>("Target B");
             
-            _status.Text = String.Format("DBC Locale: {0}", DBC.DBC.Locale);
+            _status.Text = String.Format("DBC Locale: {0}", DBC.Locale);
 
             _cbAdvancedFilter1.SetStructFields<SpellEntry>();
             _cbAdvancedFilter2.SetStructFields<SpellEntry>();
@@ -97,7 +98,7 @@ namespace SpellWork.Forms
             var ic = _tbSearchIcon.Text.ToUInt32();
             var at = _tbSearchAttributes.Text.ToUInt32();
 
-            _spellList = (from spell in DBC.DBC.Spell.Values
+            _spellList = (from spell in DBC.Spell.Values
                           where
                               ((id == 0 || spell.ID == id) && (ic == 0 || spell.SpellIconID == ic) &&
                                (at == 0 || (spell.Attributes & at) != 0 || (spell.AttributesEx & at) != 0 ||
@@ -142,7 +143,7 @@ namespace SpellWork.Forms
             var field1Ct = (CompareType)_cbAdvancedFilter1CompareType.SelectedIndex;
             var field2Ct = (CompareType)_cbAdvancedFilter2CompareType.SelectedIndex;
 
-            _spellList = (from spell in DBC.DBC.Spell.Values
+            _spellList = (from spell in DBC.Spell.Values
                           where
                               (!bFamilyNames || spell.SpellFamilyName == fFamilyNames) &&
                               (!bSpellEffect || spell.Effect.ContainsElement((uint)fSpellEffect)) &&
@@ -167,8 +168,8 @@ namespace SpellWork.Forms
             var spell1 = _tbCompareFilterSpell1.Text.ToUInt32();
             var spell2 = _tbCompareFilterSpell2.Text.ToUInt32();
 
-            if (DBC.DBC.Spell.ContainsKey(spell1) && DBC.DBC.Spell.ContainsKey(spell2))
-                new SpellCompare(_rtbCompareSpell1, _rtbCompareSpell2, DBC.DBC.Spell[spell1], DBC.DBC.Spell[spell2]);
+            if (DBC.Spell.ContainsKey(spell1) && DBC.Spell.ContainsKey(spell2))
+                new SpellCompare(_rtbCompareSpell1, _rtbCompareSpell2, DBC.Spell[spell1], DBC.Spell[spell2]);
         }
 
         private void CompareSearch1Click(object sender, EventArgs e)

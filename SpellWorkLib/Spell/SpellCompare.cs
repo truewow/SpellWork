@@ -1,14 +1,14 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
-using SpellWork.DBC;
-using SpellWork.Extensions;
+using SpellWorkLib.DBC;
+using SpellWorkLib.Extensions;
 
-namespace SpellWork.Spell
+namespace SpellWorkLib.Spell
 {
     /// <summary>
     /// Compares two spells
     /// </summary>
-    class SpellCompare
+    public class SpellCompare
     {
         /// <summary>
         /// Search terms
