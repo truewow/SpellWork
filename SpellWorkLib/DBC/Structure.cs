@@ -1,4 +1,5 @@
 using System;
+using System.Dynamic;
 using System.Text;
 using System.Runtime.InteropServices;
 using SpellWorkLib.Extensions;
@@ -257,6 +258,25 @@ namespace SpellWorkLib.DBC
             }
         }
 
+        public dynamic RangeObj
+        {
+            get
+            {
+                dynamic obj = new ExpandoObject();
+                if (RangeIndex == 0 || !DBC.SpellRange.ContainsKey(RangeIndex))
+                    return obj;
+
+                var range = DBC.SpellRange[RangeIndex];
+                obj.Id = range.Id;
+                obj.Description = range.Description1;
+                obj.MinRange = range.MinRange;
+                obj.MinRangeFriendly = range.MinRangeFriendly;
+                obj.MaxRange = range.MaxRange;
+                obj.MaxRangeFriendly = range.MaxRangeFriendly;
+                return obj;
+            }
+        }
+
         public string GetRadius(int index)
         {
             var rIndex = EffectRadiusIndex[index];
@@ -264,6 +284,21 @@ namespace SpellWorkLib.DBC
                 return DBC.SpellRadius.ContainsKey(rIndex) ? String.Format("Radius (Id {0}) {1:F}", rIndex, DBC.SpellRadius[rIndex].Radius) : String.Format("Radius (Id {0}) Not found", rIndex);
 
             return String.Empty;
+        }
+
+        public dynamic GetRadiusObj(int index)
+        {
+            dynamic obj = new ExpandoObject();
+            var rIndex = EffectRadiusIndex[index];
+            if (rIndex == 0)
+                return null;
+
+            obj.Id = rIndex;
+            SpellRadiusEntry spellRadius;
+            if (DBC.SpellRadius.TryGetValue(rIndex, out spellRadius))
+                obj.Radius = spellRadius.Radius;
+
+            return obj;
         }
 
         public string CastTime
@@ -277,6 +312,26 @@ namespace SpellWorkLib.DBC
                            ? String.Format("CastingTime (Id {0}) = ????", CastingTimeIndex)
                            : String.Format("CastingTime (Id {0}) = {1:F}", CastingTimeIndex,
                                            DBC.SpellCastTimes[CastingTimeIndex].CastTime / 1000.0f);
+            }
+        }
+
+        public dynamic CastTimeObj
+        {
+            get
+            {
+                dynamic obj = new ExpandoObject();
+                if (CastingTimeIndex == 0)
+                    return obj;
+
+                obj.Id = CastingTimeIndex;
+
+                SpellCastTimesEntry times;
+                if (DBC.SpellCastTimes.TryGetValue(CastingTimeIndex, out times))
+                    obj.Speed = times.CastTime/1000.0f;
+                else
+                    obj.Speed = "????";
+
+                return obj;
             }
         }
 
