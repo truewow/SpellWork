@@ -68,7 +68,7 @@ namespace SpellWorkLib.Extensions
             return arg != 0 ? builder.AppendFormat(format, arg).AppendLine() : builder;
         }
 
-        public static uint ToUInt32(this Object val)
+        public static uint ToUInt32(this object val)
         {
             if (val == null)
                 return 0;
@@ -78,7 +78,7 @@ namespace SpellWorkLib.Extensions
             return num;
         }
 
-        public static int ToInt32(this Object val)
+        public static int ToInt32(this object val)
         {
             if (val == null)
                 return 0;
@@ -88,7 +88,7 @@ namespace SpellWorkLib.Extensions
             return num;
         }
 
-        public static float ToFloat(this Object val)
+        public static float ToFloat(this object val)
         {
             if (val == null)
                 return 0.0f;
@@ -98,7 +98,7 @@ namespace SpellWorkLib.Extensions
             return num;
         }
 
-        public static ulong ToUlong(this Object val)
+        public static ulong ToUlong(this object val)
         {
             if (val == null)
                 return 0U;
@@ -108,12 +108,12 @@ namespace SpellWorkLib.Extensions
             return num;
         }
 
-        public static String NormalizeString(this String text, String remove)
+        public static string NormalizeString(this string text, string remove)
         {
-            var str = String.Empty;
-            if (remove != String.Empty)
+            var str = string.Empty;
+            if (remove != string.Empty)
             {
-                text = text.Replace(remove, String.Empty);
+                text = text.Replace(remove, string.Empty);
             }
 
             foreach (var s in text.Split('_'))
@@ -181,9 +181,9 @@ namespace SpellWorkLib.Extensions
             return value;
         }
 
-        public static bool IsEmpty(this String str)
+        public static bool IsEmpty(this string str)
         {
-            return str == String.Empty;
+            return str == string.Empty;
         }
 
         public static string GetFullName(this Enum @enum)

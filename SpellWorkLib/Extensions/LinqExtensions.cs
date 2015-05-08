@@ -89,7 +89,7 @@ namespace SpellWorkLib.Extensions
 
         #region Specific Compares
 
-        private static Boolean Compare(String baseValue, String value, CompareType compareType)
+        private static bool Compare(string baseValue, string value, CompareType compareType)
         {
             switch (compareType)
             {
@@ -108,7 +108,7 @@ namespace SpellWorkLib.Extensions
             }
         }
 
-        private static Boolean Compare(float baseValue, float value, CompareType compareType)
+        private static bool Compare(float baseValue, float value, CompareType compareType)
         {
             switch (compareType)
             {
@@ -128,34 +128,7 @@ namespace SpellWorkLib.Extensions
             }
         }
 
-        private static Boolean Compare(UInt64 baseValue, UInt64 value, CompareType compareType)
-        {
-            switch (compareType)
-            {
-                case CompareType.GreaterOrEqual:
-                    return baseValue >= value;
-                case CompareType.GreaterThan:
-                    return baseValue > value;
-                case CompareType.LowerOrEqual:
-                    return baseValue <= value;
-                case CompareType.LowerThan:
-                    return baseValue < value;
-
-                case CompareType.AndStrict:
-                    return (baseValue & value) == value;
-                case CompareType.And:
-                    return (baseValue & value) != 0;
-                case CompareType.NotAnd:
-                    return (baseValue & value) == 0;
-
-                case CompareType.NotEqual:
-                    return baseValue != value;
-                default:
-                    return baseValue == value;
-            }
-        }
-
-        private static Boolean Compare(Int32 baseValue, Int32 value, CompareType compareType)
+        private static bool Compare(ulong baseValue, ulong value, CompareType compareType)
         {
             switch (compareType)
             {
@@ -182,7 +155,34 @@ namespace SpellWorkLib.Extensions
             }
         }
 
-        private static Boolean Compare(UInt32 baseValue, UInt32 value, CompareType compareType)
+        private static bool Compare(int baseValue, int value, CompareType compareType)
+        {
+            switch (compareType)
+            {
+                case CompareType.GreaterOrEqual:
+                    return baseValue >= value;
+                case CompareType.GreaterThan:
+                    return baseValue > value;
+                case CompareType.LowerOrEqual:
+                    return baseValue <= value;
+                case CompareType.LowerThan:
+                    return baseValue < value;
+
+                case CompareType.AndStrict:
+                    return (baseValue & value) == value;
+                case CompareType.And:
+                    return (baseValue & value) != 0;
+                case CompareType.NotAnd:
+                    return (baseValue & value) == 0;
+
+                case CompareType.NotEqual:
+                    return baseValue != value;
+                default:
+                    return baseValue == value;
+            }
+        }
+
+        private static bool Compare(uint baseValue, uint value, CompareType compareType)
         {
             switch (compareType)
             {
@@ -211,7 +211,7 @@ namespace SpellWorkLib.Extensions
 
         #endregion
 
-        private static Object GetValue<T>(T entry, MemberInfo field)
+        private static object GetValue<T>(T entry, MemberInfo field)
         {
             if (field is FieldInfo)
                 return typeof(T).GetField(field.Name).GetValue(entry);

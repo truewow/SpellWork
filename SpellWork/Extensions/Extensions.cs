@@ -34,10 +34,10 @@ namespace SpellWork.Extensions
             clb.Items.Clear();
 
             foreach (var elem in Enum.GetValues(typeof(T)))
-                clb.Items.Add(elem.ToString().NormalizeString(String.Empty));
+                clb.Items.Add(elem.ToString().NormalizeString(string.Empty));
         }
 
-        public static void SetFlags<T>(this CheckedListBox clb, String remove)
+        public static void SetFlags<T>(this CheckedListBox clb, string remove)
         {
             clb.Items.Clear();
 
@@ -45,7 +45,7 @@ namespace SpellWork.Extensions
                 clb.Items.Add(elem.ToString().NormalizeString(remove));
         }
 
-        public static void SetFlags(this CheckedListBox clb, Type type, String remove)
+        public static void SetFlags(this CheckedListBox clb, Type type, string remove)
         {
             clb.Items.Clear();
 
@@ -59,17 +59,17 @@ namespace SpellWork.Extensions
             dt.Columns.Add("ID");
             dt.Columns.Add("NAME");
 
-            dt.Rows.Add(new Object[] { -1, noValue });
+            dt.Rows.Add(new object[] { -1, noValue });
 
             foreach (var str in Enum.GetValues(typeof(T)))
-                dt.Rows.Add(new Object[] { (int)str, "(" + ((int)str).ToString("000") + ") " + str });
+                dt.Rows.Add(new object[] { (int)str, "(" + ((int)str).ToString("000") + ") " + str });
 
             cb.DataSource = dt;
             cb.DisplayMember = "NAME";
             cb.ValueMember = "ID";
         }
 
-        public static void SetEnumValuesDirect<T>(this ComboBox cb, Boolean setFirstValue)
+        public static void SetEnumValuesDirect<T>(this ComboBox cb, bool setFirstValue)
         {
             cb.BeginUpdate();
 
@@ -89,7 +89,7 @@ namespace SpellWork.Extensions
 
             var dt = new DataTable();
             dt.Columns.Add("ID", typeof(MemberInfo));
-            dt.Columns.Add("NAME", typeof(String));
+            dt.Columns.Add("NAME", typeof(string));
 
             var type = typeof(T).GetMembers();
             var i = 0;
@@ -100,7 +100,7 @@ namespace SpellWork.Extensions
 
                 var dr = dt.NewRow();
                 dr["ID"] = str;
-                dr["NAME"] = String.Format("({0:000}) {1}", i, str.Name);
+                dr["NAME"] = string.Format("({0:000}) {1}", i, str.Name);
                 dt.Rows.Add(dr);
                 ++i;
             }

@@ -33,7 +33,7 @@ namespace SpellWorkLib
             get
             {
                 byte locale = 0;
-                while (DBC.DBC.Spell[DBC.DBC.SpellEntryForDetectLocale].GetName(locale) == String.Empty)
+                while (DBC.DBC.Spell[DBC.DBC.SpellEntryForDetectLocale].GetName(locale) == string.Empty)
                 {
                     ++locale;
 

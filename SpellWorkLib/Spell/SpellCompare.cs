@@ -24,8 +24,8 @@ namespace SpellWorkLib.Spell
         /// <param name="spell2">Compare Spell 2</param>
         public SpellCompare(RichTextBox rtb1, RichTextBox rtb2, SpellEntry spell1, SpellEntry spell2)
         {
-            new SpellInfo(rtb1, spell1);
-            new SpellInfo(rtb2, spell2);
+            new SpellInfo(new RichTextBoxSpellInfoWriter(rtb1), spell1);
+            new SpellInfo(new RichTextBoxSpellInfoWriter(rtb2), spell2);
 
             var strsl = rtb1.Text.Split('\n');
             var strsr = rtb2.Text.Split('\n');

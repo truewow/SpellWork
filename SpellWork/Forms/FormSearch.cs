@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using SpellWorkLib.DBC;
 using SpellWorkLib.Extensions;
 using SpellWork.Extensions;
+using SpellWorkLib;
 using SpellWorkLib.Spell;
 
 namespace SpellWork.Forms
@@ -95,7 +96,7 @@ namespace SpellWork.Forms
         private void SpellListSelectedIndexChanged(object sender, EventArgs e)
         {
             if (_lvSpellList.SelectedIndices.Count > 0)
-                new SpellInfo(_rtbSpellInfo, _spellList[_lvSpellList.SelectedIndices[0]]);
+                new SpellInfo(new RichTextBoxSpellInfoWriter(_rtbSpellInfo), _spellList[_lvSpellList.SelectedIndices[0]]);
         }
 
         private void OkClick(object sender, EventArgs e)

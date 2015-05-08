@@ -193,7 +193,7 @@ namespace SpellWorkLib.DBC
 
         public string SpellNameRank
         {
-            get { return Rank.IsEmpty() ? SpellName : String.Format("{0} ({1})", SpellName, Rank); }
+            get { return Rank.IsEmpty() ? SpellName : string.Format("{0} ({1})", SpellName, Rank); }
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace SpellWorkLib.DBC
 
         public string Duration
         {
-            get { return DBC.SpellDuration.ContainsKey(DurationIndex) ? DBC.SpellDuration[DurationIndex].ToString() : String.Empty; }
+            get { return DBC.SpellDuration.ContainsKey(DurationIndex) ? DBC.SpellDuration[DurationIndex].ToString() : string.Empty; }
         }
 
         public string Range
@@ -245,7 +245,7 @@ namespace SpellWorkLib.DBC
             get
             {
                 if (RangeIndex == 0 || !DBC.SpellRange.ContainsKey(RangeIndex))
-                    return String.Empty;
+                    return string.Empty;
 
                 var range = DBC.SpellRange[RangeIndex];
                 var sb = new StringBuilder();
@@ -261,9 +261,9 @@ namespace SpellWorkLib.DBC
         {
             var rIndex = EffectRadiusIndex[index];
             if (rIndex != 0)
-                return DBC.SpellRadius.ContainsKey(rIndex) ? String.Format("Radius (Id {0}) {1:F}", rIndex, DBC.SpellRadius[rIndex].Radius) : String.Format("Radius (Id {0}) Not found", rIndex);
+                return DBC.SpellRadius.ContainsKey(rIndex) ? string.Format("Radius (Id {0}) {1:F}", rIndex, DBC.SpellRadius[rIndex].Radius) : string.Format("Radius (Id {0}) Not found", rIndex);
 
-            return String.Empty;
+            return string.Empty;
         }
 
         public string CastTime
@@ -271,11 +271,11 @@ namespace SpellWorkLib.DBC
             get
             {
                 if (CastingTimeIndex == 0)
-                    return String.Empty;
+                    return string.Empty;
 
                 return !DBC.SpellCastTimes.ContainsKey(CastingTimeIndex)
-                           ? String.Format("CastingTime (Id {0}) = ????", CastingTimeIndex)
-                           : String.Format("CastingTime (Id {0}) = {1:F}", CastingTimeIndex,
+                           ? string.Format("CastingTime (Id {0}) = ????", CastingTimeIndex)
+                           : string.Format("CastingTime (Id {0}) = {1:F}", CastingTimeIndex,
                                            DBC.SpellCastTimes[CastingTimeIndex].CastTime / 1000.0f);
             }
         }
@@ -382,7 +382,7 @@ namespace SpellWorkLib.DBC
 
         public override string ToString()
         {
-            return String.Format("Duration: ID ({0})  {1}, {2}, {3}", Id, Duration[0], Duration[1], Duration[2]);
+            return string.Format("Duration: ID ({0})  {1}, {2}, {3}", Id, Duration[0], Duration[1], Duration[2]);
         }
     };
 

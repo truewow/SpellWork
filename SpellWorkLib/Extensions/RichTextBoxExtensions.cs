@@ -6,17 +6,17 @@ namespace SpellWorkLib.Extensions
 {
     public static class RichTextBoxExtensions
     {
-        public const String DefaultFamily = "Arial Unicode MS";
+        public const string DefaultFamily = "Arial Unicode MS";
         public const float  DefaultSize   = 9f;
 
         public static void AppendFormatLine(this RichTextBox textbox, string format, params object[] arg0)
         {
-            textbox.AppendText(String.Format(format, arg0) + Environment.NewLine);
+            textbox.AppendText(string.Format(format, arg0) + Environment.NewLine);
         }
 
         public static void AppendFormat(this RichTextBox textbox, string format, params object[] arg0)
         {
-            textbox.AppendText(String.Format(format, arg0));
+            textbox.AppendText(string.Format(format, arg0));
         }
 
         public static void AppendLine(this RichTextBox textbox)
@@ -32,46 +32,6 @@ namespace SpellWorkLib.Extensions
         public static void Append(this RichTextBox textbox, object text)
         {
             textbox.AppendText(text.ToString());
-        }
-
-        public static void AppendFormatLineIfNotNull(this RichTextBox builder, string format, uint arg)
-        {
-            if (arg != 0)
-            {
-                builder.AppendFormatLine(format, arg);
-            }
-        }
-
-        public static void AppendFormatLineIfNotNull(this RichTextBox builder, string format, float arg)
-        {
-            if (arg != 0.0f)
-            {
-                builder.AppendFormatLine(format, arg);
-            }
-        }
-
-        public static void AppendFormatLineIfNotNull(this RichTextBox builder, string format, string arg)
-        {
-            if (arg != String.Empty)
-            {
-                builder.AppendFormatLine(format, arg);
-            }
-        }
-
-        public static void AppendFormatIfNotNull(this RichTextBox builder, string format, uint arg)
-        {
-            if (arg != 0)
-            {
-                builder.AppendFormat(format, arg);
-            }
-        }
-
-        public static void AppendFormatIfNotNull(this RichTextBox builder, string format, float arg)
-        {
-            if (arg != 0.0f)
-            {
-                builder.AppendFormat(format, arg);
-            }
         }
 
         public static void SetStyle(this RichTextBox textbox, Color color, FontStyle style)

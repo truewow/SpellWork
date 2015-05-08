@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using SpellWorkLib.DBC;
 using SpellWork.Extensions;
+using SpellWorkLib;
 using SpellWorkLib.Extensions;
 using SpellWorkLib.Spell;
 
@@ -25,7 +26,7 @@ namespace SpellWork.Forms
             _cbTarget1.SetEnumValues<Targets>("Target A");
             _cbTarget2.SetEnumValues<Targets>("Target B");
             
-            _status.Text = String.Format("DBC Locale: {0}", DBC.Locale);
+            _status.Text = string.Format("DBC Locale: {0}", DBC.Locale);
 
             _cbAdvancedFilter1.SetStructFields<SpellEntry>();
             _cbAdvancedFilter2.SetStructFields<SpellEntry>();
@@ -54,7 +55,7 @@ namespace SpellWork.Forms
 
         private void TextBoxKeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!((Char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back)))
+            if (!((char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back)))
                 e.Handled = true;
         }
 
@@ -65,7 +66,7 @@ namespace SpellWork.Forms
         private void LvSpellListSelectedIndexChanged(object sender, EventArgs e)
         {
             if (_lvSpellList.SelectedIndices.Count > 0)
-                new SpellInfo(_rtSpellInfo, _spellList[_lvSpellList.SelectedIndices[0]]);
+                new SpellInfo(new RichTextBoxSpellInfoWriter(_rtSpellInfo), _spellList[_lvSpellList.SelectedIndices[0]]);
         }
 
         private void TbSearchIdKeyDown(object sender, KeyEventArgs e)

@@ -9,9 +9,9 @@ namespace SpellWork.Forms
         public FormAboutBox()
         {
             InitializeComponent();
-            Text = String.Format("О {0} {0}", AssemblyTitle);
+            Text = string.Format("О {0} {0}", AssemblyTitle);
             labelProductName.Text = AssemblyProduct;
-            labelVersion.Text = String.Format("Версия {0} {0}", AssemblyVersion);
+            labelVersion.Text = string.Format("Версия {0} {0}", AssemblyVersion);
             labelCopyright.Text = AssemblyCopyright;
             labelCompanyName.Text = AssemblyCompany;
             textBoxDescription.Text = AssemblyDescription;
