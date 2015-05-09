@@ -39,7 +39,6 @@
     <Compile Include="DBC\Structure.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
-    <Compile Include="HTMLSpellInfoWriter.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ISpellInfoWriter.cs" />
@@ -49,7 +48,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

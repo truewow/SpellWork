@@ -2,8 +2,9 @@
 using System.Drawing;
 using System.IO;
 using System.Web.UI;
+using SpellWorkLib;
 
-namespace SpellWorkLib
+namespace SpellWorkWeb
 {
     public class HTMLSpellInfoWriter : ISpellInfoWriter
     {
