@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SpellWorkLib;
 using SpellWorkLib.DBC;
 using SpellWorkLib.Spell;
 
@@ -9,21 +8,21 @@ namespace SpellWorkWeb
 {
     public interface ISpellRepository
     {
-        List<SpellEntry> All();
-        SpellEntry? Get(int id);
-        string GetSpellHTML(SpellEntry spellEntry);
+        List<Spell> All();
+        Spell Get(int id);
+        string GetSpellHTML(Spell spell);
     }
 
     public class SpellRepository : ISpellRepository
     {
-        private readonly Dictionary<int, SpellEntry> _spells;
+        private readonly Dictionary<int, Spell> _spells;
  
         public SpellRepository()
         {
-            _spells = DBC.Spell.ToDictionary(pair => (int) pair.Key, pair => pair.Value);
+            _spells = DBC.Spell.ToDictionary(pair => (int) pair.Key, pair => new Spell { Id = (int) pair.Key, Name = pair.Value.SpellName });
         }
 
-        public List<SpellEntry> All()
+        public List<Spell> All()
         {
             try
             {
@@ -31,15 +30,15 @@ namespace SpellWorkWeb
             }
             catch (ArgumentNullException)
             {
-                return new List<SpellEntry>();
+                return new List<Spell>();
             }
         }
 
-        public SpellEntry? Get(int id)
+        public Spell Get(int id)
         {
             try
             {
-                SpellEntry spell;
+                Spell spell;
                 if (_spells.TryGetValue(id, out spell))
                     return spell;
                 return null;
@@ -50,10 +49,14 @@ namespace SpellWorkWeb
             }
         }
 
-        public string GetSpellHTML(SpellEntry spellEntry)
+        public string GetSpellHTML(Spell spell)
         {
             try
             {
+                SpellEntry spellEntry;
+                if (!DBC.Spell.TryGetValue((uint) spell.Id, out spellEntry))
+                    return null;
+
                 var spellInfo = new SpellInfo(new HTMLSpellInfoWriter(), spellEntry);
                 return spellInfo.ToString();
             }

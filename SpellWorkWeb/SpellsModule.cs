@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web;
@@ -16,7 +17,38 @@ namespace SpellWorkWeb
         {
             _spellRepository = spellRepository;
 
-            Get["/"] = _ => Response.AsJson(_spellRepository.All().Take(10).ToList());
+            Get["/"] = _ =>
+            {
+                IEnumerable<Spell> result;
+
+                try
+                {
+                    string searchQuery = Request.Query["search"];
+                    if (string.IsNullOrWhiteSpace(searchQuery))
+                        result = _spellRepository.All();
+                    else
+                    {
+                        int id;
+                        if (int.TryParse(searchQuery, out id))
+                        {
+                            result = _spellRepository.All()
+                                .Where(entry => entry.Id.ToString().StartsWith(id.ToString()));
+                        }
+                        else
+                        {
+                            result = _spellRepository.All()
+                                .Where(entry => entry.Name.StartsWith(searchQuery, StringComparison.InvariantCultureIgnoreCase));
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    result = new List<Spell>();
+                }
+
+                return Response.AsJson(result.Take(2000));
+            };
+
             Get["/{id:int}"] = parameters =>
             {
                 int id = parameters.id;
@@ -26,7 +58,7 @@ namespace SpellWorkWeb
                 var spellById = _spellRepository.Get(id);
                 if (spellById == null)
                     return HttpStatusCode.NotFound;
-                return Response.AsJson(new { SpellEntry = spellById.Value, html = _spellRepository.GetSpellHTML(spellById.Value) });
+                return Response.AsJson(new { Spell = spellById, html = _spellRepository.GetSpellHTML(spellById) });
             };
         }
     }
