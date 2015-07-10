@@ -27,6 +27,8 @@ namespace SpellWork.Spell
         DIFFICULTY_EVENT_RAID = 18,
         DIFFICULTY_EVENT_DUNGEON = 19,
         DIFFICULTY_EVENT_SCENARIO = 20,
+        DIFFICULTY_MYTHIC_DUNGEON = 23,
+        DIFFICULTY_TIMEWALKER_DUNGEON = 24,
     };
 
     /// <summary>
@@ -351,7 +353,8 @@ namespace SpellWork.Spell
         SPELL_EFFECT_FINISH_SHIPMENT                    = 248,
         SPELL_EFFECT_249                                = 249,
         SPELL_EFFECT_TAKE_SCREENSHOT                    = 250, // Serverside marker for selfie screenshot - achievement check
-        TOTAL_SPELL_EFFECTS                             = 251,
+        SPELL_EFFECT_SET_GARRISON_CACHE_SIZE            = 251,
+        TOTAL_SPELL_EFFECTS                             = 252,
     };
 
     /// <summary>
@@ -837,7 +840,14 @@ namespace SpellWork.Spell
         SPELL_AURA_476                                          = 476,
         SPELL_AURA_477                                          = 477,
         SPELL_AURA_478                                          = 478,
-        TOTAL_AURAS                                             = 479   // 6.0.3
+        SPELL_AURA_479                                          = 479,
+        SPELL_AURA_480                                          = 480,
+        SPELL_AURA_481                                          = 481,
+        SPELL_AURA_482                                          = 482,
+        SPELL_AURA_483                                          = 483,
+        SPELL_AURA_484                                          = 484,
+        SPELL_AURA_485                                          = 485,
+        TOTAL_AURAS                                             = 486   // 6.0.3
     }
 
     /// <summary>
@@ -973,6 +983,26 @@ namespace SpellWork.Spell
         TARGET_UNK_125                          = 125,
         TARGET_UNK_126                          = 126,
         TARGET_UNK_127                          = 127,
+        TARGET_UNK_128                          = 128,
+        TARGET_UNK_129                          = 129,
+        TARGET_UNK_130                          = 130,
+        TARGET_UNK_131                          = 131,
+        TARGET_UNK_132                          = 132,
+        TARGET_UNK_133                          = 133,
+        TARGET_UNK_134                          = 134,
+        TARGET_UNK_135                          = 135,
+        TARGET_UNK_136                          = 136,
+        TARGET_UNK_137                          = 137,
+        TARGET_UNK_138                          = 138,
+        TARGET_UNK_139                          = 139,
+        TARGET_UNK_140                          = 140,
+        TARGET_UNK_141                          = 141,
+        TARGET_UNK_142                          = 142,
+        TARGET_UNK_143                          = 143,
+        TARGET_UNK_144                          = 144,
+        TARGET_UNK_145                          = 145,
+        TARGET_UNK_146                          = 146,
+        TARGET_UNK_147                          = 147,
         TOTAL_SPELL_TARGETS,
     };
 
@@ -1752,7 +1782,7 @@ namespace SpellWork.Spell
         SPELL_ATTR7_ALLIANCE_ONLY                    = 0x00000200, //  9 Teleports, mounts and other spells.
         SPELL_ATTR7_DISPEL_CHARGES                   = 0x00000400, // 10 Dispel and Spellsteal individual charges instead of whole aura.
         SPELL_ATTR7_INTERRUPT_ONLY_NONPLAYER         = 0x00000800, // 11 Only non-player casts interrupt, though Feral Charge - Bear has it.
-        SPELL_ATTR7_UNK12                            = 0x00001000, // 12 Not set in 3.2.2a.
+        SPELL_ATTR7_SILENCE_ONLY_NONPLAYER           = 0x00001000, // 12 Not set in 3.2.2a.
         SPELL_ATTR7_UNK13                            = 0x00002000, // 13 Not set in 3.2.2a.
         SPELL_ATTR7_UNK14                            = 0x00004000, // 14 Only 52150 (Raise Dead - Pet) spell.
         SPELL_ATTR7_UNK15                            = 0x00008000, // 15 Exorcism. Usable on players? 100% crit chance on undead and demons?
