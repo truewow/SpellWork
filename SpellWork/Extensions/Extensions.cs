@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -73,9 +74,13 @@ namespace SpellWork.Extensions
         {
             if (val == null)
                 return 0;
+            string valStr = val.ToString();
 
             uint num;
-            uint.TryParse(val.ToString(), out num);
+            if (valStr.StartsWith("0x"))
+                uint.TryParse(valStr.Substring(2),System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture, out num);
+            else
+                uint.TryParse(valStr, out num);
             return num;
         }
 
@@ -83,9 +88,13 @@ namespace SpellWork.Extensions
         {
             if (val == null)
                 return 0;
+            string valStr = val.ToString();
 
             int num;
-            int.TryParse(val.ToString(), out num);
+            if (valStr.StartsWith("0x"))
+                int.TryParse(valStr.Substring(2), System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture, out num);
+            else
+                int.TryParse(valStr, out num);
             return num;
         }
 
@@ -103,8 +112,13 @@ namespace SpellWork.Extensions
         {
             if (val == null)
                 return 0U;
+            string valStr = val.ToString();
 
             ulong num;
+            if (valStr.StartsWith("0x"))
+                ulong.TryParse(valStr.Substring(2), System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture, out num);
+            else
+                ulong.TryParse(valStr, out num);
             ulong.TryParse(val.ToString(), out num);
             return num;
         }
