@@ -8,9 +8,9 @@ namespace SpellWork.DBC.Structures
     public sealed class SpellEffectScalingEntry
     {
         public uint Id;                                                // 1       Id
-        public float Multiplier;                                       // 2
-        public float RandomPointsMultiplier;                           // 3
-        public float OtherMultiplier;                                  // 4
+        public float Coefficient;                                      // 2
+        public float Variance;                                         // 3
+        public float ResourceCoefficient;                              // 4
         public uint SpellEffectId;                                     // 5
     }
 }

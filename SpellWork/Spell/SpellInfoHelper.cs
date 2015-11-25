@@ -108,12 +108,12 @@ namespace SpellWork.Spell
             {
                 if (Scaling != null)
                 {
-                    if (Scaling.MaxCastTime > 0)
+                    if (Scaling.CastTimeMax > 0)
                     {
-                        if (Scaling.MaxCastTimeLevel > DBC.DBC.SelectedLevel)
-                            return String.Format("Cast time = {0:F}", (Scaling.MinCastTime + (DBC.DBC.SelectedLevel - 1) * (Scaling.MaxCastTime - Scaling.MinCastTime) / (Scaling.MaxCastTimeLevel - 1)) / 1000.0f);
+                        if (Scaling.CastTimeMaxLevel > DBC.DBC.SelectedLevel)
+                            return String.Format("Cast time = {0:F}", (Scaling.CastTimeMin + (DBC.DBC.SelectedLevel - 1) * (Scaling.CastTimeMax - Scaling.CastTimeMin) / (Scaling.CastTimeMaxLevel - 1)) / 1000.0f);
 
-                        return String.Format("Cast time = {0:F}", Scaling.MaxCastTime / 1000.0f);
+                        return String.Format("Cast time = {0:F}", Scaling.CastTimeMax / 1000.0f);
                     }
 
                     return String.Empty;
@@ -180,7 +180,19 @@ namespace SpellWork.Spell
             get { return String.IsNullOrEmpty(Rank) ? SpellName : String.Format("{0} ({1})", SpellName, Rank); }
         }
 
-        public string ScalingText { get { return Scaling != null ? String.Format(" (Level {0})", DBC.DBC.SelectedLevel) : String.Empty; } }
+        public string ScalingText
+        {
+            get
+            {
+                if (Scaling == null)
+                    return string.Empty;
+
+                if ((AttributesEx11 & (uint)SpellAtributeEx11.SPELL_ATTR11_UNK2) != 0)
+                    return string.Format(" (ItemLevel {0})", DBC.DBC.SelectedItemLevel);
+
+                return string.Format(" (Level {0})", DBC.DBC.SelectedLevel);
+            }
+        }
 
         public string Description
         {

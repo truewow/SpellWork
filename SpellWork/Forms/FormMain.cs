@@ -123,17 +123,20 @@ namespace SpellWork.Forms
 
         private void TextBoxKeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!((Char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back)))
+            if (!((char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back)))
                 e.Handled = true;
         }
 
         private void LevelScalingClick(object sender, EventArgs e)
         {
             var scalingForm = new FormSpellScaling();
+            scalingForm.SelectedLevel = DBC.DBC.SelectedLevel;
+            scalingForm.SelectedItemLevel = DBC.DBC.SelectedItemLevel;
             var ret = scalingForm.ShowDialog(this);
             if (ret == DialogResult.OK)
             {
                 DBC.DBC.SelectedLevel = scalingForm.SelectedLevel;
+                DBC.DBC.SelectedItemLevel = scalingForm.SelectedItemLevel;
                 switch (tabControl1.SelectedIndex)
                 {
                     case 0:
@@ -637,7 +640,7 @@ namespace SpellWork.Forms
         private void LvSpellListRetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
             e.Item =
-                new ListViewItem(new[] {_spellList[e.ItemIndex].ID.ToString(), _spellList[e.ItemIndex].SpellNameRank});
+                new ListViewItem(new[] {_spellList[e.ItemIndex].ID.ToString(), _spellList[e.ItemIndex].SpellNameRank+_spellList[e.ItemIndex].ScalingText});
         }
 
         private void LvProcSpellListRetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)

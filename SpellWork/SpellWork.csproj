@@ -97,6 +97,7 @@
     <Compile Include="DBC\Structures\ItemEntry.cs" />
     <Compile Include="DBC\Structures\ItemSparseEntry.cs" />
     <Compile Include="DBC\Structures\OverrideSpellDataEntry.cs" />
+    <Compile Include="DBC\Structures\RandPropPointsEntry.cs" />
     <Compile Include="DBC\Structures\ScreenEffectEntry.cs" />
     <Compile Include="DBC\Structures\SkillLineAbilityEntry.cs" />
     <Compile Include="DBC\Structures\SkillLineEntry.cs" />

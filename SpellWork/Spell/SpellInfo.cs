@@ -369,28 +369,71 @@ namespace SpellWork.Spell
                 _rtb.AppendFormatLine("Effect {0}: Id {1} ({2}) {3}", effect.Index, effect.Type, (SpellEffects)effect.Type, (Difficulty)effect.Difficulty);
                 _rtb.SetDefaultStyle();
 
-                if (effect.SpellEffectScalingEntry != null && effect.SpellEffectScalingEntry.Multiplier != 0.0f && _spell.Scaling != null && _spell.Scaling.PlayerClass != 0)
+                if (effect.SpellEffectScalingEntry != null && effect.SpellEffectScalingEntry.Coefficient != 0.0f && _spell.Scaling != null && _spell.Scaling.Class != 0)
                 {
-                    var gtEntry = (uint)(((_spell.Scaling.PlayerClass > 0 ? _spell.Scaling.PlayerClass : 11 - _spell.Scaling.PlayerClass) - 1) * 123) + DBC.DBC.SelectedLevel - 1;
-                    var gtMultiplier = DBC.DBC.gtSpellScaling[gtEntry].Multiplier;
-                    if (_spell.Scaling.MaxCastTime > 0 && _spell.Scaling.MaxCastTimeLevel > DBC.DBC.SelectedLevel)
-                        gtMultiplier *= (float)(_spell.Scaling.MinCastTime + (DBC.DBC.SelectedLevel - 1) * (_spell.Scaling.MaxCastTime - _spell.Scaling.MinCastTime) / (_spell.Scaling.MaxCastTimeLevel - 1)) / (float)_spell.Scaling.MaxCastTime;
-                    if (_spell.Scaling.CoefLevelBase > DBC.DBC.SelectedLevel)
-                        gtMultiplier *= (1.0f - _spell.Scaling.CoefBase) * (float)(DBC.DBC.SelectedLevel - 1) / (float)(_spell.Scaling.CoefLevelBase - 1) + _spell.Scaling.CoefBase;
-
-                    if (effect.SpellEffectScalingEntry.RandomPointsMultiplier != 0.0f)
+                    var level = DBC.DBC.SelectedLevel - 1;
+                    if ((_spell.AttributesEx11 & (uint)SpellAtributeEx11.SPELL_ATTR11_UNK2) == 0)
                     {
-                        var avg = effect.SpellEffectScalingEntry.Multiplier * gtMultiplier;
-                        var delta = effect.SpellEffectScalingEntry.OtherMultiplier * effect.SpellEffectScalingEntry.Multiplier * gtMultiplier * 0.5;
-                        _rtb.AppendFormat("BasePoints = {0:F} to {1:F}", avg - delta, avg + delta);
+                        if ((_spell.AttributesEx10 & (uint)SpellAtributeEx10.SPELL_ATTR10_UNK12) != 0)
+                            level = _spell.BaseLevel;
                     }
                     else
-                        _rtb.AppendFormat("AveragePoints = {0:F}", effect.SpellEffectScalingEntry.Multiplier * gtMultiplier);
+                        level = DBC.DBC.SelectedItemLevel;
+                    if (_spell.Scaling.MaxScalingLevel != 0 && _spell.Scaling.MaxScalingLevel > level)
+                        level = _spell.Scaling.MaxScalingLevel;
+                    if (level < 1)
+                        level = 1;
 
-                    if (effect.SpellEffectScalingEntry.OtherMultiplier != 0.0f)
-                        _rtb.AppendFormatIfNotNull(" + combo * {0:F}", effect.SpellEffectScalingEntry.OtherMultiplier * gtMultiplier);
+                    float value = 0.0f;
+                    if (_spell.Scaling.Class != 0)
+                    {
+
+                        if (_spell.Scaling.ScalesFromItemLevel == 0)
+                        {
+                            if ((_spell.AttributesEx11 & (uint)SpellAtributeEx11.SPELL_ATTR11_UNK2) == 0)
+                            {
+                                var gtEntry = (uint)(((_spell.Scaling.Class > 0 ? _spell.Scaling.Class : 11 - _spell.Scaling.Class) - 1) * 123) + level - 1;
+                                value = DBC.DBC.gtSpellScaling[gtEntry].Multiplier;
+                            }
+                            else
+                            {
+                                if (DBC.DBC.RandPropPoints.ContainsKey(level))
+                                {
+                                    var randPropPoints = DBC.DBC.RandPropPoints[level];
+                                    value = randPropPoints.Superior[0];
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (DBC.DBC.RandPropPoints.ContainsKey(_spell.Scaling.ScalesFromItemLevel))
+                            {
+                                var randPropPoints = DBC.DBC.RandPropPoints[_spell.Scaling.ScalesFromItemLevel];
+                                value = randPropPoints.Superior[0];
+                            }
+                        }
+
+                        if (level < _spell.Scaling.CastTimeMaxLevel && _spell.Scaling.CastTimeMax != 0)
+                            value *= (float)(_spell.Scaling.CastTimeMin + (level - 1) * (_spell.Scaling.CastTimeMax - _spell.Scaling.CastTimeMin) / (_spell.Scaling.CastTimeMaxLevel - 1)) / (_spell.Scaling.CastTimeMax);
+
+                        if (level < _spell.Scaling.NerfMaxLevel)
+                            value *= ((((1.0f - _spell.Scaling.NerfFactor) * (level - 1)) / (_spell.Scaling.NerfMaxLevel - 1)) + _spell.Scaling.NerfFactor);
+                    }
+
+                    value *= effect.SpellEffectScalingEntry.Coefficient;
+                    if (value != 0.0f && value < 1.0f)
+                        value = 1.0f;
+
+                    if (effect.SpellEffectScalingEntry.Variance != 0.0f)
+                    {
+                        float delta = Math.Abs(value * effect.SpellEffectScalingEntry.Variance * 0.5f);
+                        _rtb.AppendFormat("BasePoints = {0:F} to {1:F}", value - delta, value + delta);
+                    }
                     else
-                        _rtb.AppendFormatIfNotNull(" + combo * {0:F}", effect.PointsPerComboPoint);
+                        _rtb.AppendFormat("BasePoints = {0:F}", value);
+
+                    if (effect.SpellEffectScalingEntry.ResourceCoefficient != 0.0f)
+                        _rtb.AppendFormatIfNotNull(" + combo * {0:F}", effect.SpellEffectScalingEntry.ResourceCoefficient * value);
                 }
                 else
                 {

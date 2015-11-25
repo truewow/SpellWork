@@ -10,15 +10,21 @@ namespace SpellWork.Forms
             InitializeComponent();
         }
 
-        private void LevelValueChanged(object sender, System.EventArgs e)
+        private void LevelValueChanged(object sender, EventArgs e)
         {
             SelectedLevel = (uint)((TrackBar)sender).Value;
             _tbxLevel.Text = ((TrackBar)sender).Value.ToString();
         }
 
+        private void ItemLevelValueChanged(object sender, EventArgs e)
+        {
+            SelectedItemLevel = (uint)((TrackBar)sender).Value;
+            _tbxItemLevel.Text = ((TrackBar)sender).Value.ToString();
+        }
+
         private void LevelTextKeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!Char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back && e.KeyChar != (char)Keys.Delete && e.KeyChar != (char)Keys.Escape && e.KeyChar != (char)Keys.Enter)
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back && e.KeyChar != (char)Keys.Delete && e.KeyChar != (char)Keys.Escape && e.KeyChar != (char)Keys.Enter)
                 e.Handled = true;
         }
 
@@ -43,6 +49,28 @@ namespace SpellWork.Forms
             SelectedLevel = (uint)val;
         }
 
+        private void ItemLevelTextChanged(object sender, EventArgs e)
+        {
+            var tb = (TextBox)sender;
+            if (tb.Text.Length <= 0)
+            {
+                SelectedItemLevel = 1;
+                tb.Text = "1";
+                return;
+            }
+
+            var val = int.Parse(tb.Text);
+            if (val > 1000)
+                tb.Text = "1000";
+            else if (val <= 0)
+                tb.Text = "1";
+
+            val = int.Parse(tb.Text);
+            _tbItemLevel.Value = val;
+            SelectedItemLevel = (uint)val;
+        }
+
         public uint SelectedLevel;
+        public uint SelectedItemLevel;
     }
 }

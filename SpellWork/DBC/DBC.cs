@@ -12,7 +12,7 @@ namespace SpellWork.DBC
 {
     public static class DBC
     {
-        public const string Version = "SpellWork 6.2.0 (20216)";
+        public const string Version = "SpellWork 6.2.3 (20726)";
         public const uint MaxLevel  = 100;
 
         public const int MaxDbcLocale                 = 16;
@@ -23,6 +23,7 @@ namespace SpellWork.DBC
         public static DBCStorage<AreaTableEntry> AreaTable = new DBCStorage<AreaTableEntry>();
         public static DBCStorage<gtSpellScalingEntry> gtSpellScaling = new DBCStorage<gtSpellScalingEntry>();
         public static DB2Storage<OverrideSpellDataEntry> OverrideSpellData = new DB2Storage<OverrideSpellDataEntry>();
+        public static DBCStorage<RandPropPointsEntry> RandPropPoints = new DBCStorage<RandPropPointsEntry>();
         public static DBCStorage<ScreenEffectEntry> ScreenEffect = new DBCStorage<ScreenEffectEntry>();
         public static DBCStorage<SkillLineAbilityEntry> SkillLineAbility = new DBCStorage<SkillLineAbilityEntry>();
         public static DBCStorage<SkillLineEntry> SkillLine = new DBCStorage<SkillLineEntry>();
@@ -101,17 +102,17 @@ namespace SpellWork.DBC
 
                 try
                 {
-                    using (var strm = new FileStream(String.Format("{0}\\{1}.{2}", Settings.Default.DbcPath, name, extension), FileMode.Open))
+                    using (var strm = new FileStream(string.Format("{0}\\{1}.{2}", Settings.Default.DbcPath, name, extension), FileMode.Open))
                         dbc.FieldType.GetMethod("Load", new Type[] { typeof(FileStream) }).Invoke(dbc.GetValue(null), new object[] { strm });
                 }
                 catch (DirectoryNotFoundException)
                 {
-                    throw new DirectoryNotFoundException(String.Format("Could not open {0}.dbc!", dbc.Name));
+                    throw new DirectoryNotFoundException(string.Format("Could not open {0}.dbc!", dbc.Name));
                 }
                 catch (TargetInvocationException tie)
                 {
                     if (tie.InnerException is ArgumentException)
-                        throw new ArgumentException(String.Format("Failed to load {0}.dbc: {1}", dbc.Name, tie.InnerException.Message));
+                        throw new ArgumentException(string.Format("Failed to load {0}.dbc: {1}", dbc.Name, tie.InnerException.Message));
 
                     throw;
                 }
@@ -132,15 +133,15 @@ namespace SpellWork.DBC
 
                 // triggered spell store
                 uint triggerid = effect.TriggerSpell;
-                if (DBC.SpellTriggerStore.ContainsKey(triggerid))
+                if (SpellTriggerStore.ContainsKey(triggerid))
                 {
-                    DBC.SpellTriggerStore[triggerid].Add(EffectSpellId);
+                    SpellTriggerStore[triggerid].Add(EffectSpellId);
                 }
                 else
                 {
                     List<uint> ids = new List<uint>();
                     ids.Add(EffectSpellId);
-                    DBC.SpellTriggerStore.Add(triggerid, ids);
+                    SpellTriggerStore.Add(triggerid, ids);
                 }
             }
 
@@ -155,24 +156,24 @@ namespace SpellWork.DBC
             }
             DBC.SpellPower.Clear();*/
 
-            foreach (var tr in DBC.SpellTargetRestrictions)
+            foreach (var tr in SpellTargetRestrictions)
             {
-                if (!DBC._spellTargetRestrictions.ContainsKey(tr.SpellId))
+                if (!_spellTargetRestrictions.ContainsKey(tr.SpellId))
                 {
                     List<SpellTargetRestrictionsEntry> str = new List<SpellTargetRestrictionsEntry>();
-                    DBC._spellTargetRestrictions.Add(tr.SpellId, str);
+                    _spellTargetRestrictions.Add(tr.SpellId, str);
                 }
-                DBC._spellTargetRestrictions[tr.SpellId].Add(tr);
+                _spellTargetRestrictions[tr.SpellId].Add(tr);
             }
-            DBC.SpellTargetRestrictions.Clear();
+            SpellTargetRestrictions.Clear();
 
-            foreach (var v in DBC.SpellXSpellVisual)
+            foreach (var v in SpellXSpellVisual)
             {
                 if (v.DifficultyID != 0 || v.PlayerConditionID != 0)
                     continue;
 
-                if (!DBC.SpellVisualsBySpell.ContainsKey(v.SpellID))
-                    DBC.SpellVisualsBySpell[v.SpellID] = v;
+                if (!SpellVisualsBySpell.ContainsKey(v.SpellID))
+                    SpellVisualsBySpell[v.SpellID] = v;
             }
 
             foreach (var dbcInfo in Spell.Records)
@@ -202,5 +203,6 @@ namespace SpellWork.DBC
         public static List<Item> ItemTemplate = new List<Item>();
 
         public static uint SelectedLevel = MaxLevel;
+        public static uint SelectedItemLevel = 710;
     }
 }
