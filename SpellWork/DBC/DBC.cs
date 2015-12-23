@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using DBFilesClient.NET;
 using SpellWork.Database;
@@ -56,6 +57,7 @@ namespace SpellWork.DBC
         public static DB2Storage<SpellXSpellVisualEntry> SpellXSpellVisual = new DB2Storage<SpellXSpellVisualEntry>();
 
         public static DB2Storage<ItemEntry> Item = new DB2Storage<ItemEntry>();
+        public static DB2Storage<ItemEffectEntry> ItemEffect = new DB2Storage<ItemEffectEntry>();
         public static DB2Storage<SpellReagentsEntry> SpellReagents = new DB2Storage<SpellReagentsEntry>();
         public static DB2Storage<SpellMissileEntry> SpellMissile = new DB2Storage<SpellMissileEntry>();
         public static DB2Storage<SpellMissileMotionEntry> SpellMissileMotion = new DB2Storage<SpellMissileMotionEntry>();
@@ -68,6 +70,8 @@ namespace SpellWork.DBC
         public static Dictionary<uint, List<SpellEffectEntry>> SpellEffectLists = new Dictionary<uint, List<SpellEffectEntry>>();
         public static Dictionary<uint, List<uint>> SpellTriggerStore = new Dictionary<uint, List<uint>>();
         public static Dictionary<uint, SpellXSpellVisualEntry> SpellVisualsBySpell = new Dictionary<uint, SpellXSpellVisualEntry>();
+
+        public static ICollection<ItemEffectEntry> ItemEffectLists = new List<ItemEffectEntry>();
 
         public static void Load()
         {
@@ -102,17 +106,17 @@ namespace SpellWork.DBC
 
                 try
                 {
-                    using (var strm = new FileStream(string.Format("{0}\\{1}.{2}", Settings.Default.DbcPath, name, extension), FileMode.Open))
+                    using (var strm = new FileStream($"{Settings.Default.DbcPath}\\{name}.{extension}", FileMode.Open))
                         dbc.FieldType.GetMethod("Load", new Type[] { typeof(FileStream) }).Invoke(dbc.GetValue(null), new object[] { strm });
                 }
                 catch (DirectoryNotFoundException)
                 {
-                    throw new DirectoryNotFoundException(string.Format("Could not open {0}.dbc!", dbc.Name));
+                    throw new DirectoryNotFoundException($"Could not open {dbc.Name}.{extension}!");
                 }
                 catch (TargetInvocationException tie)
                 {
                     if (tie.InnerException is ArgumentException)
-                        throw new ArgumentException(string.Format("Failed to load {0}.dbc: {1}", dbc.Name, tie.InnerException.Message));
+                        throw new ArgumentException($"Failed to load {dbc.Name}.{extension}: {tie.InnerException.Message}");
 
                     throw;
                 }
@@ -179,22 +183,25 @@ namespace SpellWork.DBC
             foreach (var dbcInfo in Spell.Records)
                 SpellInfoStore.Add(dbcInfo.Id, new SpellInfoHelper(dbcInfo));
 
+            ItemEffectLists = ItemEffect;
+            var itemEffects = ItemEffectLists.GroupBy(itemEffect => itemEffect.ItemID)
+                .ToDictionary(group => group.Key, group => group.ToList());
+
             foreach (var item in ItemSparse)
             {
+                int[] itemSpell = new int[5];
+
+                List<ItemEffectEntry> itemEffectList;
+                if (itemEffects.TryGetValue(item.Id, out itemEffectList))
+                    foreach (var itemEffect in itemEffectList)
+                        itemSpell[itemEffect.OrderIndex] = (int)itemEffect.SpellID;
+
                 ItemTemplate.Add(new Item
                 {
                     Entry = item.Id,
                     Name = item.Name,
                     Description = item.Description,
-                    /*SpellId = new[]
-                    {
-                        item.SpellId[0],
-                        item.SpellId[1],
-                        item.SpellId[2],
-                        item.SpellId[3],
-                        item.SpellId[4]
-                    }*/
-                    SpellId = new[] { 0, 0, 0, 0, 0 }
+                    SpellId = itemSpell
                 });
             }
         }

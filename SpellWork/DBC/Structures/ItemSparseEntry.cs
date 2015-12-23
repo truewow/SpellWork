@@ -6,7 +6,7 @@ namespace SpellWork.DBC.Structures
     {
         public uint Id;
 
-        [StoragePresence(StoragePresenceOption.Include, ArraySize = 70)]
+        [StoragePresence(StoragePresenceOption.Include, ArraySize = 69)]
         public int[] PlaceHolder1;
 
         public string Name;
@@ -15,7 +15,7 @@ namespace SpellWork.DBC.Structures
         public string Name4;
         public string Description;
 
-        [StoragePresence(StoragePresenceOption.Include, ArraySize = 26)]
+        [StoragePresence(StoragePresenceOption.Include, ArraySize = 27)]
         public int[] PlaceHolder2;
     }
 }

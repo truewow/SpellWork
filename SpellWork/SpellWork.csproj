@@ -94,6 +94,7 @@
     <Compile Include="DBC\Structures\AreaGroupMemberEntry.cs" />
     <Compile Include="DBC\Structures\AreaTableEntry.cs" />
     <Compile Include="DBC\Structures\gtSpellScalingEntry.cs" />
+    <Compile Include="DBC\Structures\ItemEffectEntry.cs" />
     <Compile Include="DBC\Structures\ItemEntry.cs" />
     <Compile Include="DBC\Structures\ItemSparseEntry.cs" />
     <Compile Include="DBC\Structures\OverrideSpellDataEntry.cs" />
@@ -210,6 +211,7 @@
     </Compile>
     <None Include="app.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
