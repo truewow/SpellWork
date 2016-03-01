@@ -8,8 +8,8 @@ Instructions: Run `SpellWork.exe` and select the DBC folder extracted from the c
 
 ![Screenshot](screenshot.png)
 
-Nightly Builds
---------------
+Nightly Builds & Downloads
+--------------------------
 
 - [**1.12.1 / 1.12.2** (branch 0.6)](https://ci.appveyor.com/api/projects/DDuarte/spellwork-cs/artifacts/SpellWork/SpellWork.zip?job=Configuration:%20Release&branch=0.6)
 [![Build status](https://ci.appveyor.com/api/projects/status/bdkqqtu62sc21lw5/branch/0.6?svg=true)](https://ci.appveyor.com/project/DDuarte/spellwork-cs/branch/0.6)
