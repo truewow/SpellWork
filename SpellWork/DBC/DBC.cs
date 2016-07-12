@@ -31,6 +31,7 @@ namespace SpellWork.DBC
 
         public static Dictionary<uint, string> AreaStrings             = new Dictionary<uint, string>();
         public static Dictionary<uint, string> SpellStrings            = new Dictionary<uint, string>();
+        public static Dictionary<uint, string> SpellStringsFromDB      = new Dictionary<uint, string>();
         public static Dictionary<uint, string> SkillLineStrings        = new Dictionary<uint, string>();
         public static Dictionary<uint, string> SpellRangeStrings       = new Dictionary<uint, string>();
         public static Dictionary<uint, string> ScreenEffectStrings     = new Dictionary<uint, string>();

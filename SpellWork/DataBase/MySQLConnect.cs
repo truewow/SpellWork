@@ -39,6 +39,201 @@ namespace SpellWork.Database
             return String.Empty;
         }
 
+        public static void LoadSpellsDBCFromDB()
+        {
+            using (_conn = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString))
+            {
+                string query = @"SELECT Id,Dispel,Mechanic,Attributes,AttributesEx,AttributesEx2,AttributesEx3,AttributesEx4,AttributesEx5,AttributesEx6,AttributesEx7,Stances,StancesNot,Targets,CastingTimeIndex,AuraInterruptFlags,ProcFlags,ProcChance,ProcCharges,MaxLevel,
+                    BaseLevel,SpellLevel,DurationIndex,RangeIndex,StackAmount,EquippedItemClass,EquippedItemSubClassMask,EquippedItemInventoryTypeMask,Effect1,Effect2,Effect3,EffectDieSides1,EffectDieSides2,EffectDieSides3,EffectRealPointsPerLevel1,
+                    EffectRealPointsPerLevel2,EffectRealPointsPerLevel3,EffectBasePoints1,EffectBasePoints2,EffectBasePoints3,EffectMechanic1,EffectMechanic2,EffectMechanic3,EffectImplicitTargetA1,EffectImplicitTargetA2,EffectImplicitTargetA3,EffectImplicitTargetB1,
+                    EffectImplicitTargetB2,EffectImplicitTargetB3,EffectRadiusIndex1,EffectRadiusIndex2,EffectRadiusIndex3,EffectApplyAuraName1,EffectApplyAuraName2,EffectApplyAuraName3,EffectAmplitude1,EffectAmplitude2,EffectAmplitude3,
+                    EffectMultipleValue1,EffectMultipleValue2,EffectMultipleValue3,EffectItemType1,EffectItemType2,EffectItemType3,EffectMiscValue1,EffectMiscValue2,EffectMiscValue3,EffectMiscValueB1,EffectMiscValueB2,EffectMiscValueB3,
+                    EffectTriggerSpell1,EffectTriggerSpell2,EffectTriggerSpell3,EffectSpellClassMaskA1,EffectSpellClassMaskA2,EffectSpellClassMaskA3,EffectSpellClassMaskB1,EffectSpellClassMaskB2,EffectSpellClassMaskB3,
+                    EffectSpellClassMaskC1,EffectSpellClassMaskC2,EffectSpellClassMaskC3,MaxTargetLevel,SpellFamilyName,SpellFamilyFlags1,SpellFamilyFlags2,SpellFamilyFlags3,MaxAffectedTargets,DmgClass,PreventionType,DmgMultiplier1,DmgMultiplier2,DmgMultiplier3,
+                    AreaGroupId,SchoolMask,Comment FROM `spell_dbc` ORDER BY Id ASC;";
+                DBC.DBC.SpellStringsFromDB.Clear();
+
+                _command = new MySqlCommand(query, _conn);
+                _conn.Open();
+
+                using (var reader = _command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int index = 0;
+                        uint spellId = reader.GetUInt32(index++);
+                        DBC.DBC.Spell.Add(spellId, new SpellEntry
+                        {
+                            ID = spellId,
+                            Dispel = reader.GetUInt32(index++),
+                            Mechanic = reader.GetUInt32(index++),
+                            Attributes = reader.GetUInt32(index++),
+                            AttributesEx = reader.GetUInt32(index++),
+                            AttributesEx2 = reader.GetUInt32(index++),
+                            AttributesEx3 = reader.GetUInt32(index++),
+                            AttributesEx4 = reader.GetUInt32(index++),
+                            AttributesEx5 = reader.GetUInt32(index++),
+                            AttributesEx6 = reader.GetUInt32(index++),
+                            AttributesEx7 = reader.GetUInt32(index++),
+                            Stances = reader.GetUInt32(index++),
+                            StancesNot = reader.GetUInt32(index++),
+                            Targets = reader.GetUInt32(index++),
+                            CastingTimeIndex = reader.GetUInt32(index++),
+                            AuraInterruptFlags = reader.GetUInt32(index++),
+                            ProcFlags = reader.GetUInt32(index++),
+                            ProcChance = reader.GetUInt32(index++),
+                            ProcCharges = reader.GetUInt32(index++),
+                            MaxLevel = reader.GetUInt32(index++),
+                            BaseLevel = reader.GetUInt32(index++),
+                            SpellLevel = reader.GetUInt32(index++),
+                            DurationIndex = reader.GetUInt32(index++),
+                            RangeIndex = reader.GetUInt32(index++),
+                            StackAmount = reader.GetUInt32(index++),
+                            EquippedItemClass = reader.GetInt32(index++),
+                            EquippedItemSubClassMask = reader.GetInt32(index++),
+                            EquippedItemInventoryTypeMask = reader.GetInt32(index++),
+                            Effect = new[]
+                            {
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                            },
+                            EffectDieSides = new[]
+                            {
+                                reader.GetInt32(index++),
+                                reader.GetInt32(index++),
+                                reader.GetInt32(index++),
+                            },
+                            EffectRealPointsPerLevel = new[]
+                            {
+                                reader.GetFloat(index++),
+                                reader.GetFloat(index++),
+                                reader.GetFloat(index++),
+                            },
+                            EffectBasePoints = new[]
+                            {
+                                reader.GetInt32(index++),
+                                reader.GetInt32(index++),
+                                reader.GetInt32(index++),
+                            },
+                            EffectMechanic = new[]
+                            {
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                            },
+                            EffectImplicitTargetA = new[]
+                            {
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                            },
+                            EffectImplicitTargetB = new[]
+                            {
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                            },
+                            EffectRadiusIndex = new[]
+                            {
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                            },
+                            EffectApplyAuraName = new[]
+                            {
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                            },
+                            EffectAmplitude = new[]
+                            {
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                            },
+                            EffectMultipleValue = new[]
+                            {
+                                reader.GetFloat(index++),
+                                reader.GetFloat(index++),
+                                reader.GetFloat(index++),
+                            },
+                            EffectItemType = new[]
+                            {
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                            },
+                            EffectMiscValue = new[]
+                            {
+                                reader.GetInt32(index++),
+                                reader.GetInt32(index++),
+                                reader.GetInt32(index++),
+                            },
+                            EffectMiscValueB = new[]
+                            {
+                                reader.GetInt32(index++),
+                                reader.GetInt32(index++),
+                                reader.GetInt32(index++),
+                            },
+                            EffectTriggerSpell = new[]
+                            {
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                            },
+                            EffectSpellClassMaskA = new[]
+                            {
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                            },
+                            EffectSpellClassMaskB = new[]
+                            {
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                            },
+                            EffectSpellClassMaskC = new[]
+                            {
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                            },
+                            MaxTargetLevel = reader.GetUInt32(index++),
+                            SpellFamilyName = reader.GetUInt32(index++),
+                            SpellFamilyFlags = new[]
+                            {
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                                reader.GetUInt32(index++),
+                            },
+                            MaxAffectedTargets = reader.GetUInt32(index++),
+                            DmgClass = reader.GetUInt32(index++),
+                            PreventionType = reader.GetUInt32(index++),
+                            DmgMultiplier = new[]
+                            {
+                                reader.GetFloat(index++),
+                                reader.GetFloat(index++),
+                                reader.GetFloat(index++),
+                            },
+                            AreaGroupId = reader.GetInt32(index++),
+                            SchoolMask = reader.GetUInt32(index++),
+                            SpellVisual = new uint[2],
+                            Reagent = new int[DBC.DBC.MaxReagentCount],
+                            ReagentCount = new uint[DBC.DBC.MaxReagentCount],
+                            EffectPointsPerComboPoint = new float[DBC.DBC.MaxEffectIndex],
+                            EffectChainTarget = new uint[DBC.DBC.MaxEffectIndex]
+                        });
+
+                        string DBName = reader.GetString(index);
+                        DBName += " (SERVERSIDE)";
+                        DBC.DBC.SpellStringsFromDB.Add(spellId, DBName);
+                    }
+                }
+            }
+        }
+
         public static void SelectProc(string query)
         {
             using (_conn = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString))
