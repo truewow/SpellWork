@@ -289,6 +289,19 @@ namespace SpellWork.Spell
             _rtb.AppendFormat(", CharacterPoints ({0}, {1})", skill.CharacterPoints[0], skill.CharacterPoints[1]);
         }
 
+        private int CalculateBasePoints(int effectIndex)
+        {
+            int basePoints = _spell.EffectBasePoints[effectIndex];
+            switch (_spell.EffectDieSides[effectIndex])
+            {
+                case 0: break;
+                case 1: basePoints += 1; break;
+                default: break;
+            }
+
+            return basePoints;
+        }
+
         private void AppendSpellEffectInfo()
         {
             _rtb.AppendLine(_line);
@@ -296,28 +309,34 @@ namespace SpellWork.Spell
             for (var effectIndex = 0; effectIndex < DBC.DBC.MaxEffectIndex; effectIndex++)
             {
                 _rtb.SetBold();
+
+                int basePoints = CalculateBasePoints(effectIndex);
                 if ((SpellEffects)_spell.Effect[effectIndex] == SpellEffects.NO_SPELL_EFFECT)
                 {
                     _rtb.AppendFormatLine("Effect {0}:  NO EFFECT", effectIndex);
+                    if (basePoints != 0)
+                    {
+                        _rtb.AppendFormat("BasePoints = {0}", basePoints);
+                        _rtb.AppendLine();
+                    }
+
                     _rtb.AppendLine();
                     continue;
                 }
 
                 _rtb.AppendFormatLine("Effect {0}: Id {1} ({2})", effectIndex, _spell.Effect[effectIndex], (SpellEffects)_spell.Effect[effectIndex]);
                 _rtb.SetDefaultStyle();
-                _rtb.AppendFormat("BasePoints = {0}", _spell.EffectBasePoints[effectIndex] + 1);
+                _rtb.AppendFormat("BasePoints = {0}", basePoints);
 
                 if (_spell.EffectRealPointsPerLevel[effectIndex] != 0)
                     _rtb.AppendFormat(" + Level * {0:F}", _spell.EffectRealPointsPerLevel[effectIndex]);
 
-                // WTF ? 1 = spell.EffectBaseDice[i]
-                if (1 < _spell.EffectDieSides[effectIndex])
+                int randomPoints = _spell.EffectDieSides[effectIndex];
+                if (randomPoints != 0 && randomPoints != 1)
                 {
+                    _rtb.AppendFormat(" to {0}", basePoints + randomPoints);
                     if (_spell.EffectRealPointsPerLevel[effectIndex] != 0)
-                        _rtb.AppendFormat(" to {0} + lvl * {1:F}",
-                            _spell.EffectBasePoints[effectIndex] + 1 + _spell.EffectDieSides[effectIndex], _spell.EffectRealPointsPerLevel[effectIndex]);
-                    else
-                        _rtb.AppendFormat(" to {0}", _spell.EffectBasePoints[effectIndex] + 1 + _spell.EffectDieSides[effectIndex]);
+                        _rtb.AppendFormat(" + Level * {0:F}", _spell.EffectRealPointsPerLevel[effectIndex]);
                 }
 
                 _rtb.AppendFormatIfNotNull(" + combo * {0:F}", _spell.EffectPointsPerComboPoint[effectIndex]);
