@@ -64,6 +64,7 @@ namespace SpellWork.Spell
         SPELLFAMILY_UNK78 = 78,     // only  Zhao-Jin's spear spell
         SPELLFAMILY_UNK91 = 91,     // only Gara'jal the Spiritbinder spells
         SPELLFAMILY_UNK100 = 100,   // smoke bomb
+        SPELLFAMILY_DEMON_HUNTER = 107,
     };
 
     /// <summary>
@@ -102,12 +103,11 @@ namespace SpellWork.Spell
     /// </summary>
     public enum SpellEffects
     {
-        NO_SPELL_EFFECT                                 = 0,
         SPELL_EFFECT_INSTAKILL                          = 1,
         SPELL_EFFECT_SCHOOL_DAMAGE                      = 2,
         SPELL_EFFECT_DUMMY                              = 3,
         SPELL_EFFECT_PORTAL_TELEPORT                    = 4, // Unused (4.3.4)
-        SPELL_EFFECT_TELEPORT_UNITS                     = 5,
+        SPELL_EFFECT_5                                  = 5, // Unused (7.0.3)
         SPELL_EFFECT_APPLY_AURA                         = 6,
         SPELL_EFFECT_ENVIRONMENTAL_DAMAGE               = 7,
         SPELL_EFFECT_POWER_DRAIN                        = 8,
@@ -207,8 +207,8 @@ namespace SpellWork.Spell
         SPELL_EFFECT_DISMISS_PET                        = 102,
         SPELL_EFFECT_REPUTATION                         = 103,
         SPELL_EFFECT_SUMMON_OBJECT_SLOT1                = 104,
-        SPELL_EFFECT_SUMMON_OBJECT_SLOT2                = 105,
-        SPELL_EFFECT_SUMMON_OBJECT_SLOT3                = 106,
+        SPELL_EFFECT_SURVEY                             = 105,
+        SPELL_EFFECT_CHANGE_RAID_MARKER                 = 106,
         SPELL_EFFECT_SUMMON_OBJECT_SLOT4                = 107,
         SPELL_EFFECT_DISPEL_MECHANIC                    = 108,
         SPELL_EFFECT_RESURRECT_PET                      = 109,
@@ -262,7 +262,7 @@ namespace SpellWork.Spell
         SPELL_EFFECT_CREATE_ITEM_2                      = 157,
         SPELL_EFFECT_MILLING                            = 158,
         SPELL_EFFECT_ALLOW_RENAME_PET                   = 159,
-        SPELL_EFFECT_160                                = 160,
+        SPELL_EFFECT_FORCE_CAST_2                       = 160,
         SPELL_EFFECT_TALENT_SPEC_COUNT                  = 161,
         SPELL_EFFECT_TALENT_SPEC_SELECT                 = 162,
         SPELL_EFFECT_163                                = 163, // Unused (4.3.4)
@@ -278,7 +278,7 @@ namespace SpellWork.Spell
         SPELL_EFFECT_UNLOCK_GUILD_VAULT_TAB             = 173, // Guild tab unlocked (guild perk)
         SPELL_EFFECT_APPLY_AURA_ON_PET                  = 174, // NYI
         SPELL_EFFECT_175                                = 175, // Unused (4.3.4)
-        SPELL_EFFECT_SANCTUARY_2                        = 176, // NYI
+        SPELL_EFFECT_SANCTUARY_2                        = 176,
         SPELL_EFFECT_177                                = 177,
         SPELL_EFFECT_178                                = 178, // Unused (4.3.4)
         SPELL_EFFECT_CREATE_AREATRIGGER                 = 179,
@@ -289,8 +289,8 @@ namespace SpellWork.Spell
         SPELL_EFFECT_REPUTATION_2                       = 184, // NYI
         SPELL_EFFECT_185                                = 185,
         SPELL_EFFECT_186                                = 186,
-        SPELL_EFFECT_RANDOMIZE_ARCHAEOLOGY_DIGSITES     = 187, // NYI
-        SPELL_EFFECT_188                                = 188,
+        SPELL_EFFECT_RANDOMIZE_ARCHAEOLOGY_DIGSITES     = 187,
+        SPELL_EFFECT_STAMPEDE                           = 188,
         SPELL_EFFECT_LOOT                               = 189, // NYI, lootid in MiscValue ?
         SPELL_EFFECT_190                                = 190,
         SPELL_EFFECT_TELEPORT_TO_DIGSITE                = 191, // NYI
@@ -302,20 +302,20 @@ namespace SpellWork.Spell
         SPELL_EFFECT_197                                = 197,
         SPELL_EFFECT_198                                = 198,
         SPELL_EFFECT_199                                = 199,
-        SPELL_EFFECT_HEAL_BATTLEPET_PCT                 = 200, // BYI
+        SPELL_EFFECT_HEAL_BATTLEPET_PCT                 = 200, // NYI
         SPELL_EFFECT_ENABLE_BATTLE_PETS                 = 201, // NYI
         SPELL_EFFECT_202                                = 202,
-        SPELL_EFFECT_203                                = 203,
+        SPELL_EFFECT_CANCEL_AURA                        = 203,
         SPELL_EFFECT_CHANGE_BATTLEPET_QUALITY           = 204,
         SPELL_EFFECT_LAUNCH_QUEST_CHOICE                = 205,
-        SPELL_EFFECT_206                                = 206,
+        SPELL_EFFECT_ALTER_ITEM                         = 206, // NYI
         SPELL_EFFECT_LAUNCH_QUEST_TASK                  = 207, // Starts one of the "progress bar" quests
         SPELL_EFFECT_208                                = 208,
         SPELL_EFFECT_209                                = 209,
         SPELL_EFFECT_LEARN_GARRISON_BUILDING            = 210,
         SPELL_EFFECT_LEARN_GARRISON_SPECIALIZATION      = 211,
         SPELL_EFFECT_212                                = 212,
-        SPELL_EFFECT_213                                = 213,
+        SPELL_EFFECT_JUMP_DEST_2                        = 213,
         SPELL_EFFECT_CREATE_GARRISON                    = 214,
         SPELL_EFFECT_UPGRADE_CHARACTER_SPELLS           = 215, // Unlocks boosted players' spells (ChrUpgrade*.db2)
         SPELL_EFFECT_CREATE_SHIPMENT                    = 216,
@@ -354,7 +354,11 @@ namespace SpellWork.Spell
         SPELL_EFFECT_249                                = 249,
         SPELL_EFFECT_TAKE_SCREENSHOT                    = 250, // Serverside marker for selfie screenshot - achievement check
         SPELL_EFFECT_SET_GARRISON_CACHE_SIZE            = 251,
-        TOTAL_SPELL_EFFECTS                             = 252,
+        SPELL_EFFECT_TELEPORT_UNITS                     = 252,
+        SPELL_EFFECT_253                                = 253,
+        SPELL_EFFECT_254                                = 254,
+        SPELL_EFFECT_255                                = 255,
+        TOTAL_SPELL_EFFECTS                             = 256,
     };
 
     /// <summary>
@@ -651,7 +655,7 @@ namespace SpellWork.Spell
         SPELL_AURA_ABILITY_PERIODIC_CRIT                        = 286,
         SPELL_AURA_DEFLECT_SPELLS                               = 287,
         SPELL_AURA_IGNORE_HIT_DIRECTION                         = 288,
-        SPELL_AURA_289                                          = 289,
+        SPELL_AURA_PREVENT_DURABILITY_LOSS                      = 289,
         SPELL_AURA_MOD_CRIT_PCT                                 = 290,
         SPELL_AURA_MOD_XP_QUEST_PCT                             = 291,
         SPELL_AURA_OPEN_STABLE                                  = 292,
@@ -671,7 +675,7 @@ namespace SpellWork.Spell
         SPELL_AURA_306                                          = 306,
         SPELL_AURA_HEAL_ABSORB_TEST                             = 307,
         SPELL_AURA_MOD_CRIT_CHANCE_FOR_CASTER                   = 308,
-        SPELL_AURA_309                                          = 309,  // Not used in 4.3.4
+        SPELL_AURA_MOD_RESILIENCE                               = 309,  // NYI
         SPELL_AURA_MOD_CREATURE_AOE_DAMAGE_AVOIDANCE            = 310,
         SPELL_AURA_311                                          = 311,
         SPELL_AURA_ANIM_REPLACEMENT_SET                         = 312,
@@ -709,7 +713,7 @@ namespace SpellWork.Spell
         SPELL_AURA_MOD_AUTOATTACK_DAMAGE                        = 344,  // NYI
         SPELL_AURA_BYPASS_ARMOR_FOR_CASTER                      = 345,
         SPELL_AURA_ENABLE_ALT_POWER                             = 346,  // NYI
-        SPELL_AURA_MOD_SPELL_COOLDOWN_BY_HASTE                  = 347,  // NYI
+        SPELL_AURA_MOD_SPELL_COOLDOWN_BY_HASTE                  = 347,
         SPELL_AURA_DEPOSIT_BONUS_MONEY_IN_GUILD_BANK_ON_LOOT    = 348,
         SPELL_AURA_MOD_CURRENCY_GAIN                            = 349,
         SPELL_AURA_MOD_GATHERING_ITEMS_GAINED_PERCENT           = 350,  // NYI
@@ -723,13 +727,13 @@ namespace SpellWork.Spell
         SPELL_AURA_WORGEN_ALTERED_FORM                          = 358,
         SPELL_AURA_359                                          = 359,
         SPELL_AURA_PROC_TRIGGER_SPELL_COPY                      = 360,  // Procs the same spell that caused this proc (Dragonwrath, Tarecgosa's Rest)
-        SPELL_AURA_PROC_TRIGGER_SPELL_2                         = 361,
+        SPELL_AURA_OVERRIDE_AUTOATTACK_WITH_MELEE_SPELL         = 361,  // NYI
         SPELL_AURA_362                                          = 362,  // Not used in 4.3.4
         SPELL_AURA_MOD_NEXT_SPELL                               = 363,  // Used by 101601 Throw Totem - causes the client to initialize spell cast with specified spell
         SPELL_AURA_364                                          = 364,  // Not used in 4.3.4
         SPELL_AURA_MAX_FAR_CLIP_PLANE                           = 365,  // Overrides client's View Distance setting to max("Fair", current_setting) and turns off terrain display
         SPELL_AURA_OVERRIDE_SPELL_POWER_BY_AP_PCT               = 366,  // NYI - Sets spellpower equal to % of attack power, discarding all other bonuses (from gear and buffs)
-        SPELL_AURA_367                                          = 367,
+        SPELL_AURA_OVERRIDE_AUTOATTACK_WITH_RANGED_SPELL        = 367,  // NYI
         SPELL_AURA_368                                          = 368,  // Not used in 4.3.4
         SPELL_AURA_ENABLE_POWER_BAR_TIMER                       = 369,
         SPELL_AURA_SET_FAIR_FAR_CLIP                            = 370,  // Overrides client's View Distance setting to max("Fair", current_setting)
@@ -738,13 +742,13 @@ namespace SpellWork.Spell
         SPELL_AURA_373                                          = 373,
         SPELL_AURA_MODIFY_FALL_DAMAGE_PCT                       = 374,  // NYI
         SPELL_AURA_375                                          = 375,
-        SPELL_AURA_376                                          = 376,
-        SPELL_AURA_377                                          = 377,
+        SPELL_AURA_MOD_CURRENCY_GAIN_FROM_SOURCE                = 376,  // NYI
+        SPELL_AURA_CAST_WHILE_WALKING_2                         = 377,  // NYI
         SPELL_AURA_378                                          = 378,
         SPELL_AURA_379                                          = 379,
-        SPELL_AURA_380                                          = 380,
+        SPELL_AURA_MOD_GLOBAL_COOLDOWN_BY_HASTE                 = 380,  // Allows melee abilities to benefit from haste GCD reduction
         SPELL_AURA_381                                          = 381,
-        SPELL_AURA_382                                          = 382,
+        SPELL_AURA_MOD_PET_STAT_PCT                             = 382,  // NYI
         SPELL_AURA_IGNORE_SPELL_COOLDOWN                        = 383,  // NYI
         SPELL_AURA_384                                          = 384,
         SPELL_AURA_CHANCE_OVERRIDE_AUTOATTACK_WITH_SPELL_ON_SELF= 385,  // NYI (with triggered spell cast by the initial caster?)
@@ -756,18 +760,18 @@ namespace SpellWork.Spell
         SPELL_AURA_391                                          = 391,
         SPELL_AURA_392                                          = 392,
         SPELL_AURA_393                                          = 393,
-        SPELL_AURA_394                                          = 394,
-        SPELL_AURA_395                                          = 395,
+        SPELL_AURA_SHOW_CONFIRMATION_PROMPT                     = 394,
+        SPELL_AURA_AREA_TRIGGER                                 = 395,  // NYI
         SPELL_AURA_396                                          = 396,
         SPELL_AURA_397                                          = 397,
         SPELL_AURA_398                                          = 398,
         SPELL_AURA_399                                          = 399,
-        SPELL_AURA_400                                          = 400,
+        SPELL_AURA_MOD_SKILL_2                                  = 400,
         SPELL_AURA_401                                          = 401,
         SPELL_AURA_402                                          = 402,
-        SPELL_AURA_403                                          = 403,
-        SPELL_AURA_404                                          = 404,
-        SPELL_AURA_405                                          = 405,
+        SPELL_AURA_OVERRIDE_SPELL_VISUAL                        = 403,
+        SPELL_AURA_OVERRIDE_ATTACK_POWER_BY_SP_PCT              = 404,
+        SPELL_AURA_MOD_RATING_PCT                               = 405,  // NYI
         SPELL_AURA_406                                          = 406,
         SPELL_AURA_MOD_FEAR_2                                   = 407,  // NYI
         SPELL_AURA_408                                          = 408,
@@ -778,12 +782,12 @@ namespace SpellWork.Spell
         SPELL_AURA_413                                          = 413,
         SPELL_AURA_414                                          = 414,
         SPELL_AURA_415                                          = 415,
-        SPELL_AURA_416                                          = 416,
-        SPELL_AURA_417                                          = 417,
-        SPELL_AURA_418                                          = 418,
-        SPELL_AURA_419                                          = 419,
+        SPELL_AURA_MOD_COOLDOWN_BY_HASTE_REGEN                  = 416,
+        SPELL_AURA_MOD_GLOBAL_COOLDOWN_BY_HASTE_REGEN           = 417,
+        SPELL_AURA_MOD_MAX_POWER                                = 418,  // NYI
+        SPELL_AURA_MOD_BASE_MANA_PCT                            = 419,
         SPELL_AURA_MOD_BATTLE_PET_XP_PCT                        = 420,  // NYI
-        SPELL_AURA_421                                          = 421,
+        SPELL_AURA_MOD_ABSORB_EFFECTS_AMOUNT_PCT                = 421,  // NYI
         SPELL_AURA_422                                          = 422,
         SPELL_AURA_423                                          = 423,
         SPELL_AURA_424                                          = 424,
@@ -802,18 +806,18 @@ namespace SpellWork.Spell
         SPELL_AURA_437                                          = 437,
         SPELL_AURA_438                                          = 438,
         SPELL_AURA_439                                          = 439,
-        SPELL_AURA_440                                          = 440,
-        SPELL_AURA_441                                          = 441,
-        SPELL_AURA_442                                          = 442,
-        SPELL_AURA_443                                          = 443,
+        SPELL_AURA_MOD_MULTISTRIKE_DAMAGE                       = 440,  // NYI
+        SPELL_AURA_MOD_MULTISTRIKE_CHANCE                       = 441,  // NYI
+        SPELL_AURA_MOD_READINESS                                = 442,  // NYI
+        SPELL_AURA_MOD_LEECH                                    = 443,  // NYI
         SPELL_AURA_444                                          = 444,
         SPELL_AURA_445                                          = 445,
         SPELL_AURA_446                                          = 446,
-        SPELL_AURA_447                                          = 447,
+        SPELL_AURA_MOD_XP_FROM_CREATURE_TYPE                    = 447,
         SPELL_AURA_448                                          = 448,
         SPELL_AURA_449                                          = 449,
         SPELL_AURA_450                                          = 450,
-        SPELL_AURA_OVERRIDE_PET_SPECS                           = 451, // NYI
+        SPELL_AURA_OVERRIDE_PET_SPECS                           = 451,
         SPELL_AURA_452                                          = 452,
         SPELL_AURA_CHARGE_RECOVERY_MOD                          = 453,
         SPELL_AURA_CHARGE_RECOVERY_MULTIPLIER                   = 454,
@@ -828,26 +832,32 @@ namespace SpellWork.Spell
         SPELL_AURA_CONVER_CRIT_RATING_PCT_TO_PARRY_RATING       = 463, // NYI
         SPELL_AURA_464                                          = 464,
         SPELL_AURA_465                                          = 465,
-        SPELL_AURA_466                                          = 466,
-        SPELL_AURA_467                                          = 467,
+        SPELL_AURA_MOD_BONUS_ARMOR_PCT                          = 466, // Affects bonus armor gain from all sources except base stats
+        SPELL_AURA_MOD_STAT_BONUS_PCT                           = 467, // Affects stat gain from all sources except base stats
         SPELL_AURA_468                                          = 468,
-        SPELL_AURA_469                                          = 469,
-        SPELL_AURA_471                                          = 471,
+        SPELL_AURA_SHOW_CONFIRMATION_PROMPT_WITH_DIFFICULTY     = 469,
+        SPELL_AURA_470                                          = 470,
+        SPELL_AURA_MOD_VERSATILITY                              = 471,  // NYI
         SPELL_AURA_472                                          = 472,
-        SPELL_AURA_473                                          = 473,
+        SPELL_AURA_PREVENT_DURABILITY_LOSS_FROM_COMBAT          = 473, // Prevents durability loss from dealing/taking damage
         SPELL_AURA_474                                          = 474,
-        SPELL_AURA_475                                          = 475,
-        SPELL_AURA_476                                          = 476,
+        SPELL_AURA_ALLOW_USING_GAMEOBJECTS_WHILE_MOUNTED        = 475,
+        SPELL_AURA_MOD_CURRENCY_GAIN_LOOTED                     = 476,
         SPELL_AURA_477                                          = 477,
         SPELL_AURA_478                                          = 478,
         SPELL_AURA_479                                          = 479,
         SPELL_AURA_480                                          = 480,
-        SPELL_AURA_481                                          = 481,
+        SPELL_AURA_CONVERT_CONSUMED_RUNE                        = 481,
         SPELL_AURA_482                                          = 482,
         SPELL_AURA_483                                          = 483,
         SPELL_AURA_484                                          = 484,
         SPELL_AURA_485                                          = 485,
-        TOTAL_AURAS                                             = 486   // 6.0.3
+        SPELL_AURA_486                                          = 486,
+        SPELL_AURA_487                                          = 487,
+        SPELL_AURA_488                                          = 488,
+        SPELL_AURA_489                                          = 489,
+        SPELL_AURA_490                                          = 490,
+        TOTAL_AURAS                                             = 491
     }
 
     /// <summary>
@@ -1308,7 +1318,7 @@ namespace SpellWork.Spell
         TARGET_FLAG_UNIT_MINIPET    = 0x00010000,               // pguid, used to validate target (if non combat pet)
         TARGET_FLAG_GLYPH_SLOT      = 0x00020000,               // used in glyph spells
         TARGET_FLAG_UNK19           = 0x00040000,               // sometimes appears with DEST_TARGET spells (may appear or not for a given spell)
-        TARGET_FLAG_UNUSED20        = 0x00080000,               // uint32 counter, loop { vec3 - screen position (?), guid }, not used so far
+        TARGET_FLAG_UNUSED20        = 0x00080000,               // public uint counter, loop { vec3 - screen position (?), guid }, not used so far
         TARGET_FLAG_UNIT_PASSENGER  = 0x00100000,               // guessed, used to validate target (if vehicle passenger)
     };
 
@@ -1495,8 +1505,6 @@ namespace SpellWork.Spell
     [Flags]
     public enum SpellAtribute : uint
     {
-        SPELL_ATTR0_ALL                              = 0xFFFFFFFF,
-        SPELL_ATTR0_NONE                             = 0x00000000,
         SPELL_ATTR0_UNK0                             = 0x00000001, //  0
         SPELL_ATTR0_REQ_AMMO                         = 0x00000002, //  1 on next ranged
         SPELL_ATTR0_ON_NEXT_SWING                    = 0x00000004, //  2
@@ -1534,8 +1542,6 @@ namespace SpellWork.Spell
     [Flags]
     public enum SpellAtributeEx : uint
     {
-        SPELL_ATTR1_ALL                              = 0xFFFFFFFF,
-        SPELL_ATTR1_NONE                             = 0x00000000,
         SPELL_ATTR1_DISMISS_PET                      = 0x00000001, //  0 for spells without this flag client doesn't allow to summon pet if caster has a pet
         SPELL_ATTR1_DRAIN_ALL_POWER                  = 0x00000002, //  1 use all power (Only paladin Lay of Hands and Bunyanize)
         SPELL_ATTR1_CHANNELED_1                      = 0x00000004, //  2 clientside checked? cancelable?
@@ -1573,8 +1579,6 @@ namespace SpellWork.Spell
     [Flags]
     public enum SpellAtributeEx2 : uint
     {
-        SPELL_ATTR2_ALL                              = 0xFFFFFFFF,
-        SPELL_ATTR2_NONE                             = 0x00000000,
         SPELL_ATTR2_CAN_TARGET_DEAD                  = 0x00000001, //  0 can target dead unit or corpse
         SPELL_ATTR2_UNK1                             = 0x00000002, //  1 vanish, shadowform, Ghost Wolf and other
         SPELL_ATTR2_CAN_TARGET_NOT_IN_LOS            = 0x00000004, //  2 26368 4.0.1 dbc change
@@ -1612,8 +1616,6 @@ namespace SpellWork.Spell
     [Flags]
     public enum SpellAtributeEx3 : uint
     {
-        SPELL_ATTR3_ALL                              = 0xFFFFFFFF,
-        SPELL_ATTR3_NONE                             = 0x00000000,
         SPELL_ATTR3_UNK0                             = 0x00000001, //  0
         SPELL_ATTR3_UNK1                             = 0x00000002, //  1
         SPELL_ATTR3_UNK2                             = 0x00000004, //  2
@@ -1651,8 +1653,6 @@ namespace SpellWork.Spell
     [Flags]
     public enum SpellAtributeEx4 : uint
     {
-        SPELL_ATTR4_ALL                              = 0xFFFFFFFF,
-        SPELL_ATTR4_NONE                             = 0x00000000,
         SPELL_ATTR4_IGNORE_RESISTANCES               = 0x00000001, //  0 spells with this attribute will completely ignore the target's resistance (these spells can't be resisted)
         SPELL_ATTR4_PROC_ONLY_ON_CASTER              = 0x00000002, //  1 proc only on effects with TARGET_UNIT_CASTER?
         SPELL_ATTR4_UNK2                             = 0x00000004, //  2
@@ -1666,7 +1666,7 @@ namespace SpellWork.Spell
         SPELL_ATTR4_SPELL_VS_EXTEND_COST             = 0x00000400, // 10 Rogue Shiv have this flag
         SPELL_ATTR4_UNK11                            = 0x00000800, // 11
         SPELL_ATTR4_UNK12                            = 0x00001000, // 12
-        SPELL_ATTR4_UNK13                            = 0x00002000, // 13
+        SPELL_ATTR4_COMBAT_LOG_NO_CASTER             = 0x00002000, // 13 No caster object is sent to client combat log
         SPELL_ATTR4_DAMAGE_DOESNT_BREAK_AURAS        = 0x00004000, // 14 doesn't break auras by damage from these spells
         SPELL_ATTR4_UNK15                            = 0x00008000, // 15
         SPELL_ATTR4_NOT_USABLE_IN_ARENA_OR_RATED_BG  = 0x00010000, // 16 Cannot be used in both Arenas or Rated Battlegrounds
@@ -1690,8 +1690,6 @@ namespace SpellWork.Spell
     [Flags]
     public enum SpellAtributeEx5 : uint
     {
-        SPELL_ATTR5_ALL                              = 0xFFFFFFFF,
-        SPELL_ATTR5_NONE                             = 0x00000000,
         SPELL_ATTR5_UNK0                             = 0x00000001, //  0
         SPELL_ATTR5_NO_REAGENT_WHILE_PREP            = 0x00000002, //  1 not need reagents if UNIT_FLAG_PREPARATION
         SPELL_ATTR5_UNK2                             = 0x00000004, //  2
@@ -1729,8 +1727,6 @@ namespace SpellWork.Spell
     [Flags]
     public enum SpellAtributeEx6 : uint
     {
-        SPELL_ATTR6_ALL                              = 0xFFFFFFFF,
-        SPELL_ATTR6_NONE                             = 0x00000000,
         SPELL_ATTR6_DONT_DISPLAY_COOLDOWN            = 0x00000001, //  0 client doesn't display cooldown in tooltip for these spells
         SPELL_ATTR6_ONLY_IN_ARENA                    = 0x00000002, //  1 only usable in arena
         SPELL_ATTR6_IGNORE_CASTER_AURAS              = 0x00000004, //  2
@@ -1768,8 +1764,6 @@ namespace SpellWork.Spell
     [Flags]
     public enum SpellAtributeEx7 : uint
     {
-        SPELL_ATTR7_ALL                              = 0xFFFFFFFF,
-        SPELL_ATTR7_NONE                             = 0x00000000,
         SPELL_ATTR7_UNK0                             = 0x00000001, //  0 Shaman's new spells (Call of the ...), Feign Death.
         SPELL_ATTR7_IGNORE_DURATION_MODS             = 0x00000002, //  1 Duration is not affected by duration modifiers
         SPELL_ATTR7_REACTIVATE_AT_RESURRECT          = 0x00000004, //  2 Paladin's auras and 65607 only.
@@ -1807,8 +1801,6 @@ namespace SpellWork.Spell
     [Flags]
     public enum SpellAtributeEx8 : uint
     {
-        SPELL_ATTR8_ALL                              = 0xFFFFFFFF,
-        SPELL_ATTR8_NONE                             = 0x00000000,
         SPELL_ATTR8_CANT_MISS                        = 0x00000001, //  0
         SPELL_ATTR8_UNK1                             = 0x00000002, //  1
         SPELL_ATTR8_UNK2                             = 0x00000004, //  2
@@ -1885,8 +1877,6 @@ namespace SpellWork.Spell
     [Flags]
     public enum SpellAtributeEx10 : uint
     {
-        SPELL_ATTR10_ALL                             = 0xFFFFFFFF,
-        SPELL_ATTR10_NONE                            = 0x00000000,
         SPELL_ATTR10_UNK0                            = 0x00000001, //  0
         SPELL_ATTR10_UNK1                            = 0x00000002, //  1
         SPELL_ATTR10_UNK2                            = 0x00000004, //  2
@@ -1899,7 +1889,7 @@ namespace SpellWork.Spell
         SPELL_ATTR10_UNK9                            = 0x00000200, //  9
         SPELL_ATTR10_UNK10                           = 0x00000400, // 10
         SPELL_ATTR10_HERB_GATHERING_MINING           = 0x00000800, // 11 Only Herb Gathering and Mining
-        SPELL_ATTR10_UNK12                           = 0x00001000, // 12
+        SPELL_ATTR10_USE_SPELL_BASE_LEVEL_FOR_SCALING = 0x00001000, // 12
         SPELL_ATTR10_UNK13                           = 0x00002000, // 13
         SPELL_ATTR10_UNK14                           = 0x00004000, // 14
         SPELL_ATTR10_UNK15                           = 0x00008000, // 15
@@ -1916,7 +1906,7 @@ namespace SpellWork.Spell
         SPELL_ATTR10_UNK26                           = 0x04000000, // 26
         SPELL_ATTR10_UNK27                           = 0x08000000, // 27
         SPELL_ATTR10_UNK28                           = 0x10000000, // 28
-        SPELL_ATTR10_UNK29                           = 0x20000000, // 29
+        SPELL_ATTR10_MOUNT_IS_NOT_ACCOUNT_WIDE       = 0x20000000, // 29 This mount is stored per-character
         SPELL_ATTR10_UNK30                           = 0x40000000, // 30
         SPELL_ATTR10_UNK31                           = 0x80000000  // 31
     };
@@ -1924,16 +1914,14 @@ namespace SpellWork.Spell
     [Flags]
     enum SpellAtributeEx11 : uint
     {
-        SPELL_ATTR11_ALL                             = 0xFFFFFFFF,
-        SPELL_ATTR11_NONE                            = 0x00000000,
-        SPELL_ATTR11_UNK0                            = 0x00000001, //  0
+         SPELL_ATTR11_UNK0                            = 0x00000001, //  0
         SPELL_ATTR11_UNK1                            = 0x00000002, //  1
-        SPELL_ATTR11_UNK2                            = 0x00000004, //  2
+        SPELL_ATTR11_SCALES_WITH_ITEM_LEVEL          = 0x00000004, //  2
         SPELL_ATTR11_UNK3                            = 0x00000008, //  3
         SPELL_ATTR11_UNK4                            = 0x00000010, //  4
         SPELL_ATTR11_UNK5                            = 0x00000020, //  5
         SPELL_ATTR11_UNK6                            = 0x00000040, //  6
-        SPELL_ATTR11_UNK7                            = 0x00000080, //  7
+        SPELL_ATTR11_RANK_IGNORES_CASTER_LEVEL       = 0x00000080, //  7 Spell_C_GetSpellRank returns 0 instead of 5 * std::min(SpellLevels->MaxLevel, caster->Level)
         SPELL_ATTR11_UNK8                            = 0x00000100, //  8
         SPELL_ATTR11_UNK9                            = 0x00000200, //  9
         SPELL_ATTR11_UNK10                           = 0x00000400, // 10
@@ -1942,7 +1930,7 @@ namespace SpellWork.Spell
         SPELL_ATTR11_UNK13                           = 0x00002000, // 13
         SPELL_ATTR11_UNK14                           = 0x00004000, // 14
         SPELL_ATTR11_UNK15                           = 0x00008000, // 15
-        SPELL_ATTR11_UNK16                           = 0x00010000, // 16
+        SPELL_ATTR11_NOT_USABLE_IN_CHALLENGE_MODE    = 0x00010000, // 16
         SPELL_ATTR11_UNK17                           = 0x00020000, // 17
         SPELL_ATTR11_UNK18                           = 0x00040000, // 18
         SPELL_ATTR11_UNK19                           = 0x00080000, // 19
@@ -1963,8 +1951,6 @@ namespace SpellWork.Spell
     [Flags]
     enum SpellAtributeEx12 : uint
     {
-        SPELL_ATTR12_ALL                             = 0xFFFFFFFF,
-        SPELL_ATTR12_NONE                            = 0x00000000,
         SPELL_ATTR12_UNK0                            = 0x00000001, //  0
         SPELL_ATTR12_UNK1                            = 0x00000002, //  1
         SPELL_ATTR12_UNK2                            = 0x00000004, //  2
@@ -1989,10 +1975,10 @@ namespace SpellWork.Spell
         SPELL_ATTR12_UNK21                           = 0x00200000, // 21
         SPELL_ATTR12_UNK22                           = 0x00400000, // 22
         SPELL_ATTR12_UNK23                           = 0x00800000, // 23
-        SPELL_ATTR12_UNK24                           = 0x01000000, // 24
+        SPELL_ATTR12_IS_GARRISON_BUFF                = 0x01000000, // 24
         SPELL_ATTR12_UNK25                           = 0x02000000, // 25
         SPELL_ATTR12_UNK26                           = 0x04000000, // 26
-        SPELL_ATTR12_UNK27                           = 0x08000000, // 27
+        SPELL_ATTR12_IS_READINESS_SPELL              = 0x08000000, // 27
         SPELL_ATTR12_UNK28                           = 0x10000000, // 28
         SPELL_ATTR12_UNK29                           = 0x20000000, // 29
         SPELL_ATTR12_UNK30                           = 0x40000000, // 30
@@ -2002,8 +1988,6 @@ namespace SpellWork.Spell
     [Flags]
     enum SpellAtributeEx13 : uint
     {
-        SPELL_ATTR13_ALL                             = 0xFFFFFFFF,
-        SPELL_ATTR13_NONE                            = 0x00000000,
         SPELL_ATTR13_UNK0                            = 0x00000001, //  0
         SPELL_ATTR13_UNK1                            = 0x00000002, //  1
         SPELL_ATTR13_UNK2                            = 0x00000004, //  2
@@ -2022,7 +2006,7 @@ namespace SpellWork.Spell
         SPELL_ATTR13_UNK15                           = 0x00008000, // 15
         SPELL_ATTR13_UNK16                           = 0x00010000, // 16
         SPELL_ATTR13_UNK17                           = 0x00020000, // 17
-        SPELL_ATTR13_UNK18                           = 0x00040000, // 18
+        SPELL_ATTR13_ACTIVATES_REQUIRED_SHAPESHIFT   = 0x00040000, // 18
         SPELL_ATTR13_UNK19                           = 0x00080000, // 19
         SPELL_ATTR13_UNK20                           = 0x00100000, // 20
         SPELL_ATTR13_UNK21                           = 0x00200000, // 21
@@ -2041,32 +2025,38 @@ namespace SpellWork.Spell
     [Flags]
     public enum CombatRating
     {
-        CR_WEAPON_SKILL             =      0x00,
-        CR_DEFENSE_SKILL            = 1 << 0x00,
-        CR_DODGE                    = 1 << 0x01,
-        CR_PARRY                    = 1 << 0x02,
-        CR_BLOCK                    = 1 << 0x03,
-        CR_HIT_MELEE                = 1 << 0x04,
-        CR_HIT_RANGED               = 1 << 0x05,
-        CR_HIT_SPELL                = 1 << 0x06,
-        CR_CRIT_MELEE               = 1 << 0x07,
-        CR_CRIT_RANGED              = 1 << 0x08,
-        CR_CRIT_SPELL               = 1 << 0x09,
-        CR_HIT_TAKEN_MELEE          = 1 << 0x0A,
-        CR_HIT_TAKEN_RANGED         = 1 << 0x0B,
-        CR_HIT_TAKEN_SPELL          = 1 << 0x0C,
-        CR_CRIT_TAKEN_MELEE         = 1 << 0x0D,
-        CR_CRIT_TAKEN_RANGED        = 1 << 0x0E,
-        CR_CRIT_TAKEN_SPELL         = 1 << 0x0F,
-        CR_HASTE_MELEE              = 1 << 0x10,
-        CR_HASTE_RANGED             = 1 << 0x11,
-        CR_HASTE_SPELL              = 1 << 0x12,
-        CR_WEAPON_SKILL_MAINHAND    = 1 << 0x13,
-        CR_WEAPON_SKILL_OFFHAND     = 1 << 0x14,
-        CR_WEAPON_SKILL_RANGED      = 1 << 0x15,
-        CR_EXPERTISE                = 1 << 0x16,
-        CR_ARMOR_PENETRATION        = 1 << 0x17,
-        CR_MASTERY                  = 1 << 0x18,
+        CR_AMPLIFY                          = 0,
+        CR_DEFENSE_SKILL                    = 1 << 1,
+        CR_DODGE                            = 1 << 2,
+        CR_PARRY                            = 1 << 3,
+        CR_BLOCK                            = 1 << 4,
+        CR_HIT_MELEE                        = 1 << 5,
+        CR_HIT_RANGED                       = 1 << 6,
+        CR_HIT_SPELL                        = 1 << 7,
+        CR_CRIT_MELEE                       = 1 << 8,
+        CR_CRIT_RANGED                      = 1 << 9,
+        CR_CRIT_SPELL                       = 1 << 10,
+        CR_MULTISTRIKE                      = 1 << 11, // All zero in gametables, so keep it. (sorry)
+        CR_READINESS                        = 1 << 12,
+        CR_SPEED                            = 1 << 13,
+        CR_RESILIENCE_CRIT_TAKEN            = 1 << 14,
+        CR_RESILIENCE_PLAYER_DAMAGE         = 1 << 15,
+        CR_LIFESTEAL                        = 1 << 16,
+        CR_HASTE_MELEE                      = 1 << 17,
+        CR_HASTE_RANGED                     = 1 << 18,
+        CR_HASTE_SPELL                      = 1 << 19,
+        CR_AVOIDANCE                        = 1 << 20,
+        CR_STURDINESS                       = 1 << 21,
+        CR_UNUSED_7                         = 1 << 22,
+        CR_EXPERTISE                        = 1 << 23,
+        CR_ARMOR_PENETRATION                = 1 << 24,
+        CR_MASTERY                          = 1 << 25,
+        CR_PVP_POWER                        = 1 << 26,
+        CR_CLEAVE                           = 1 << 27,
+        CR_VERSATILITY_DAMAGE_DONE          = 1 << 28,
+        CR_VERSATILITY_HEALING_DONE         = 1 << 29,
+        CR_VERSATILITY_DAMAGE_TAKEN         = 1 << 30,
+        CR_UNUSED_12                        = 1 << 31
     };
 
     public enum UnitMods

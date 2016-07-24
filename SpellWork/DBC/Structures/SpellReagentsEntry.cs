@@ -1,13 +1,9 @@
-﻿using DBFilesClient.NET;
-
-namespace SpellWork.DBC.Structures
+﻿namespace SpellWork.DBC.Structures
 {
-    public sealed class SpellReagentsEntry
+    public class SpellReagentsEntry
     {
-        public uint Id;
-        [StoragePresence(StoragePresenceOption.Include, ArraySize = 8)]
-        public uint[] ItemId;
-        [StoragePresence(StoragePresenceOption.Include, ArraySize = 8)]
-        public uint[] Count;
+        public uint SpellID;
+        public uint[] Reagent;
+        public uint[] ReagentCount;
     }
 }

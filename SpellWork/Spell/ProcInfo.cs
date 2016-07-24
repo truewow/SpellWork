@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -8,26 +7,26 @@ using SpellWork.Extensions;
 
 namespace SpellWork.Spell
 {
-    public class ProcInfo
+    public static class ProcInfo
     {
         public static SpellInfoHelper SpellProc { get; set; }
         public static bool Update = true;
 
-        public ProcInfo(TreeView familyTree, SpellFamilyNames spellfamily)
+        public static void Fill(TreeView familyTree, SpellFamilyNames spellfamily)
         {
             familyTree.Nodes.Clear();
 
             var spells = from spell in DBC.DBC.SpellInfoStore.Values
                          where spell.SpellFamilyName == (uint)spellfamily
-                         join sk in DBC.DBC.SkillLineAbility.Values on spell.ID equals sk.SpellID into temp1
+                         join sk in DBC.DBC.SkilllLineAbilityStore.Values on spell.ID equals sk.SpellID into temp1
                          from skill in temp1.DefaultIfEmpty(new SkillLineAbilityEntry())
-                         join skl in DBC.DBC.SkillLine.Values on skill.SkillLine equals skl.Id into temp2
-                         from skillLine in temp2.DefaultIfEmpty(new SkillLineEntry())
+                         join skl in DBC.DBC.SkilllLineStore on skill.SkillLine equals skl.Key into temp2
+                         from skillLine in temp2
                          select new
                          {
                              spell,
                              skill.SkillLine,
-                             skillLine
+                             skillLine = skillLine.Value
                          };
 
             for (var i = 0; i < 128; ++i)
@@ -45,7 +44,7 @@ namespace SpellWork.Spell
 
                 var node   = new TreeNode
                 {
-                    Text = String.Format("0x{0:X8} {1:X8} {2:X8} {3:X8}", mask[3], mask[2], mask[1], mask[0]),
+                    Text = $"0x{mask[3]:X8} {mask[2]:X8} {mask[1]:X8} {mask[0]:X8}",
                     ImageKey = @"family.ico"
                 };
                 familyTree.Nodes.Add(node);
@@ -67,10 +66,10 @@ namespace SpellWork.Spell
 
                 if (isSkill)
                 {
-                    name.AppendFormat("(Skill: ({0}) {1}) ", elem.SkillLine, elem.skillLine.Name);
+                    name.AppendFormat("(Skill: ({0}) {1}) ", elem.SkillLine, elem.skillLine.DisplayName);
 
                     toolTip.AppendLine();
-                    toolTip.AppendFormatLine("Skill Name: {0}", elem.skillLine.Name);
+                    toolTip.AppendFormatLine("Skill Name: {0}", elem.skillLine.DisplayName);
                     toolTip.AppendFormatLine("Description: {0}", elem.skillLine.Description);
                 }
 

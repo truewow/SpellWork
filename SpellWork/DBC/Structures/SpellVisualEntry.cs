@@ -1,8 +1,8 @@
 ﻿namespace SpellWork.DBC.Structures
 {
+    // 7.x ?
     public sealed class SpellVisualEntry
     {
-        public uint Id;
         public uint UnkMoP1;
         public uint PrecastKit;
         public uint CastingKit;
@@ -11,11 +11,11 @@
         public uint StateDoneKit;
         public uint ChannelKit;
         public uint UnkMoP2;
-        public uint AnimEventSoundID;
+        public uint MissileModel;
         public uint Flags;
         public uint CasterImpactKit;
         public uint TargetImpactKit;
-        public int MissileAttachment;
+        public int MissileMotionId;
         public uint MissileTargetingKit;
         public uint UnkMoP3;
         public uint InstantAreaKit;
@@ -28,6 +28,7 @@
         public float MissileImpactOffsetY;
         public float MissileImpactOffsetZ;
         public uint UnkCata1;
+        public uint Id;
         public uint UnkMoP4;
         public uint UnkMoP5;
         public uint UnkMoP6;

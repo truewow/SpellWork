@@ -1,6 +1,8 @@
-﻿namespace SpellWork.Database
+﻿using System.Globalization;
+
+namespace SpellWork.Database
 {
-    public struct SpellProcEventEntry
+    public sealed class SpellProcEventEntry
     {
         public uint Id;
         public string SpellName;
@@ -26,8 +28,8 @@
                 SpellFamilyMask[2].ToString(),
                 ProcFlags.ToString(),
                 ProcEx.ToString(),
-                PpmRate.ToString(),
-                CustomChance.ToString(),
+                PpmRate.ToString(CultureInfo.InvariantCulture),
+                CustomChance.ToString(CultureInfo.InvariantCulture),
                 Cooldown.ToString()
             };
         }

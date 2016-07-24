@@ -8,7 +8,7 @@ namespace SpellWork.Forms
     {
         public uint Flags { get; private set; }
 
-        public FormCalculateFlags(Type data, uint value, String remove)
+        public FormCalculateFlags(Type data, uint value, string remove)
         {
             InitializeComponent();
 

@@ -1,10 +1,10 @@
 ﻿namespace SpellWork.DBC.Structures
 {
-    public sealed class SpellShapeshiftEntry
+    public class SpellShapeshiftEntry
     {
-        public uint Id;
-        public ulong StancesNot;
-        public ulong Stances;
+        public uint SpellID;
+        public uint[] ShapeshiftExclude;
+        public uint[] ShapeshiftMask;
         public int StanceBarOrder;
     }
 }

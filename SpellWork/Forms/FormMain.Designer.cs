@@ -39,6 +39,7 @@
             this._tsmExit = new System.Windows.Forms.ToolStripMenuItem();
             this._tsmHelp = new System.Windows.Forms.ToolStripMenuItem();
             this._tsmAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.ProgressButton = new System.Windows.Forms.ToolStripMenuItem();
             this._ilPro = new System.Windows.Forms.ImageList(this.components);
             this.splitContainer7 = new System.Windows.Forms.SplitContainer();
             this.splitContainer8 = new System.Windows.Forms.SplitContainer();
@@ -242,7 +243,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._tsmFile,
-            this._tsmHelp});
+            this._tsmHelp,
+            this.ProgressButton});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(872, 24);
@@ -293,7 +295,11 @@
             this._tsmAbout.Name = "_tsmAbout";
             this._tsmAbout.Size = new System.Drawing.Size(113, 22);
             this._tsmAbout.Text = "About..";
-            this._tsmAbout.Click += new System.EventHandler(this.AboutClick);
+            // 
+            // ProgressButton
+            // 
+            this.ProgressButton.Name = "ProgressButton";
+            this.ProgressButton.Size = new System.Drawing.Size(12, 20);
             // 
             // _ilPro
             // 
@@ -679,6 +685,7 @@
             this._cbTarget2.DropDownHeight = 500;
             this._cbTarget2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._cbTarget2.DropDownWidth = 302;
+            this._cbTarget2.Enabled = false;
             this._cbTarget2.FormattingEnabled = true;
             this._cbTarget2.IntegralHeight = false;
             this._cbTarget2.Location = new System.Drawing.Point(4, 111);
@@ -694,6 +701,7 @@
             this._cbTarget1.DropDownHeight = 500;
             this._cbTarget1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._cbTarget1.DropDownWidth = 302;
+            this._cbTarget1.Enabled = false;
             this._cbTarget1.FormattingEnabled = true;
             this._cbTarget1.IntegralHeight = false;
             this._cbTarget1.Location = new System.Drawing.Point(4, 87);
@@ -709,7 +717,9 @@
             this._cbSpellEffect.DropDownHeight = 500;
             this._cbSpellEffect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._cbSpellEffect.DropDownWidth = 302;
+            this._cbSpellEffect.Enabled = false;
             this._cbSpellEffect.FormattingEnabled = true;
+            this._cbSpellEffect.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this._cbSpellEffect.IntegralHeight = false;
             this._cbSpellEffect.Location = new System.Drawing.Point(4, 62);
             this._cbSpellEffect.Name = "_cbSpellEffect";
@@ -724,6 +734,7 @@
             this._cbSpellAura.DropDownHeight = 500;
             this._cbSpellAura.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._cbSpellAura.DropDownWidth = 302;
+            this._cbSpellAura.Enabled = false;
             this._cbSpellAura.FormattingEnabled = true;
             this._cbSpellAura.IntegralHeight = false;
             this._cbSpellAura.Location = new System.Drawing.Point(4, 38);
@@ -739,6 +750,7 @@
             this._cbSpellFamilyName.DropDownHeight = 500;
             this._cbSpellFamilyName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._cbSpellFamilyName.DropDownWidth = 302;
+            this._cbSpellFamilyName.Enabled = false;
             this._cbSpellFamilyName.FormattingEnabled = true;
             this._cbSpellFamilyName.IntegralHeight = false;
             this._cbSpellFamilyName.ItemHeight = 13;
@@ -797,6 +809,7 @@
             // _bSearch
             // 
             this._bSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._bSearch.Enabled = false;
             this._bSearch.Location = new System.Drawing.Point(341, 11);
             this._bSearch.Name = "_bSearch";
             this._bSearch.Size = new System.Drawing.Size(50, 23);
@@ -829,6 +842,7 @@
             // 
             this._tbSearchId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this._tbSearchId.Enabled = false;
             this._tbSearchId.Location = new System.Drawing.Point(73, 13);
             this._tbSearchId.Name = "_tbSearchId";
             this._tbSearchId.Size = new System.Drawing.Size(263, 20);
@@ -1083,6 +1097,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this._cbProcSpellFamilyTree.DropDownHeight = 500;
             this._cbProcSpellFamilyTree.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._cbProcSpellFamilyTree.Enabled = false;
             this._cbProcSpellFamilyTree.FormattingEnabled = true;
             this._cbProcSpellFamilyTree.IntegralHeight = false;
             this._cbProcSpellFamilyTree.Location = new System.Drawing.Point(1, 2);
@@ -1656,6 +1671,7 @@
             // 
             // _bWrite
             // 
+            this._bWrite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this._bWrite.Enabled = false;
             this._bWrite.Location = new System.Drawing.Point(686, 1);
             this._bWrite.Name = "_bWrite";
@@ -1668,6 +1684,7 @@
             // 
             // _bLevelScaling
             // 
+            this._bLevelScaling.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this._bLevelScaling.Location = new System.Drawing.Point(808, 1);
             this._bLevelScaling.Name = "_bLevelScaling";
             this._bLevelScaling.Size = new System.Drawing.Size(60, 23);
@@ -1693,6 +1710,7 @@
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormMain";
+            this.Load += new System.EventHandler(this.OnFormLoad);
             this.Resize += new System.EventHandler(this.FormMainResize);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -1890,5 +1908,6 @@
         private System.Windows.Forms.ToolStripMenuItem _tsmExit;
         private System.Windows.Forms.Button _bLevelScaling;
         private System.Windows.Forms.RichTextBox _rtbProcSpellInfo;
+        private System.Windows.Forms.ToolStripMenuItem ProgressButton;
     }
 }

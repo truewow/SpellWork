@@ -1,13 +1,10 @@
-﻿using DBFilesClient.NET;
-
-namespace SpellWork.DBC.Structures
+﻿namespace SpellWork.DBC.Structures
 {
-    public sealed class SpellClassOptionsEntry
+    public class SpellClassOptionsEntry
     {
-        public uint Id;
-        public uint ModalNextSpell;
-        [StoragePresence(StoragePresenceOption.Include, ArraySize = 4)]
+        public uint SpellID;
         public uint[] SpellFamilyFlags;
-        public uint SpellFamilyName;
+        public byte SpellClassSet;
+        public uint ModalNextSpell;
     }
 }

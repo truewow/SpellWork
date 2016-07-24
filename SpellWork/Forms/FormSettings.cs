@@ -27,6 +27,7 @@ namespace SpellWork.Forms
             Settings.Default.WorldDbName = _tbBase.Text;
             Settings.Default.UseDbConnect = _cbUseDBConnect.Checked;
             Settings.Default.DbcPath = _tbPath.Text;
+            Settings.Default.GtPath = _tbGtPath.Text;
 
             MySqlConnection.TestConnect();
 
@@ -50,6 +51,7 @@ namespace SpellWork.Forms
             _tbBase.Text = Settings.Default.WorldDbName;
             _gbDbSetting.Enabled = _cbUseDBConnect.Checked = Settings.Default.UseDbConnect;
             _tbPath.Text = Settings.Default.DbcPath;
+            _tbGtPath.Text = Settings.Default.GtPath;
         }
 
         private void FormSettings_KeyDown(object sender, KeyEventArgs e)
@@ -65,11 +67,6 @@ namespace SpellWork.Forms
                 Settings.Default.DbcPath = folderBrowserDialog1.SelectedPath;
                 Settings.Default.Save();
             }
-        }
-
-        private void _tbPathMouseHover(object sender, EventArgs e)
-        {
-            toolTip1.Show("Click to select folder path of dbcs", _tbPath);
         }
     }
 }

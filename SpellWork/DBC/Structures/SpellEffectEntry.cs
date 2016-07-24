@@ -1,64 +1,47 @@
-﻿using System;
-using System.Linq;
-using DBFilesClient.NET;
+﻿using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace SpellWork.DBC.Structures
 {
-    public sealed class SpellEffectEntry
+    [StructLayout(LayoutKind.Sequential)]
+    public class SpellEffectEntry
     {
-        public uint Id;
-        public uint Difficulty; // Pandaria
-        public uint Type;
-        public float ValueMultiplier;
-        public uint ApplyAuraName;
-        public uint Amplitude;
-        public int BasePoints;
-        public float BonusMultiplier;
-        public float DamageMultiplier;
-        public uint ChainTarget;
-        public int DieSides;
-        public uint ItemType;
-        public uint Mechanic;
-        public int MiscValue;
-        public int MiscValueB;
-        public float PointsPerComboPoint;
-        public uint RadiusIndex;
-        public uint RadiusMaxIndex;
-        public float RealPointsPerLevel;
-        [StoragePresence(StoragePresenceOption.Include, ArraySize = 4)]
-        public uint[] SpellClassMask;
-        public uint TriggerSpell;
-        public uint UnkMop1; // Pandaria
-        public uint ImplicitTargetA;
-        public uint ImplicitTargetB;
-        public uint SpellId;
-        public uint Index;
-        public uint Unk0;
-        public uint UnkWod;
+        public float EffectAmplitude;
+        public float EffectBonusCoefficient;
+        public float EffectChainAmplitude;
+        public float EffectPointsPerResource;
+        public float EffectRealPointsPerLevel;
+        public uint[] EffectSpellClassMask;
+        public float EffectPosFacing;
+        public float BonusCoefficientFromAP;
+        public uint ID;
+        public uint DifficultyID;
+        public uint Effect;
+        public uint EffectAura;
+        public uint EffectAuraPeriod;
+        public int EffectBasePoints;
+        public uint EffectChainTargets;
+        public uint EffectDieSides;
+        public uint EffectItemType;
+        public uint EffectMechanic;
+        public int[] EffectMiscValues;
+        public int[] EffectRadiusIndex;
+        public uint EffectTriggerSpell;
+        public uint[] ImplicitTarget;
+        public uint SpellID;
+        public uint EffectIndex;
+        public uint EffectAttributes;
 
-        public SpellEffectScalingEntry SpellEffectScalingEntry
-        {
-            get
-            {
-                foreach (var scale in DBC.SpellEffectScaling)
-                {
-                    if (scale.SpellEffectId == Id)
-                    {
-                        return scale;
-                    }
-                }
-                return null;
-            }
-        }
+        public SpellEffectScalingEntry SpellEffectScalingEntry { get; set; }
 
         public string MaxRadius
         {
             get
             {
-                if (RadiusMaxIndex == 0 || !DBC.SpellRadius.ContainsKey(RadiusMaxIndex))
-                    return String.Empty;
+                if (EffectRadiusIndex[1] == 0 || !DBC.SpellRadius.ContainsKey(EffectRadiusIndex[1]))
+                    return string.Empty;
 
-                return String.Format("Max Radius (Id {0}) {1:F}", RadiusMaxIndex, DBC.SpellRadius[RadiusMaxIndex].Radius);
+                return $"Max Radius (Id {EffectRadiusIndex[1]}) {DBC.SpellRadius[EffectRadiusIndex[1]].Radius:F}";
             }
         }
 
@@ -66,10 +49,10 @@ namespace SpellWork.DBC.Structures
         {
             get
             {
-                if (RadiusIndex == 0 || !DBC.SpellRadius.ContainsKey(RadiusIndex))
-                    return String.Empty;
+                if (EffectRadiusIndex[0] == 0 || !DBC.SpellRadius.ContainsKey(EffectRadiusIndex[0]))
+                    return string.Empty;
 
-                return String.Format("Radius (Id {0}) {1:F}", RadiusIndex, DBC.SpellRadius[RadiusIndex].Radius);
+                return $"Radius (Id {EffectRadiusIndex[0]}) {DBC.SpellRadius[EffectRadiusIndex[0]].Radius:F}";
             }
         }
     }

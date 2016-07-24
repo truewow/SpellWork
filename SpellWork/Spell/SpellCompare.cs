@@ -7,12 +7,12 @@ namespace SpellWork.Spell
     /// <summary>
     /// Compares two spells
     /// </summary>
-    class SpellCompare
+    static class SpellCompare
     {
         /// <summary>
         /// Search terms
         /// </summary>
-        readonly string[] _words = new[] { "=====" };
+        private static readonly string[] _words = { "=====" };
 
         /// <summary>
         /// Compares two spells
@@ -21,7 +21,7 @@ namespace SpellWork.Spell
         /// <param name="rtb2">RichTextBox 2 in right</param>
         /// <param name="spell1">Compare Spell 1</param>
         /// <param name="spell2">Compare Spell 2</param>
-        public SpellCompare(RichTextBox rtb1, RichTextBox rtb2, SpellInfoHelper spell1, SpellInfoHelper spell2)
+        public static void Compare(RichTextBox rtb1, RichTextBox rtb2, SpellInfoHelper spell1, SpellInfoHelper spell2)
         {
             new SpellInfo(rtb1, spell1);
             new SpellInfo(rtb2, spell2);

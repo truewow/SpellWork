@@ -1,17 +1,14 @@
-﻿using DBFilesClient.NET;
-
-namespace SpellWork.DBC.Structures
+﻿namespace SpellWork.DBC.Structures
 {
     public sealed class ItemEntry
     {
-        public uint Id;
-        public uint Class;
-        public uint SubClass;
-        public int SoundOverrideSubclass;
-        public int Material;
-        public uint DisplayId;
-        public uint InventoryType;
-        public uint Sheath;
-        public uint UnkWod1;
+        public uint FileDataID;
+        public byte Class;
+        public byte SubClass;
+        public sbyte SoundOverrideSubclass;
+        public sbyte Material;
+        public byte InventoryType;
+        public byte Sheath;
+        public byte GroupSoundsID;
     }
 }

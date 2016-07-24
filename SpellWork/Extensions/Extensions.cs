@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
@@ -13,42 +11,6 @@ namespace SpellWork.Extensions
 {
     public static class Extensions
     {
-        /// <summary>
-        /// Reads the NULL-terminated string from the current stream.
-        /// </summary>
-        /// <param name="reader">Stream to read from.</param>
-        /// <returns>Resulting string.</returns>
-        public static string ReadCString(this BinaryReader reader)
-        {
-            byte num;
-            var temp = new List<byte>();
-
-            while ((num = reader.ReadByte()) != 0)
-            {
-                temp.Add(num);
-            }
-
-            return Encoding.UTF8.GetString(temp.ToArray());
-        }
-
-        /// <summary>
-        /// Reads the struct from the current stream.
-        /// </summary>
-        /// <typeparam name="T">Struct type.</typeparam>
-        /// <param name="reader">Stream to read from.</param>
-        /// <returns>Resulting struct.</returns>
-        public static T ReadStruct<T>(this BinaryReader reader) where T : struct
-        {
-            var rawData = reader.ReadBytes(Marshal.SizeOf(typeof(T)));
-
-            var handle = GCHandle.Alloc(rawData, GCHandleType.Pinned);
-            var returnObject = (T)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T));
-
-            handle.Free();
-
-            return returnObject;
-        }
-
         public static StringBuilder AppendFormatIfNotNull(this StringBuilder builder, string format, params object[] arg)
         {
             return arg[0].ToUInt32() != 0 ? builder.AppendFormat(format, arg) : builder;
@@ -70,7 +32,7 @@ namespace SpellWork.Extensions
             return arg != 0 ? builder.AppendFormat(format, arg).AppendLine() : builder;
         }
 
-        public static uint ToUInt32(this Object val)
+        public static uint ToUInt32(this object val)
         {
             if (val == null)
                 return 0;
@@ -78,13 +40,13 @@ namespace SpellWork.Extensions
 
             uint num;
             if (valStr.StartsWith("0x"))
-                uint.TryParse(valStr.Substring(2),System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture, out num);
+                uint.TryParse(valStr.Substring(2),NumberStyles.HexNumber, CultureInfo.InvariantCulture, out num);
             else
                 uint.TryParse(valStr, out num);
             return num;
         }
 
-        public static int ToInt32(this Object val)
+        public static int ToInt32(this object val)
         {
             if (val == null)
                 return 0;
@@ -92,13 +54,13 @@ namespace SpellWork.Extensions
 
             int num;
             if (valStr.StartsWith("0x"))
-                int.TryParse(valStr.Substring(2), System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture, out num);
+                int.TryParse(valStr.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out num);
             else
                 int.TryParse(valStr, out num);
             return num;
         }
 
-        public static float ToFloat(this Object val)
+        public static float ToFloat(this object val)
         {
             if (val == null)
                 return 0.0f;
@@ -108,7 +70,7 @@ namespace SpellWork.Extensions
             return num;
         }
 
-        public static ulong ToUlong(this Object val)
+        public static ulong ToUlong(this object val)
         {
             if (val == null)
                 return 0U;
@@ -116,19 +78,19 @@ namespace SpellWork.Extensions
 
             ulong num;
             if (valStr.StartsWith("0x"))
-                ulong.TryParse(valStr.Substring(2), System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture, out num);
+                ulong.TryParse(valStr.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out num);
             else
                 ulong.TryParse(valStr, out num);
             ulong.TryParse(val.ToString(), out num);
             return num;
         }
 
-        public static String NormalizeString(this String text, String remove)
+        public static string NormalizeString(this string text, string remove)
         {
-            var str = String.Empty;
-            if (remove != String.Empty)
+            var str = string.Empty;
+            if (remove != string.Empty)
             {
-                text = text.Replace(remove, String.Empty);
+                text = text.Replace(remove, string.Empty);
             }
 
             foreach (var s in text.Split('_'))
@@ -165,10 +127,10 @@ namespace SpellWork.Extensions
             clb.Items.Clear();
 
             foreach (var elem in Enum.GetValues(typeof(T)))
-                clb.Items.Add(elem.ToString().NormalizeString(String.Empty));
+                clb.Items.Add(elem.ToString().NormalizeString(string.Empty));
         }
 
-        public static void SetFlags<T>(this CheckedListBox clb, String remove)
+        public static void SetFlags<T>(this CheckedListBox clb, string remove)
         {
             clb.Items.Clear();
 
@@ -176,7 +138,7 @@ namespace SpellWork.Extensions
                 clb.Items.Add(elem.ToString().NormalizeString(remove));
         }
 
-        public static void SetFlags(this CheckedListBox clb, Type type, String remove)
+        public static void SetFlags(this CheckedListBox clb, Type type, string remove)
         {
             clb.Items.Clear();
 
@@ -190,17 +152,17 @@ namespace SpellWork.Extensions
             dt.Columns.Add("ID");
             dt.Columns.Add("NAME");
 
-            dt.Rows.Add(new Object[] { -1, noValue });
+            dt.Rows.Add(-1, noValue);
 
             foreach (var str in Enum.GetValues(typeof(T)))
-                dt.Rows.Add(new Object[] { (int)str, "(" + ((int)str).ToString("000") + ") " + str });
+                dt.Rows.Add((int)str, "(" + ((int)str).ToString("000") + ") " + str);
 
             cb.DataSource = dt;
             cb.DisplayMember = "NAME";
             cb.ValueMember = "ID";
         }
 
-        public static void SetEnumValuesDirect<T>(this ComboBox cb, Boolean setFirstValue)
+        public static void SetEnumValuesDirect<T>(this ComboBox cb, bool setFirstValue)
         {
             cb.BeginUpdate();
 
@@ -220,7 +182,7 @@ namespace SpellWork.Extensions
 
             var dt = new DataTable();
             dt.Columns.Add("ID", typeof(MemberInfo));
-            dt.Columns.Add("NAME", typeof(String));
+            dt.Columns.Add("NAME", typeof(string));
 
             var type = typeof(T).GetMembers();
             var i = 0;
@@ -231,7 +193,7 @@ namespace SpellWork.Extensions
 
                 var dr = dt.NewRow();
                 dr["ID"] = str;
-                dr["NAME"] = String.Format("({0:000}) {1}", i, str.Name);
+                dr["NAME"] = $"({i:000}) {str.Name}";
                 dt.Rows.Add(dr);
                 ++i;
             }
@@ -274,14 +236,9 @@ namespace SpellWork.Extensions
         /// <param name="array">Array in which to search</param>
         /// <param name="value">Meaning Search</param>
         /// <returns>true or false</returns>
-        public static bool ContainsElement(this uint[] array, uint value)
+        public static bool ContainsElement<T>(this T[] array, T value) where T : IComparable
         {
-            return array.Any(i => i == value);
-        }
-
-        public static bool ContainsElement(this int[] array, int value)
-        {
-            return array.Any(i => i == value);
+            return array.Any(i => i.Equals(value));
         }
 
         public static T GetValue<T>(this Dictionary<uint, T> dictionary, uint key)
@@ -291,30 +248,24 @@ namespace SpellWork.Extensions
             return value;
         }
 
-        public static bool IsEmpty(this String str)
+        public static bool IsEmpty(this string str)
         {
-            return str == String.Empty;
+            return str == string.Empty;
         }
 
         public static string GetFullName(this Enum @enum)
         {
             var field = @enum.GetType().GetField(@enum.ToString());
-            if (field != null)
-            {
-                var attrs = (FullNameAttribute[])field.GetCustomAttributes(typeof(FullNameAttribute), false);
+            var attrs = (FullNameAttribute[]) field?.GetCustomAttributes(typeof(FullNameAttribute), false);
 
-                if (attrs.Length > 0)
-                    return attrs[0].FullName;
-            }
-
-            return @enum.ToString();
+            return attrs?.Length > 0 ? attrs[0].FullName : @enum.ToString();
         }
     }
 
-    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Field)]
     public class FullNameAttribute : Attribute
     {
-        public string FullName { get; private set; }
+        public string FullName { get; }
 
         public FullNameAttribute(string fullName)
         {

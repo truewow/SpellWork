@@ -16,26 +16,26 @@ namespace SpellWork.Database
         public static List<string> Dropped = new List<string>();
         public static List<SpellProcEventEntry> SpellProcEvent = new List<SpellProcEventEntry>();
 
-        private static String ConnectionString
+        private static string ConnectionString
         {
             get
             {
                 if (Settings.Default.Host == ".")
-                    return String.Format("Server=localhost;Pipe={0};UserID={1};Password={2};Database={3};CharacterSet=utf8;ConnectionTimeout=5;ConnectionProtocol=Pipe;",
-                        Settings.Default.PortOrPipe, Settings.Default.User, Settings.Default.Pass, Settings.Default.WorldDbName);
+                    return
+                        $"Server=localhost;Pipe={Settings.Default.PortOrPipe};UserID={Settings.Default.User};Password={Settings.Default.Pass};Database={Settings.Default.WorldDbName};CharacterSet=utf8;ConnectionTimeout=5;ConnectionProtocol=Pipe;";
 
-                return String.Format("Server={0};Port={1};UserID={2};Password={3};Database={4};CharacterSet=utf8;ConnectionTimeout=5;",
-                    Settings.Default.Host, Settings.Default.PortOrPipe, Settings.Default.User, Settings.Default.Pass, Settings.Default.WorldDbName);
+                return
+                    $"Server={Settings.Default.Host};Port={Settings.Default.PortOrPipe};UserID={Settings.Default.User};Password={Settings.Default.Pass};Database={Settings.Default.WorldDbName};CharacterSet=utf8;ConnectionTimeout=5;";
             }
         }
 
-        private static String GetSpellName(uint id)
+        private static string GetSpellName(uint id)
         {
-            if (DBC.DBC.SpellInfoStore.ContainsKey(id))
-                return DBC.DBC.SpellInfoStore[id].SpellNameRank;
+            if (DBC.DBC.SpellInfoStore.ContainsKey((int)id))
+                return DBC.DBC.SpellInfoStore[(int)id].SpellNameRank;
 
-            Dropped.Add(String.Format("DELETE FROM `spell_proc_event` WHERE `entry` IN ({0});\r\n", id.ToUInt32()));
-            return String.Empty;
+            Dropped.Add($"DELETE FROM `spell_proc_event` WHERE `entry` IN ({id.ToUInt32()});\r\n");
+            return string.Empty;
         }
 
         public static void SelectProc(string query)
@@ -86,8 +86,7 @@ namespace SpellWork.Database
         public static void AddDBItems()
         {
             // In order to reduce the search time, we make the first selection of all items that have spellid
-            var query = String.Format(
-                @"SELECT    t.entry,
+            var query = @"SELECT    t.entry,
                             t.name,
                             t.description,
                             t.spellid_1,
@@ -102,7 +101,7 @@ namespace SpellWork.Database
                     t.spellid_2 <> 0 ||
                     t.spellid_3 <> 0 ||
                     t.spellid_4 <> 0 ||
-                    t.spellid_5 <> 0;");
+                    t.spellid_5 <> 0;";
 
             using (_conn = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString))
             {
@@ -149,7 +148,7 @@ namespace SpellWork.Database
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(string.Format("Errno {0}{1}{2}", ex.Number, Environment.NewLine, ex.Message));
+                MessageBox.Show($"Errno {ex.Number}{Environment.NewLine}{ex.Message}");
                 Connected = false;
             }
             catch

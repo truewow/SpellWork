@@ -1,13 +1,13 @@
 ﻿namespace SpellWork.DBC.Structures
 {
-    public sealed class SpellCastingRequirementsEntry
+    public class SpellCastingRequirementsEntry
     {
-        public uint Id;
-        public uint FacingCasterFlags;
-        public uint MinFactionId;
-        public uint MinReputation;
-        public int AreaGroupId;
-        public uint RequiredAuraVision;
-        public uint RequiresSpellFocus;
+        public uint SpellID;
+        public ushort MinFactionID;
+        public ushort RequiredAreasID;
+        public ushort RequiresSpellFocus;
+        public byte FacingCasterFlags;
+        public byte MinReputation;
+        public byte RequiredAuraVision;
     }
 }
