@@ -23,5 +23,8 @@
     <Setting Name="DbcPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">dbc</Value>
     </Setting>
+    <Setting Name="GtPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">gt</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

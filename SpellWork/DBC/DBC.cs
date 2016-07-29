@@ -10,7 +10,6 @@ using SpellWork.Spell;
 using SpellWork.Properties;
 using SpellWork.GameTables;
 using System.Collections.Concurrent;
-using System.Linq;
 
 namespace SpellWork.DBC
 {
@@ -121,7 +120,7 @@ namespace SpellWork.DBC
                 }
             }
 
-            // Open DBCs locally 
+            // Open DBCs locally
             // This is faster because it avoids a truckload of reflection code later (ProcInfo, i'm looking at you)
             var skillLineAbility = new DB2Reader<SkillLineAbilityEntry>($@"{Settings.Default.DbcPath}\SkillLineAbility.db2");
             var skillLine = new DB2Reader<SkillLineEntry>($@"{Settings.Default.DbcPath}\SkillLine.db2");
@@ -528,7 +527,7 @@ namespace SpellWork.DBC
         public static uint SelectedLevel = MaxLevel;
 
         private static Dictionary<int, SpellInfoHelper> _spellInfo = new Dictionary<int, SpellInfoHelper>();
-        public static Dictionary<int, SpellInfoHelper> SpellInfoStore => _spellInfo; 
+        public static Dictionary<int, SpellInfoHelper> SpellInfoStore => _spellInfo;
 
         public static event Action<int, string> OnLoadProgress;
     }

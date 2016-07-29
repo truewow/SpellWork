@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 using SpellWork.DBC.Structures;
 using SpellWork.Extensions;
-using System.Collections.Generic;
 
 namespace SpellWork.Spell
 {
