@@ -372,9 +372,9 @@ namespace SpellWork.Spell
                 if (effect.SpellEffectScalingEntry != null && effect.SpellEffectScalingEntry.Coefficient != 0.0f && _spell.Scaling != null && _spell.Scaling.Class != 0)
                 {
                     var level = DBC.DBC.SelectedLevel - 1;
-                    if ((_spell.AttributesEx11 & (uint)SpellAtributeEx11.SPELL_ATTR11_UNK2) == 0)
+                    if ((_spell.AttributesEx11 & (uint)SpellAtributeEx11.SPELL_ATTR11_SCALES_WITH_ITEM_LEVEL) == 0)
                     {
-                        if ((_spell.AttributesEx10 & (uint)SpellAtributeEx10.SPELL_ATTR10_UNK12) != 0)
+                        if ((_spell.AttributesEx10 & (uint)SpellAtributeEx10.SPELL_ATTR10_USE_SPELL_BASE_LEVEL_FOR_SCALING) != 0)
                             level = _spell.BaseLevel;
                     }
                     else
@@ -390,7 +390,7 @@ namespace SpellWork.Spell
 
                         if (_spell.Scaling.ScalesFromItemLevel == 0)
                         {
-                            if ((_spell.AttributesEx11 & (uint)SpellAtributeEx11.SPELL_ATTR11_UNK2) == 0)
+                            if ((_spell.AttributesEx11 & (uint)SpellAtributeEx11.SPELL_ATTR11_SCALES_WITH_ITEM_LEVEL) == 0)
                             {
                                 var gtEntry = (uint)(((_spell.Scaling.Class > 0 ? _spell.Scaling.Class : 11 - _spell.Scaling.Class) - 1) * 123) + level - 1;
                                 value = DBC.DBC.gtSpellScaling[gtEntry].Multiplier;

@@ -187,7 +187,7 @@ namespace SpellWork.Spell
                 if (Scaling == null)
                     return string.Empty;
 
-                if ((AttributesEx11 & (uint)SpellAtributeEx11.SPELL_ATTR11_UNK2) != 0)
+                if ((AttributesEx11 & (uint)SpellAtributeEx11.SPELL_ATTR11_SCALES_WITH_ITEM_LEVEL) != 0)
                     return string.Format(" (ItemLevel {0})", DBC.DBC.SelectedItemLevel);
 
                 return string.Format(" (Level {0})", DBC.DBC.SelectedLevel);
