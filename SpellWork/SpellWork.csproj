@@ -89,7 +89,6 @@
     </Compile>
     <Compile Include="Database\Structures.cs" />
     <Compile Include="DBC\DataStoreFileNameAttribute.cs" />
-    <Compile Include="DBC\DB2Ignored.cs" />
     <Compile Include="DBC\DB2Reader.cs" />
     <Compile Include="DBC\Structures\AreaGroupMemberEntry.cs" />
     <Compile Include="DBC\Structures\AreaTableEntry.cs" />

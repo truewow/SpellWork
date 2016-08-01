@@ -30,103 +30,175 @@ namespace SpellWork.DBC
             var structure = new T();
 
             var propertyIndex = 0;
-            foreach (var prop in typeof (T).GetFields(BindingFlags.Instance | BindingFlags.Public))
+            try
             {
-                if (propertyIndex >= FieldCount)
-                    return structure;
-
-                if (prop.GetCustomAttribute<DB2Ignored>() != null)
-                    continue;
-
-                var fieldStructure = FieldStructures[propertyIndex];
-                var fieldPosition = (int) fieldStructure.Position;
-                var arraySize = 1;
-                if (prop.FieldType.IsArray)
+                foreach (var prop in typeof(T).GetFields(BindingFlags.Instance | BindingFlags.Public))
                 {
-                    var nextMarker = propertyIndex + 1 == FieldCount
-                        ? RecordSize
-                        : FieldStructures[propertyIndex + 1].Position;
-                    arraySize = (nextMarker - fieldPosition) / fieldStructure.ByteSize;
+                    if (propertyIndex >= FieldCount)
+                        return structure;
+
+                    object value;
+                    if (prop.FieldType.IsArray)
+                        value = BuildArrayField(byteRow, propertyIndex, prop);
+                    else
+                        value = BuildSimpleField(byteRow, propertyIndex, prop);
+
+                    //FieldStructures[propertyIndex].ValueSetter(structure, value);
+                    ++propertyIndex;
+                    prop.SetValue(structure, value);
                 }
-
-                var elementType = prop.FieldType.IsArray ? prop.FieldType.GetElementType() : prop.FieldType;
-                var typeCode = Type.GetTypeCode(elementType);
-                var instanceValue = Array.CreateInstance(elementType, arraySize);
-                for (var i = 0; i < arraySize; ++i)
-                {
-                    try
-                    {
-                        switch (typeCode)
-                        {
-                            case TypeCode.SByte:
-                                instanceValue.SetValue((sbyte) byteRow[fieldPosition], i);
-                                break;
-                            case TypeCode.Byte:
-                                instanceValue.SetValue(byteRow[fieldPosition], i);
-                                break;
-                            case TypeCode.Int16:
-                                instanceValue.SetValue((short)(byteRow[fieldPosition] | (byteRow[fieldPosition + 1] << 8)), i);
-                                break;
-                            case TypeCode.UInt16:
-                                instanceValue.SetValue((ushort)(byteRow[fieldPosition] | (byteRow[fieldPosition + 1] << 8)), i);
-                                break;
-                            case TypeCode.Int32:
-                            {
-                                var elementVal = 0;
-                                for (var k = 0; k < fieldStructure.ByteSize; ++k)
-                                    elementVal |= byteRow[fieldPosition + k] << (8 * k);
-                                instanceValue.SetValue(elementVal, i);
-                                break;
-                            }
-                            case TypeCode.UInt32:
-                            {
-                                var elementVal = 0u;
-                                for (var k = 0; k < fieldStructure.ByteSize; ++k)
-                                    elementVal |= (uint) (byteRow[fieldPosition + k] << (8 * k));
-                                instanceValue.SetValue(elementVal, i);
-                                break;
-                            }
-                            case TypeCode.Int64:
-                                instanceValue.SetValue(BitConverter.ToInt64(byteRow, fieldPosition), i);
-                                break;
-                            case TypeCode.UInt64:
-                                instanceValue.SetValue(BitConverter.ToUInt64(byteRow, fieldPosition), i);
-                                break;
-                            case TypeCode.Single:
-                                instanceValue.SetValue(BitConverter.ToSingle(byteRow, fieldPosition), i);
-                                break;
-                            case TypeCode.String:
-                            {
-                                if (HasInlineStrings)
-                                {
-                                    //! TODO 7.x Implement, only Item-Sparse has this
-                                    instanceValue.SetValue(string.Empty, i);
-                                }
-                                else
-                                {
-                                    var stringOffset = BitConverter.ToInt32(byteRow, fieldPosition);
-                                    if (!StringTable.ContainsKey(stringOffset))
-                                        Console.WriteLine("Derp");
-                                    instanceValue.SetValue(StringTable[stringOffset], i);
-                                }
-                                break;
-                            }
-                        }
-
-                        fieldPosition += fieldStructure.ByteSize;
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"Possible error when loading record. {e}");
-                        return null;
-                    }
-                }
-
-                ++propertyIndex;
-                prop.SetValue(structure, arraySize == 1 ? instanceValue.GetValue(0) : instanceValue);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Possible error when loading record. {e}");
+                return null;
             }
 
             return structure;
+        }
+
+        private object BuildArrayField(byte[] byteRow, int propertyIndex, FieldInfo prop)
+        {
+            var fieldStructure = FieldStructures[propertyIndex];
+            var fieldPosition = (int)fieldStructure.Position;
+            var nextMarker = propertyIndex + 1 == FieldCount
+                ? RecordSize
+                : FieldStructures[propertyIndex + 1].Position;
+            var arraySize = (nextMarker - fieldPosition) / fieldStructure.ByteSize;
+
+            var elementType = prop.FieldType.GetElementType();
+            var typeCode = Type.GetTypeCode(elementType);
+            var instanceValue = Array.CreateInstance(elementType, arraySize);
+            for (var i = 0; i < arraySize; ++i)
+            {
+                switch (typeCode)
+                {
+                    case TypeCode.SByte:
+                        instanceValue.SetValue((sbyte)byteRow[fieldPosition], i);
+                        break;
+                    case TypeCode.Byte:
+                        instanceValue.SetValue(byteRow[fieldPosition], i);
+                        break;
+                    case TypeCode.Int16:
+                        instanceValue.SetValue((short)(byteRow[fieldPosition] | (byteRow[fieldPosition + 1] << 8)), i);
+                        break;
+                    case TypeCode.UInt16:
+                        instanceValue.SetValue((ushort)(byteRow[fieldPosition] | (byteRow[fieldPosition + 1] << 8)), i);
+                        break;
+                    case TypeCode.Int32:
+                    {
+                        var elementVal = 0;
+                        for (var k = 0; k < fieldStructure.ByteSize; ++k)
+                            elementVal |= byteRow[fieldPosition + k] << (8 * k);
+                        instanceValue.SetValue(elementVal, i);
+                        break;
+                    }
+                    case TypeCode.UInt32:
+                    {
+                        var elementVal = 0u;
+                        for (var k = 0; k < fieldStructure.ByteSize; ++k)
+                            elementVal |= (uint)(byteRow[fieldPosition + k] << (8 * k));
+                        instanceValue.SetValue(elementVal, i);
+                        break;
+                    }
+                    case TypeCode.Int64:
+                        instanceValue.SetValue(BitConverter.ToInt64(byteRow, fieldPosition), i);
+                        break;
+                    case TypeCode.UInt64:
+                        instanceValue.SetValue(BitConverter.ToUInt64(byteRow, fieldPosition), i);
+                        break;
+                    case TypeCode.Single:
+                        instanceValue.SetValue(BitConverter.ToSingle(byteRow, fieldPosition), i);
+                        break;
+                    case TypeCode.String:
+                    {
+                        if (HasInlineStrings)
+                        {
+                            //! TODO 7.x Implement, only Item-Sparse has this
+                            instanceValue.SetValue(string.Empty, i);
+                        }
+                        else
+                        {
+                            var stringOffset = BitConverter.ToInt32(byteRow, fieldPosition);
+                            if (StringTable.ContainsKey(stringOffset))
+                                instanceValue.SetValue(StringTable[stringOffset], i);
+                            else
+                                instanceValue.SetValue(string.Empty, i);
+                        }
+                        break;
+                    }
+                }
+
+                fieldPosition += fieldStructure.ByteSize;
+            }
+
+            return instanceValue;
+        }
+
+        private object BuildSimpleField(byte[] byteRow, int propertyIndex, FieldInfo prop)
+        {
+            var fieldStructure = FieldStructures[propertyIndex];
+            var fieldPosition = (int)fieldStructure.Position;
+            object instanceValue = null;
+            switch (Type.GetTypeCode(prop.FieldType))
+            {
+                case TypeCode.SByte:
+                    instanceValue = (sbyte)byteRow[fieldPosition];
+                    break;
+                case TypeCode.Byte:
+                    instanceValue = byteRow[fieldPosition];
+                    break;
+                case TypeCode.Int16:
+                    instanceValue = BitConverter.ToInt16(byteRow, fieldPosition);
+                    break;
+                case TypeCode.UInt16:
+                    instanceValue = BitConverter.ToUInt16(byteRow, fieldPosition);
+                    break;
+                case TypeCode.Int32:
+                    {
+                        var elementVal = 0;
+                        for (var k = 0; k < fieldStructure.ByteSize; ++k)
+                            elementVal |= byteRow[fieldPosition + k] << (8 * k);
+                        instanceValue = elementVal;
+                        break;
+                    }
+                case TypeCode.UInt32:
+                    {
+                        var elementVal = 0u;
+                        for (var k = 0; k < fieldStructure.ByteSize; ++k)
+                            elementVal |= (uint)(byteRow[fieldPosition + k] << (8 * k));
+                        instanceValue = elementVal;
+                        break;
+                    }
+                case TypeCode.Int64:
+                    instanceValue = BitConverter.ToInt64(byteRow, fieldPosition);
+                    break;
+                case TypeCode.UInt64:
+                    instanceValue = BitConverter.ToUInt64(byteRow, fieldPosition);
+                    break;
+                case TypeCode.Single:
+                    instanceValue = BitConverter.ToSingle(byteRow, fieldPosition);
+                    break;
+                case TypeCode.String:
+                {
+                    if (HasInlineStrings)
+                    {
+                        //! TODO 7.x Implement, only Item-Sparse has this
+                        instanceValue = string.Empty;
+                    }
+                    else
+                    {
+                        var stringOffset = BitConverter.ToInt32(byteRow, fieldPosition);
+                        if (StringTable.ContainsKey(stringOffset))
+                            instanceValue = StringTable[stringOffset];
+                        else
+                            instanceValue = string.Empty;
+                    }
+                    break;
+                }
+            }
+
+            return instanceValue;
         }
 
         private class FieldStructure

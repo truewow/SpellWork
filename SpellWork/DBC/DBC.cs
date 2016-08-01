@@ -358,8 +358,7 @@ namespace SpellWork.DBC
                         return;
                     }
 
-                    foreach (var spellInfoData in SpellEffect)
-                        spellInfoData.Value.SpellEffectScalingEntry = effect.Value;
+                    SpellEffect[effect.Value.SpellEffectId].SpellEffectScalingEntry = effect.Value;
                 }
                 catch (Exception e)
                 {
