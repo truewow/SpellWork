@@ -43,8 +43,7 @@ namespace SpellWork.Spell
                     _rtb.AppendFormatLine(_line);
 
                 var addline = false;
-                // TODO Reimplement
-                /*if (DBC.DBC.SpellTriggerStore.ContainsKey(_spell.ID))
+                if (DBC.DBC.SpellTriggerStore.ContainsKey(_spell.ID))
                 {
                     foreach (var procSpellId in DBC.DBC.SpellTriggerStore[_spell.ID])
                     {
@@ -57,7 +56,7 @@ namespace SpellWork.Spell
                         _rtb.SetDefaultStyle();
                         addline = true;
                     }
-                }*/
+                }
                 if (addline)
                     _rtb.AppendFormatLine(_line);
 

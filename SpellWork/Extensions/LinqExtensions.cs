@@ -52,9 +52,9 @@ namespace SpellWork.Extensions
 
             switch (basicValue.GetType().Name)
             {
-                case "public uint":
+                case "UInt32":
                     return Compare(basicValue.ToUInt32(), val.ToUInt32(), compareType);
-                case "public int":
+                case "Int32":
                     return Compare(basicValue.ToInt32(), val.ToInt32(), compareType);
                 case "Single":
                     return Compare(basicValue.ToFloat(), val.ToFloat(), compareType);
@@ -62,12 +62,12 @@ namespace SpellWork.Extensions
                     return Compare(basicValue.ToUlong(), val.ToUlong(), compareType);
                 case "String":
                     return Compare(basicValue.ToString(), val.ToString(), compareType);
-                case @"public uint[]":
+                case @"UInt32[]":
                 {
                     var valUint = val.ToUInt32();
                     return ((uint[])basicValue).Any(el => Compare(el, valUint, compareType));
                 }
-                case @"public int[]":
+                case @"Int32[]":
                 {
                     var valInt = val.ToInt32();
                     return ((int[])basicValue).Any(el => Compare(el, valInt, compareType));

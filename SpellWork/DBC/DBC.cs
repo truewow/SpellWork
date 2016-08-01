@@ -1,15 +1,14 @@
+using SpellWork.Database;
+using SpellWork.DBC.Structures;
+using SpellWork.GameTables;
+using SpellWork.GameTables.Structures;
+using SpellWork.Properties;
+using SpellWork.Spell;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Threading.Tasks;
-using SpellWork.Database;
-using SpellWork.DBC.Structures;
-using SpellWork.GameTables.Structures;
-using SpellWork.Spell;
-using SpellWork.Properties;
-using SpellWork.GameTables;
-using System.Collections.Concurrent;
 
 namespace SpellWork.DBC
 {
@@ -22,7 +21,7 @@ namespace SpellWork.DBC
         public static DB2Reader<AreaTableEntry> AreaTable = new DB2Reader<AreaTableEntry>();
         public static DB2Reader<OverrideSpellDataEntry> OverrideSpellData = new DB2Reader<OverrideSpellDataEntry>();
         public static DB2Reader<ScreenEffectEntry> ScreenEffect = new DB2Reader<ScreenEffectEntry>();
-        private static DB2Reader<SpellEntry> Spell = new DB2Reader<SpellEntry>();
+        public static DB2Reader<SpellEntry> Spell = new DB2Reader<SpellEntry>();
         private static DB2Reader<SpellAuraOptionsEntry> SpellAuraOptions = new DB2Reader<SpellAuraOptionsEntry>();
         private static DB2Reader<SpellAuraRestrictionsEntry> SpellAuraRestrictions = new DB2Reader<SpellAuraRestrictionsEntry>();
         private static DB2Reader<SpellCastingRequirementsEntry> SpellCastingRequirements = new DB2Reader<SpellCastingRequirementsEntry>();
@@ -62,34 +61,11 @@ namespace SpellWork.DBC
         public static Dictionary<int, SkillLineAbilityEntry> SkilllLineAbilityStore = new Dictionary<int, SkillLineAbilityEntry>();
         public static Dictionary<int, SkillLineEntry> SkilllLineStore = new Dictionary<int, SkillLineEntry>();
 
-        private static readonly Dictionary<uint, SpellInfoLoadData> SpellInfoLoadData = new Dictionary<uint, SpellInfoLoadData>();
+        private static readonly IDictionary<uint, SpellInfoLoadData> SpellInfoLoadData = new ConcurrentDictionary<uint, SpellInfoLoadData>();
+        public static readonly IDictionary<uint, ISet<uint>> SpellTriggerStore = new Dictionary<uint, ISet<uint>>();
 
         public static void Load()
         {
-            if (!Directory.Exists(Settings.Default.DbcPath))
-            {
-                var browserDialog = new System.Windows.Forms.FolderBrowserDialog {
-                    Description = "Select the path to the directory containing your DB2 files."
-                };
-                if (browserDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    Settings.Default.DbcPath = browserDialog.SelectedPath;
-                    Settings.Default.Save();
-                }
-            }
-
-            if (!Directory.Exists(Settings.Default.GtPath))
-            {
-                var browserDialog = new System.Windows.Forms.FolderBrowserDialog {
-                    Description = "Select the path to the directory containing your GameTable files."
-                };
-                if (browserDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    Settings.Default.GtPath = browserDialog.SelectedPath;
-                    Settings.Default.Save();
-                }
-            }
-
             foreach (var dbc in typeof(DBC).GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
             {
                 if (!dbc.FieldType.IsGenericType || dbc.FieldType.GetGenericTypeDefinition() != typeof(DB2Reader<>))
@@ -103,16 +79,13 @@ namespace SpellWork.DBC
 
                 try
                 {
-                    OnLoadProgress?.Invoke(0, $"Loading {dbc.Name}.db2 ...");
                     dbc.FieldType.GetMethod("Open", new [] { typeof(string) }).Invoke(dbc.GetValue(null), new object[] { $@"{Settings.Default.DbcPath}\{name}.db2" });
                 }
                 catch (DirectoryNotFoundException)
                 {
-                    OnLoadProgress?.Invoke(0, $"Could not open {dbc.Name}.db2 ...");
                 }
                 catch (TargetInvocationException tie)
                 {
-                    OnLoadProgress?.Invoke(0, $"Could not open {dbc.Name}.db2 ...");
                     if (tie.InnerException is ArgumentException)
                         throw new ArgumentException($"Failed to load {dbc.Name}.db2: {tie.InnerException.Message}");
 
@@ -133,352 +106,219 @@ namespace SpellWork.DBC
             skillLine.Clear();
             skillLineAbility.Clear();
 
-            // Use ConcurrentQueue to enable safe enqueueing from multiple threads.
-            var exceptions = new ConcurrentQueue<Exception>();
-
-            OnLoadProgress?.Invoke(0, "Generating SpellInfo store ...");
-
             foreach (var spell in Spell)
-                SpellInfoLoadData[spell.Value.ID] = new SpellInfoLoadData() {
-                    Spell = spell.Value
-                };
+                SpellInfoLoadData[spell.Value.ID] = new SpellInfoLoadData() { Spell = spell.Value };
 
-            Parallel.ForEach(SpellInfoLoadData, effect =>
+            foreach (var effect in SpellInfoLoadData)
             {
-                try
+                if (!SpellMisc.ContainsKey(effect.Value.Spell.MiscID))
                 {
-                    if (!SpellMisc.ContainsKey(effect.Value.Spell.MiscID))
-                    {
-                        Console.WriteLine(
-                            $"Spell {effect.Key} is referencing unknown SpellMisc {effect.Value.Spell.MiscID}, ignoring!");
-                        return;
-                    }
-                    effect.Value.Misc = SpellMisc[(int) effect.Value.Spell.MiscID];
+                    Console.WriteLine($"Spell {effect.Key} is referencing unknown SpellMisc {effect.Value.Spell.MiscID}, ignoring!");
+                    continue;
                 }
-                catch (Exception e)
-                {
-                    exceptions.Enqueue(e);
-                }
-            });
 
-            OnLoadProgress?.Invoke(0, "Loading spell effects ...");
+                effect.Value.Misc = SpellMisc[(int) effect.Value.Spell.MiscID];
+            }
 
-            Parallel.ForEach(SpellEffect, effect =>
-            {
-                try {
-                    if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
-                    {
-                        Console.WriteLine(
-                            $"Spell effect {effect.Value.ID} is referencing unknown spell {effect.Value.SpellID}, ignoring!");
-                        return;
-                    }
-                    SpellInfoLoadData[effect.Value.SpellID].Effects.Add(effect.Value);
-                }
-                catch (Exception e)
-                {
-                    exceptions.Enqueue(e);
-                }
-            });
-
-            OnLoadProgress?.Invoke(0, "Loading spell target restrictions ...");
-
-            Parallel.ForEach(SpellTargetRestrictions, effect =>
+            foreach (var effect in SpellEffect)
             {
                 if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
                 {
-                    Console.WriteLine(
-                        $"SpellTargetRestrictions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
-                    return;
+                    Console.WriteLine($"Spell effect {effect.Value.ID} is referencing unknown spell {effect.Value.SpellID}, ignoring!");
+                    continue;
                 }
+
+                SpellInfoLoadData[effect.Value.SpellID].Effects.Add(effect.Value);
+                var triggerid = effect.Value.EffectTriggerSpell;
+                if (triggerid != 0)
+                {
+                    if (SpellTriggerStore.ContainsKey(triggerid))
+                        SpellTriggerStore[triggerid].Add(effect.Value.SpellID);
+                    else
+                        SpellTriggerStore.Add(triggerid, new SortedSet<uint> { effect.Value.SpellID });
+                }
+            }
+
+            foreach (var effect in SpellTargetRestrictions)
+            {
+                if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
+                {
+                    Console.WriteLine($"SpellTargetRestrictions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                    continue;
+                }
+
                 SpellInfoLoadData[effect.Value.SpellID].TargetRestrictions.Add(effect.Value);
-            });
+            }
 
-            OnLoadProgress?.Invoke(0, "Loading spell visuals ...");
-
-            Parallel.ForEach(SpellXSpellVisual, effect =>
+            foreach (var effect in SpellXSpellVisual)
             {
                 if (effect.Value.DifficultyID != 0 || effect.Value.PlayerConditionID != 0)
-                    return;
+                    continue;
 
-                try {
-                    if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
-                    {
-                        Console.WriteLine(
-                            $"SpellXSpellVisual: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
-                        return;
-                    }
-                    SpellInfoLoadData[effect.Value.SpellID].SpellXSpellVisual = effect.Value;
-                }
-                catch (Exception e)
+                if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
                 {
-                    exceptions.Enqueue(e);
+                    Console.WriteLine($"SpellXSpellVisual: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                    continue;
                 }
-            });
 
-            OnLoadProgress?.Invoke(0, "Loading spell scaling parameters ...");
+                SpellInfoLoadData[effect.Value.SpellID].SpellXSpellVisual = effect.Value;
+            }
 
-            Parallel.ForEach(SpellScaling, effect =>
-            {
-                try {
-                    if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
-                    {
-                        Console.WriteLine(
-                            $"SpellScaling: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
-                        return;
-                    }
-                    SpellInfoLoadData[effect.Value.SpellID].Scaling = effect.Value;
-                }
-                catch (Exception e)
-                {
-                    exceptions.Enqueue(e);
-                }
-            });
-
-            OnLoadProgress?.Invoke(0, "Loading aura options ...");
-
-            Parallel.ForEach(SpellAuraOptions, effect =>
-            {
-                try
-                {
-                    if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
-                    {
-                        Console.WriteLine(
-                            $"SpellAuraOptions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
-                        return;
-                    }
-                    SpellInfoLoadData[effect.Value.SpellID].AuraOptions = effect.Value;
-                    if (effect.Value.SpellProcsPerMinuteID != 0)
-                        SpellInfoLoadData[effect.Value.SpellID].ProcsPerMinute = SpellProcsPerMinute[effect.Value.SpellProcsPerMinuteID];
-                }
-                catch (Exception e)
-                {
-                    exceptions.Enqueue(e);
-                }
-            });
-
-            SpellProcsPerMinute.Clear();
-
-            OnLoadProgress?.Invoke(0, "Loading aura restrictions ...");
-
-            Parallel.ForEach(SpellAuraRestrictions, effect =>
-            {
-                try {
-                    if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
-                    {
-                        Console.WriteLine(
-                            $"SpellAuraRestrictions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
-                        return;
-                    }
-                    SpellInfoLoadData[effect.Value.SpellID].AuraRestrictions = effect.Value;
-                }
-                catch (Exception e)
-                {
-                    exceptions.Enqueue(e);
-                }
-            });
-
-            OnLoadProgress?.Invoke(0, "Loading spell categories ...");
-
-            Parallel.ForEach(SpellCategories, effect =>
-            {
-                try {
-                    if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
-                    {
-                        Console.WriteLine(
-                            $"SpellCategories: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
-                        return;
-                    }
-                    SpellInfoLoadData[effect.Value.SpellID].Categories = effect.Value;
-                }
-                catch (Exception e)
-                {
-                    exceptions.Enqueue(e);
-                }
-            });
-
-            OnLoadProgress?.Invoke(0, "Loading casting requirements ...");
-
-            Parallel.ForEach(SpellCastingRequirements, effect =>
+            foreach (var effect in SpellScaling)
             {
                 if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
                 {
-                    Console.WriteLine(
-                        $"SpellCastingRequirements: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                    Console.WriteLine($"SpellScaling: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                    continue;
+                }
+
+                SpellInfoLoadData[effect.Value.SpellID].Scaling = effect.Value;
+            }
+
+            foreach (var effect in SpellAuraOptions)
+            {
+                if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
+                {
+                    Console.WriteLine($"SpellAuraOptions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                    continue;
+                }
+
+                SpellInfoLoadData[effect.Value.SpellID].AuraOptions = effect.Value;
+                if (effect.Value.SpellProcsPerMinuteID != 0)
+                    SpellInfoLoadData[effect.Value.SpellID].ProcsPerMinute = SpellProcsPerMinute[effect.Value.SpellProcsPerMinuteID];
+            }
+
+            foreach (var effect in SpellAuraRestrictions)
+            {
+                if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
+                {
+                    Console.WriteLine($"SpellAuraRestrictions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                    continue;
+                }
+
+                SpellInfoLoadData[effect.Value.SpellID].AuraRestrictions = effect.Value;
+            }
+
+            foreach (var effect in SpellCategories)
+            {
+                if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
+                {
+                    Console.WriteLine($"SpellCategories: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                    continue;
+                }
+
+                SpellInfoLoadData[effect.Value.SpellID].Categories = effect.Value;
+            }
+
+            foreach (var effect in SpellCastingRequirements)
+            {
+                if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
+                {
+                    Console.WriteLine($"SpellCastingRequirements: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                     return;
                 }
+
                 SpellInfoLoadData[effect.Value.SpellID].CastingRequirements = effect.Value;
-            });
+            }
 
-            OnLoadProgress?.Invoke(0, "Loading spell class options ...");
-
-            Parallel.ForEach(SpellClassOptions, effect =>
+            foreach (var effect in SpellClassOptions)
             {
-                try {
-                    if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
-                    {
-                        Console.WriteLine(
-                            $"SpellClassOptions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
-                        return;
-                    }
-                    SpellInfoLoadData[effect.Value.SpellID].ClassOptions = effect.Value;
-                }
-                catch (Exception e)
+                if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
                 {
-                    exceptions.Enqueue(e);
+                    Console.WriteLine($"SpellClassOptions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                    continue;
                 }
-            });
 
-            OnLoadProgress?.Invoke(0, "Loading cooldowns ...");
+                SpellInfoLoadData[effect.Value.SpellID].ClassOptions = effect.Value;
+            }
 
-            Parallel.ForEach(SpellCooldowns, effect =>
+            foreach (var effect in SpellCooldowns)
             {
-                try {
-                    if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
-                    {
-                        Console.WriteLine(
-                            $"SpellCooldowns: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
-                        return;
-                    }
-                    SpellInfoLoadData[effect.Value.SpellID].Cooldowns = effect.Value;
-                }
-                catch (Exception e)
+                if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
                 {
-                    exceptions.Enqueue(e);
+                    Console.WriteLine($"SpellCooldowns: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                    continue;
                 }
-            });
 
-            Parallel.ForEach(SpellEffectScaling, effect =>
+                SpellInfoLoadData[effect.Value.SpellID].Cooldowns = effect.Value;
+            }
+
+            foreach (var effect in SpellEffectScaling)
             {
-                try
+                if (!SpellEffect.ContainsKey((int)effect.Value.SpellEffectId))
                 {
-                    if (!SpellEffect.ContainsKey((int)effect.Value.SpellEffectId))
-                    {
-                        Console.WriteLine(
-                            $"SpellEffectScaling: Unknown spell effect {effect.Value.SpellEffectId} referenced, ignoring!");
-                        return;
-                    }
-
-                    SpellEffect[effect.Value.SpellEffectId].SpellEffectScalingEntry = effect.Value;
+                    Console.WriteLine($"SpellEffectScaling: Unknown spell effect {effect.Value.SpellEffectId} referenced, ignoring!");
+                    continue;
                 }
-                catch (Exception e)
-                {
-                    exceptions.Enqueue(e);
-                }
-            });
 
-            OnLoadProgress?.Invoke(0, "Loading interrupts ...");
+                SpellEffect[effect.Value.SpellEffectId].SpellEffectScalingEntry = effect.Value;
+            }
 
-            Parallel.ForEach(SpellInterrupts, effect =>
+            foreach (var effect in SpellInterrupts)
             {
-                try {
-                    if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
-                    {
-                        Console.WriteLine(
-                            $"SpellInterrupts: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
-                        return;
-                    }
-                    SpellInfoLoadData[effect.Value.SpellID].Interrupts = effect.Value;
-                }
-                catch (Exception e)
+                if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
                 {
-                    exceptions.Enqueue(e);
+                    Console.WriteLine($"SpellInterrupts: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                    continue;
                 }
-            });
 
-            OnLoadProgress?.Invoke(0, "Loading equipped items ...");
+                SpellInfoLoadData[effect.Value.SpellID].Interrupts = effect.Value;
+            }
 
-            Parallel.ForEach(SpellEquippedItems, effect =>
+            foreach (var effect in SpellEquippedItems)
             {
-                try {
-                    if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
-                    {
-                        Console.WriteLine(
-                            $"SpellEquippedItems: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
-                        return;
-                    }
-                    SpellInfoLoadData[effect.Value.SpellID].EquippedItems = effect.Value;
-                }
-                catch (Exception e)
+                if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
                 {
-                    exceptions.Enqueue(e);
+                    Console.WriteLine($"SpellEquippedItems: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                    continue;
                 }
-            });
 
-            OnLoadProgress?.Invoke(0, "Loading spell levels ...");
+                SpellInfoLoadData[effect.Value.SpellID].EquippedItems = effect.Value;
+            }
 
-            Parallel.ForEach(SpellLevels, effect =>
+            foreach (var effect in SpellLevels)
             {
-                try {
-                    if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
-                    {
-                        Console.WriteLine(
-                            $"SpellLevels: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
-                        return;
-                    }
-                    SpellInfoLoadData[effect.Value.SpellID].Levels = effect.Value;
-                }
-                catch (Exception e)
+                if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
                 {
-                    exceptions.Enqueue(e);
+                    Console.WriteLine($"SpellLevels: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                    continue;
                 }
-            });
 
-            OnLoadProgress?.Invoke(0, "Loading spell reagents costs ...");
+                SpellInfoLoadData[effect.Value.SpellID].Levels = effect.Value;
+            }
 
-            Parallel.ForEach(SpellReagents, effect =>
+            foreach (var effect in SpellReagents)
             {
-                try {
-                    if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
-                    {
-                        Console.WriteLine(
-                            $"SpellReagents: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
-                        return;
-                    }
-                    SpellInfoLoadData[effect.Value.SpellID].Reagents = effect.Value;
-                }
-                catch (Exception e)
+                if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
                 {
-                    exceptions.Enqueue(e);
+                    Console.WriteLine($"SpellReagents: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                    continue;
                 }
-            });
 
-            OnLoadProgress?.Invoke(0, "Loading spell shapeshift conditions ...");
+                SpellInfoLoadData[effect.Value.SpellID].Reagents = effect.Value;
+            }
 
-            Parallel.ForEach(SpellShapeshift, effect =>
+            foreach (var effect in SpellShapeshift)
             {
-                try {
-                    if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
-                    {
-                        Console.WriteLine(
-                            $"SpellShapeshift: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
-                        return;
-                    }
-                    SpellInfoLoadData[effect.Value.SpellID].Shapeshift = effect.Value;
-                }
-                catch (Exception e)
+                if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
                 {
-                    exceptions.Enqueue(e);
+                    Console.WriteLine($"SpellShapeshift: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                    continue;
                 }
-            });
 
-            OnLoadProgress?.Invoke(0, "Loading spell totem cost ...");
+                SpellInfoLoadData[effect.Value.SpellID].Shapeshift = effect.Value;
+            }
 
-            Parallel.ForEach(SpellTotems, effect =>
+            foreach (var effect in SpellTotems)
             {
-                try {
-                    if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
-                    {
-                        Console.WriteLine(
-                            $"SpellTotems: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
-                        return;
-                    }
-                    SpellInfoLoadData[effect.Value.SpellID].Totems = effect.Value;
-                }
-                catch (Exception e)
+                if (!SpellInfoLoadData.ContainsKey(effect.Value.SpellID))
                 {
-                    exceptions.Enqueue(e);
+                    Console.WriteLine($"SpellTotems: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                    continue;
                 }
-            });
+
+                SpellInfoLoadData[effect.Value.SpellID].Totems = effect.Value;
+            }
 
             /*OnLoadProgress?.Invoke($"Generating ItemTemplate store ...");
 
@@ -493,41 +333,18 @@ namespace SpellWork.DBC
                 });
             }*/
 
-            OnLoadProgress?.Invoke(0, "Generating spell structure ...");
-
             foreach (var e in SpellInfoLoadData)
-            // Parallel.ForEach(SpellInfoLoadData, e => {
                 _spellInfo.Add((int) e.Key, new SpellInfoHelper(e.Value));
-            // });
-
-            if (!exceptions.IsEmpty)
-                throw new Exception("Debug me!");
-
-            OnLoadProgress?.Invoke(0, "Cleaning leftover data ...");
-
-            foreach(var dbc in typeof(DBC).GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
-            {
-                if (!dbc.FieldType.IsGenericType || dbc.FieldType.GetGenericTypeDefinition() != typeof(DB2Reader<>))
-                    continue;
-
-                if (dbc.FieldType.GetGenericArguments()[0].IsValueType)
-                    dbc.FieldType.GetMethod("Clear").Invoke(dbc.GetValue(null), new object[0]);
-            }
-
-            OnLoadProgress?.Invoke(0, "Loading GameTables ...");
 
             GameTable<GtSpellScalingEntry>.Open($@"{Settings.Default.GtPath}\SpellScaling.txt");
-
-            OnLoadProgress?.Invoke(100, "Done!");
         }
 
         public static List<Item> ItemTemplate = new List<Item>();
 
         public static uint SelectedLevel = MaxLevel;
+        public static uint SelectedItemLevel = 890;
 
         private static Dictionary<int, SpellInfoHelper> _spellInfo = new Dictionary<int, SpellInfoHelper>();
         public static Dictionary<int, SpellInfoHelper> SpellInfoStore => _spellInfo;
-
-        public static event Action<int, string> OnLoadProgress;
     }
 }

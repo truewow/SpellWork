@@ -131,6 +131,7 @@ namespace SpellWork.Forms
             if (ret == DialogResult.OK)
             {
                 DBC.DBC.SelectedLevel = scalingForm.SelectedLevel;
+                DBC.DBC.SelectedItemLevel = scalingForm.SelectedItemLevel;
                 switch (tabControl1.SelectedIndex)
                 {
                     case 0:
@@ -635,53 +636,5 @@ namespace SpellWork.Forms
 
         #endregion
 
-        private void OnFormLoad(object sender, EventArgs e)
-        {
-            var worker = new BackgroundWorker();
-            worker.WorkerReportsProgress = true;
-            worker.WorkerSupportsCancellation = false;
-            var self = this;
-            worker.DoWork += (o, oe) =>
-            {
-                Thread.Sleep(750);
-                DBC.DBC.OnLoadProgress += (pct, msg) =>
-                {
-                    worker.ReportProgress(pct, msg);
-                };
-                DBC.DBC.Load();
-            };
-            worker.ProgressChanged += (wrk, msg) => {
-                self.InvokeIfRequired(() =>
-                {
-                    ProgressButton.Text = (string) msg.UserState;
-                    if (msg.ProgressPercentage == 100)
-                    {
-                        _tbSearchId.Enabled = true;
-                        _bSearch.Enabled = true;
-                        _cbSpellFamilyName.Enabled = _cbSpellAura.Enabled = _cbSpellEffect.Enabled = true;
-                        _cbTarget1.Enabled = _cbTarget2.Enabled = true;
-                        _bCompareSearch1.Enabled = _bCompareSearch2.Enabled = true;
-                        _cbProcSpellFamilyTree.Enabled = true;
-                    }
-                });
-            };
-            worker.RunWorkerAsync();
-        }
-    }
-
-    public static class FormUtils
-    {
-        public static void InvokeIfRequired(this ISynchronizeInvoke obj, MethodInvoker action)
-        {
-            if (obj.InvokeRequired)
-            {
-                var args = new object[0];
-                obj.Invoke(action, args);
-            }
-            else
-            {
-                action();
-            }
-        }
     }
 }

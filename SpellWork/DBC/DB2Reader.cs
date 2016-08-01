@@ -41,9 +41,8 @@ namespace SpellWork.DBC
                     if (prop.FieldType.IsArray)
                         value = BuildArrayField(byteRow, propertyIndex, prop);
                     else
-                        value = BuildSimpleField(byteRow, propertyIndex, prop);
+                        value = BuildSimpleField(byteRow, propertyIndex, prop.FieldType, 0);
 
-                    //FieldStructures[propertyIndex].ValueSetter(structure, value);
                     ++propertyIndex;
                     prop.SetValue(structure, value);
                 }
@@ -61,86 +60,29 @@ namespace SpellWork.DBC
         {
             var fieldStructure = FieldStructures[propertyIndex];
             var fieldPosition = (int)fieldStructure.Position;
+            var positionOffset = 0;
             var nextMarker = propertyIndex + 1 == FieldCount
                 ? RecordSize
                 : FieldStructures[propertyIndex + 1].Position;
             var arraySize = (nextMarker - fieldPosition) / fieldStructure.ByteSize;
 
             var elementType = prop.FieldType.GetElementType();
-            var typeCode = Type.GetTypeCode(elementType);
             var instanceValue = Array.CreateInstance(elementType, arraySize);
             for (var i = 0; i < arraySize; ++i)
             {
-                switch (typeCode)
-                {
-                    case TypeCode.SByte:
-                        instanceValue.SetValue((sbyte)byteRow[fieldPosition], i);
-                        break;
-                    case TypeCode.Byte:
-                        instanceValue.SetValue(byteRow[fieldPosition], i);
-                        break;
-                    case TypeCode.Int16:
-                        instanceValue.SetValue((short)(byteRow[fieldPosition] | (byteRow[fieldPosition + 1] << 8)), i);
-                        break;
-                    case TypeCode.UInt16:
-                        instanceValue.SetValue((ushort)(byteRow[fieldPosition] | (byteRow[fieldPosition + 1] << 8)), i);
-                        break;
-                    case TypeCode.Int32:
-                    {
-                        var elementVal = 0;
-                        for (var k = 0; k < fieldStructure.ByteSize; ++k)
-                            elementVal |= byteRow[fieldPosition + k] << (8 * k);
-                        instanceValue.SetValue(elementVal, i);
-                        break;
-                    }
-                    case TypeCode.UInt32:
-                    {
-                        var elementVal = 0u;
-                        for (var k = 0; k < fieldStructure.ByteSize; ++k)
-                            elementVal |= (uint)(byteRow[fieldPosition + k] << (8 * k));
-                        instanceValue.SetValue(elementVal, i);
-                        break;
-                    }
-                    case TypeCode.Int64:
-                        instanceValue.SetValue(BitConverter.ToInt64(byteRow, fieldPosition), i);
-                        break;
-                    case TypeCode.UInt64:
-                        instanceValue.SetValue(BitConverter.ToUInt64(byteRow, fieldPosition), i);
-                        break;
-                    case TypeCode.Single:
-                        instanceValue.SetValue(BitConverter.ToSingle(byteRow, fieldPosition), i);
-                        break;
-                    case TypeCode.String:
-                    {
-                        if (HasInlineStrings)
-                        {
-                            //! TODO 7.x Implement, only Item-Sparse has this
-                            instanceValue.SetValue(string.Empty, i);
-                        }
-                        else
-                        {
-                            var stringOffset = BitConverter.ToInt32(byteRow, fieldPosition);
-                            if (StringTable.ContainsKey(stringOffset))
-                                instanceValue.SetValue(StringTable[stringOffset], i);
-                            else
-                                instanceValue.SetValue(string.Empty, i);
-                        }
-                        break;
-                    }
-                }
-
-                fieldPosition += fieldStructure.ByteSize;
+                instanceValue.SetValue(BuildSimpleField(byteRow, propertyIndex, elementType, positionOffset), i);
+                positionOffset += fieldStructure.ByteSize;
             }
 
             return instanceValue;
         }
 
-        private object BuildSimpleField(byte[] byteRow, int propertyIndex, FieldInfo prop)
+        private object BuildSimpleField(byte[] byteRow, int propertyIndex, Type fieldType, int positionOffset)
         {
             var fieldStructure = FieldStructures[propertyIndex];
-            var fieldPosition = (int)fieldStructure.Position;
+            var fieldPosition = (int)fieldStructure.Position + positionOffset;
             object instanceValue = null;
-            switch (Type.GetTypeCode(prop.FieldType))
+            switch (Type.GetTypeCode(fieldType))
             {
                 case TypeCode.SByte:
                     instanceValue = (sbyte)byteRow[fieldPosition];
@@ -244,7 +186,8 @@ namespace SpellWork.DBC
             var maxId = reader.ReadInt32();
             reader.ReadInt32(); // Locale
             var copyTableSize = reader.ReadInt32();
-            var flags = reader.ReadInt32();
+            var flags = reader.ReadInt16();
+            var indexField = reader.ReadInt16();
             HasOffsetMap = (flags & 0x01) != 0;
             HasNonInlineIDs = (flags & 0x04) != 0;
 
@@ -297,7 +240,20 @@ namespace SpellWork.DBC
 
             // Populate data storage now.
             for (var i = 0; i < RecordCount; ++i)
-                Add(HasNonInlineIDs ? nonInlineIDs[i] : i, BuildEntry(reader.ReadBytes(RecordSize)));
+            {
+                byte[] rowBytes = reader.ReadBytes(RecordSize);
+                int id;
+                if (!HasNonInlineIDs)
+                {
+                    var idBytes = new byte[4];
+                    Array.Copy(rowBytes, FieldStructures[indexField].Position, idBytes, 0, FieldStructures[indexField].ByteSize);
+                    id = BitConverter.ToInt32(idBytes, 0);
+                }
+                else
+                    id = nonInlineIDs[i];
+
+                Add(id, BuildEntry(rowBytes));
+            }
 
             // Populate copy table
             foreach (var kv in copyTable)

@@ -18,6 +18,7 @@ namespace SpellWork
 
             try
             {
+                DBC.DBC.Load();
                 Application.Run(new FormMain());
             }
             catch (DirectoryNotFoundException dnfe)
