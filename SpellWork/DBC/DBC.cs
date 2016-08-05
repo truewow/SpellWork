@@ -349,7 +349,7 @@ namespace SpellWork.DBC
                 }
             }));
 
-            /*foreach (var item in ItemSparse.Rows)
+            /*foreach (var item in ItemSparse.Values)
             {
                 ItemTemplate.Add(new Item
                 {

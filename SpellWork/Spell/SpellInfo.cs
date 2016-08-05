@@ -9,6 +9,7 @@ using SpellWork.DBC.Structures;
 using SpellWork.Extensions;
 using SpellWork.GameTables;
 using SpellWork.GameTables.Structures;
+using System.Diagnostics;
 
 namespace SpellWork.Spell
 {
@@ -573,7 +574,8 @@ namespace SpellWork.Spell
                     {
                         if ((AttributesEx11 & (uint)SpellAtributeEx11.SPELL_ATTR11_SCALES_WITH_ITEM_LEVEL) == 0)
                         {
-                            var gtScaling = GameTable<GtSpellScalingEntry>.GetRecord((int)level);
+                            var gtScaling = GameTable<GtSpellScalingEntry>.GetRecord(level);
+                            Debug.Assert(gtScaling != null);
                             value = Scaling.ScalingClass > 0
                                 ? gtScaling.GetColumnForClass(Scaling.ScalingClass)
                                 : gtScaling.Item;
@@ -760,7 +762,7 @@ namespace SpellWork.Spell
             }
 
             rtb.AppendFormat("), miscB = {0}", effect.EffectMiscValues[1]);
-            rtb.AppendFormatLine(", periodic = {0}", effect.EffectAmplitude);
+            rtb.AppendFormatLine(", amplitude = {0}, periodic = {1}", effect.EffectAmplitude, effect.EffectAuraPeriod);
 
             switch (aura)
             {

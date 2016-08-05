@@ -5,46 +5,57 @@ using System.Reflection;
 
 namespace SpellWork.GameTables
 {
-    public static class GameTable<T> where T : GameTableRecord
+    public static class GameTable<T> where T : class, GameTableRecord, new()
     {
         private static Dictionary<int, T> _records { get; } = new Dictionary<int, T>();
 
-        public static T GetRecord(int key) => _records[key];
+        public static T GetRecord(int key)
+        {
+            T instance;
+            return _records.TryGetValue(key, out instance) ? instance : null;
+        }
 
         public static void Open(string fileName)
         {
             using (var reader = new StreamReader(fileName))
             {
-                var lineIndex = 0;
+                var lineIndex = -1;
                 while (true)
                 {
                     var line = reader.ReadLine();
                     if (line == null)
                         break;
 
-                    var lineTokens = line.Split(new[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
-
+                    ++lineIndex;
                     if (lineIndex == 0)
                         continue;
 
-                    var record = (T)Activator.CreateInstance(typeof(T));
+                    var lineTokens = line.Split(new[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    var record = new T();
                     var fieldIndex = 0;
                     foreach (var field in typeof (T).GetFields(BindingFlags.Public | BindingFlags.Instance))
                     {
-                        if (Type.GetTypeCode(field.FieldType) == TypeCode.UInt32)
-                            field.SetValue(record, uint.Parse(lineTokens[fieldIndex]));
-                        else if (Type.GetTypeCode(field.FieldType) == TypeCode.Int32)
-                            field.SetValue(record, int.Parse(lineTokens[fieldIndex]));
-                        else if (Type.GetTypeCode(field.FieldType) == TypeCode.Single)
-                            field.SetValue(record, float.Parse(lineTokens[fieldIndex]));
-                        else
-                            throw new ArgumentOutOfRangeException();
+                        // ReSharper disable once SwitchStatementMissingSomeCases
+                        switch (Type.GetTypeCode(field.FieldType))
+                        {
+                            case TypeCode.UInt32:
+                                field.SetValue(record, uint.Parse(lineTokens[fieldIndex]));
+                                break;
+                            case TypeCode.Int32:
+                                field.SetValue(record, int.Parse(lineTokens[fieldIndex]));
+                                break;
+                            case TypeCode.Single:
+                                field.SetValue(record, float.Parse(lineTokens[fieldIndex]));
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
 
                         ++fieldIndex;
                     }
 
-                    _records.Add(int.Parse(lineTokens[0]), record);
-                    ++lineIndex;
+                    _records.Add(lineIndex, record);
                 }
             }
         }
