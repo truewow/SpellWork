@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using SpellWork.Database;
 using SpellWork.DBC.Structures;
 using SpellWork.Extensions;
 using SpellWork.GameTables;
@@ -43,9 +44,9 @@ namespace SpellWork.Spell
                     _rtb.AppendFormatLine(_line);
 
                 var addline = false;
-                if (DBC.DBC.SpellTriggerStore.ContainsKey(_spell.ID))
+                if (DBC.DBC.SpellTriggerStore.ContainsKey((int)_spell.ID))
                 {
-                    foreach (var procSpellId in DBC.DBC.SpellTriggerStore[_spell.ID])
+                    foreach (var procSpellId in DBC.DBC.SpellTriggerStore[(int)_spell.ID])
                     {
                         var procname = "Spell Not Found";
                         if (DBC.DBC.Spell.ContainsKey(procSpellId))
@@ -319,12 +320,12 @@ namespace SpellWork.Spell
 
         private void AppendSkillLine()
         {
-            var query = DBC.DBC.SkilllLineAbilityStore.Where(skl => skl.Value.SpellID == _spell.ID).ToArray();
+            var query = DBC.DBC.SkillLineAbility.Where(skl => skl.Value.SpellID == _spell.ID).ToArray();
             if (query.Length == 0)
                 return;
 
             var skill = query.First().Value;
-            var line = DBC.DBC.SkilllLineStore[skill.SkillLine];
+            var line = DBC.DBC.SkillLine[skill.SkillLine];
 
             _rtb.AppendFormatLine("Skill (Id {0}) \"{1}\"", skill.SkillLine, line.DisplayName);
             _rtb.AppendFormat("    MinSkillLineRank {0}", skill.MinSkillLineRank);
@@ -423,7 +424,7 @@ namespace SpellWork.Spell
 
                     var query = from spell in DBC.DBC.SpellInfoStore.Values
                         where spell.SpellFamilyName == _spell.SpellFamilyName && spell.SpellFamilyFlags.ContainsElement(classMask)
-                        join sk in DBC.DBC.SkilllLineAbilityStore.Values on spell.ID equals sk.SpellID into temp
+                        join sk in DBC.DBC.SkillLineAbility.Values on spell.ID equals sk.SpellID into temp
                         from skill in temp.DefaultIfEmpty(new SkillLineAbilityEntry())
                         select new
                         {
@@ -633,7 +634,8 @@ namespace SpellWork.Spell
                         select item;
 
             // ReSharper disable once PossibleMultipleEnumeration
-            if (!items.Any())
+            var enumerable = items as Item[] ?? items.ToArray();
+            if (!enumerable.Any())
                 return;
 
             _rtb.AppendLine(_line);
@@ -641,7 +643,7 @@ namespace SpellWork.Spell
             _rtb.AppendLine("Items using this spell:");
             _rtb.SetDefaultStyle();
 
-            foreach (var item in items)
+            foreach (var item in enumerable)
             {
                 var name = string.IsNullOrEmpty(item.LocalesName) ? item.Name : item.LocalesName;
                 var desc = string.IsNullOrEmpty(item.LocalesDescription) ? item.Description : item.LocalesDescription;

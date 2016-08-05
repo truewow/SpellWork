@@ -169,10 +169,10 @@ namespace SpellWork.Spell
                 if (!string.IsNullOrEmpty(_Description))
                     sb.AppendFormatLine("Description: {0}", _Description);
 
-                if (SpellDescriptionVariableID == 0 || !DBC.DBC.SpellDescriptionVariables.ContainsKey(SpellDescriptionVariableID))
+                if (SpellDescriptionVariableID == 0 || !DBC.DBC.SpellDescriptionVariables.ContainsKey((int)SpellDescriptionVariableID))
                     return sb.ToString();
 
-                var sdesc = DBC.DBC.SpellDescriptionVariables[SpellDescriptionVariableID];
+                var sdesc = DBC.DBC.SpellDescriptionVariables[(int)SpellDescriptionVariableID];
                 sb.AppendFormatLine("Description variable Id: {0}", SpellDescriptionVariableID);
                 sb.AppendFormatLine("Description variable: {0}", sdesc.Variables);
                 return sb.ToString();

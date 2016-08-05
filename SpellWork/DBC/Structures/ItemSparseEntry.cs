@@ -1,5 +1,8 @@
-﻿namespace SpellWork.DBC.Structures
+﻿using DBFilesClient.NET;
+
+namespace SpellWork.DBC.Structures
 {
+    [DBFileName("Item-sparse")]
     public sealed class ItemSparseEntry
     {
         public uint[] Flags;

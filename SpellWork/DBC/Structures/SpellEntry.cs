@@ -6,7 +6,7 @@
         public string NameSubtext;
         public string Description;
         public string AuraDescription;
-        public uint MiscID;
+        public int MiscID;
         public uint ID;
         public uint DescriptionVariablesID;
 
