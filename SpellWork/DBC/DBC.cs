@@ -8,6 +8,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using DBFilesClient.NET;
 using System.Threading.Tasks;
@@ -102,19 +103,17 @@ namespace SpellWork.DBC
                 });
 
             foreach (var spell in Spell)
-                SpellInfoStore[spell.Value.ID] = new SpellInfo { Spell = spell.Value};
+                SpellInfoStore[spell.Value.ID] = new SpellInfo(spell.Value);
 
             await Task.WhenAll(Task.Run(() =>
             {
-                foreach (var effect in SpellInfoStore)
+                foreach (var effect in SpellInfoStore.Where(effect => SpellMisc.ContainsKey(effect.Value.Spell.MiscID)))
                 {
-                    if (!SpellMisc.ContainsKey(effect.Value.Spell.MiscID))
-                        continue;
-
                     effect.Value.Misc = SpellMisc[effect.Value.Spell.MiscID];
 
                     if (SpellDuration.ContainsKey(effect.Value.Misc.DurationIndex))
                         effect.Value.DurationEntry = SpellDuration[effect.Value.Misc.DurationIndex];
+
                     if (SpellRange.ContainsKey(effect.Value.Misc.RangeIndex))
                         effect.Value.Range = SpellRange[effect.Value.Misc.RangeIndex];
                 }
@@ -130,13 +129,13 @@ namespace SpellWork.DBC
                     }
 
                     SpellInfoStore[effect.Value.SpellID].Effects.Add(effect.Value);
-                    var triggerid = effect.Value.EffectTriggerSpell;
-                    if (triggerid != 0)
+                    var triggerId = (int)effect.Value.EffectTriggerSpell;
+                    if (triggerId != 0)
                     {
-                        if (SpellTriggerStore.ContainsKey((int) triggerid))
-                            SpellTriggerStore[(int) triggerid].Add((int) effect.Value.SpellID);
+                        if (SpellTriggerStore.ContainsKey(triggerId))
+                            SpellTriggerStore[triggerId].Add(effect.Value.SpellID);
                         else
-                            SpellTriggerStore.Add((int) triggerid, new SortedSet<int> {(int) effect.Value.SpellID});
+                            SpellTriggerStore.Add(triggerId, new SortedSet<int> { effect.Value.SpellID });
                     }
                 }
             }), Task.Run(() =>
@@ -154,11 +153,9 @@ namespace SpellWork.DBC
                 }
             }), Task.Run(() =>
             {
-                foreach (var effect in SpellXSpellVisual)
+                foreach (var effect in SpellXSpellVisual.Where(effect =>
+                    effect.Value.DifficultyID == 0 && effect.Value.PlayerConditionID == 0))
                 {
-                    if (effect.Value.DifficultyID != 0 || effect.Value.PlayerConditionID != 0)
-                        continue;
-
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
                         Console.WriteLine(

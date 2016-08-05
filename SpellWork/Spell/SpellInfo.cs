@@ -178,6 +178,14 @@ namespace SpellWork.Spell
 
         private const string Separator = "=================================================";
 
+        public SpellInfo(SpellEntry spellEntry)
+        {
+            Spell = spellEntry;
+            SpellDescriptionVariablesEntry variables;
+            if (DBC.DBC.SpellDescriptionVariables.TryGetValue(spellEntry.DescriptionVariablesID, out variables))
+                DescriptionVariables = variables;
+        }
+
         public void Write(RichTextBox rtb)
         {
             rtb.Clear();
@@ -536,52 +544,80 @@ namespace SpellWork.Spell
             rtb.AppendFormatLine("Effect {0}: Id {1} ({2}) {3}", effect.EffectIndex, effect.Effect, (SpellEffects)effect.Effect, (Difficulty)effect.DifficultyID);
             rtb.SetDefaultStyle();
 
-            rtb.Append("BasePoints: ");
-
             var value = 0.0f;
 
-            if (Scaling != null && effect.SpellEffectScalingEntry != null && Math.Abs(effect.SpellEffectScalingEntry.Coefficient) > 1.0E-5f)
+            if (effect.SpellEffectScalingEntry != null &&
+                Math.Abs(effect.SpellEffectScalingEntry.Coefficient) > 1.0E-5f &&
+                Scaling != null &&
+                Scaling.ScalingClass != 0)
             {
-                var level = DBC.DBC.SelectedLevel;
-                if (Scaling.MaxScalingLevel > 0 && Scaling.MaxScalingLevel < level)
-                    level = Scaling.MaxScalingLevel;
-
-                if (Scaling.ScalingClass == 0)
-                    rtb.Append("0");
-                else
+                var level = (int)(DBC.DBC.SelectedLevel - 1);
+                if ((AttributesEx11 & (uint)SpellAtributeEx11.SPELL_ATTR11_SCALES_WITH_ITEM_LEVEL) == 0)
                 {
+                    if ((AttributesEx10 & (uint)SpellAtributeEx10.SPELL_ATTR10_USE_SPELL_BASE_LEVEL_FOR_SCALING) != 0)
+                        level = BaseLevel;
+                }
+                else
+                    level = (int)DBC.DBC.SelectedItemLevel;
+
+                if (Scaling.MaxScalingLevel != 0 && Scaling.MaxScalingLevel > level)
+                    level = (int)Scaling.MaxScalingLevel;
+
+                if (level < 1)
+                    level = 1;
+
+                if (Scaling.ScalingClass != 0)
+                {
+
                     if (Scaling.ScalesFromItemLevel == 0)
                     {
-                        if (!((SpellAtributeEx11)AttributesEx11).HasFlag(SpellAtributeEx11.SPELL_ATTR11_SCALES_WITH_ITEM_LEVEL))
+                        if ((AttributesEx11 & (uint)SpellAtributeEx11.SPELL_ATTR11_SCALES_WITH_ITEM_LEVEL) == 0)
                         {
                             var gtScaling = GameTable<GtSpellScalingEntry>.GetRecord((int)level);
                             value = Scaling.ScalingClass > 0
                                 ? gtScaling.GetColumnForClass(Scaling.ScalingClass)
                                 : gtScaling.Item;
                         }
-                        else
-                            rtb.Append("sRandPropPointsStore[itemLevel ?? 1].RarePropertyPoints[0]");
+                        else if (DBC.DBC.RandPropPoints.ContainsKey(level))
+                        {
+                            var randPropPoints = DBC.DBC.RandPropPoints[level];
+                            value = randPropPoints.Superior[0];
+                        }
                     }
                     else
-                        rtb.Append(
-                            $"sRandPropPointsStore[itemLevel ?? 1].RarePropertyPoints[{Scaling.ScalesFromItemLevel}]");
-
-                    value *= effect.SpellEffectScalingEntry.Coefficient;
-                    if (Math.Abs(value) > 1.0E-5f && value < 1.0f)
-                        value = 1.0f;
-
-                    if (Math.Abs(effect.SpellEffectScalingEntry.Variance) > 1.0E-5f)
                     {
-                        var delta = Math.Abs(effect.SpellEffectScalingEntry.Variance * 0.5f);
-                        rtb.AppendFormat(" + ({0:F} to {1:F})", value - delta, value + delta);
+                        if (DBC.DBC.RandPropPoints.ContainsKey(Scaling.ScalesFromItemLevel))
+                        {
+                            var randPropPoints = DBC.DBC.RandPropPoints[Scaling.ScalesFromItemLevel];
+                            value = randPropPoints.Superior[0];
+                        }
                     }
 
-                    rtb.AppendFormatIfNotNull(" + combo * {0:F}", effect.EffectPointsPerResource);
+                    // if (level < Scaling.CastTimeMaxLevel && Scaling.CastTimeMax != 0)
+                    //     value *= (float)(Scaling.CastTimeMin + (level - 1) * (Scaling.CastTimeMax - Scaling.CastTimeMin) / (Scaling.CastTimeMaxLevel - 1)) / (Scaling.CastTimeMax);
+
+                    // if (level < Scaling.NerfMaxLevel)
+                    //     value *= ((((1.0f - Scaling.NerfFactor) * (level - 1)) / (Scaling.NerfMaxLevel - 1)) + Scaling.NerfFactor);
                 }
+
+                value *= effect.SpellEffectScalingEntry.Coefficient;
+                if (Math.Abs(value) > 1.0E-5f && value < 1.0f)
+                    value = 1.0f;
+
+                if (Math.Abs(effect.SpellEffectScalingEntry.Variance) > 1.0E-5f)
+                {
+                    var delta = Math.Abs(value * effect.SpellEffectScalingEntry.Variance * 0.5f);
+                    rtb.AppendFormat("BasePoints = {0:F} to {1:F}", value - delta, value + delta);
+                }
+                else
+                    rtb.AppendFormat("BasePoints = {0:F}", value);
+
+                if (Math.Abs(effect.SpellEffectScalingEntry.ResourceCoefficient) > 1.0E-5f)
+                    rtb.AppendFormatIfNotNull(" + combo * {0:F}", effect.SpellEffectScalingEntry.ResourceCoefficient * value);
             }
             else
             {
-                rtb.AppendFormat("{0}", effect.EffectBasePoints + ((effect.EffectDieSides == 0) ? 0 : 1));
+                rtb.AppendFormat("BasePoints = {0}", effect.EffectBasePoints + (effect.EffectDieSides == 0 ? 0 : 1));
 
                 if (Math.Abs(effect.EffectRealPointsPerLevel) > 1.0E-5f)
                     rtb.AppendFormat(" + Level * {0:F}", effect.EffectRealPointsPerLevel);
@@ -595,9 +631,19 @@ namespace SpellWork.Spell
                         rtb.AppendFormat(" to {0}", effect.EffectBasePoints + effect.EffectDieSides);
                 }
 
-                rtb.AppendFormatIfNotNull(" + combo * {0:F}", effect.EffectPointsPerResource);
+                rtb.AppendFormatIfNotNull(" + resource * {0:F}", effect.EffectPointsPerResource);
             }
 
+            if (effect.EffectBonusCoefficient > 1.0E-5f)
+                rtb.AppendFormat(" + spellPower * {0}", effect.EffectBonusCoefficient);
+
+            if (effect.BonusCoefficientFromAP > 1.0E-5)
+                rtb.AppendFormat(" + AP * {0}", effect.BonusCoefficientFromAP);
+
+            // if (Math.Abs(effect.DamageMultiplier - 1.0f) > 1.0E-5f)
+            //     rtb.AppendFormat(" x {0:F}", effect.DamageMultiplier);
+
+            // rtb.AppendFormatIfNotNull("  Multiple = {0:F}", effect.ValueMultiplier);
             rtb.AppendLine();
 
             rtb.AppendFormatLine("Targets ({0}, {1}) ({2}, {3})",
@@ -673,8 +719,6 @@ namespace SpellWork.Spell
                 rtb.AppendFormatLine("Effect Mechanic = {0} ({1})", effect.EffectMechanic, (Mechanics)effect.EffectMechanic);
 
             rtb.AppendFormatLineIfNotNull("Attributes {0:X8} ({0})", effect.EffectAttributes);
-            rtb.AppendFormatLineIfNotNull("AP Bonus Coefficient: {0}", effect.BonusCoefficientFromAP);
-            rtb.AppendFormatLineIfNotNull("Bonus Coefficient: {0}", effect.EffectBonusCoefficient);
             rtb.AppendLine();
         }
 

@@ -8,7 +8,7 @@
         public string AuraDescription;
         public int MiscID;
         public int ID;
-        public uint DescriptionVariablesID;
+        public int DescriptionVariablesID;
 
         /*public List<SpellPowerEntry> SpellPowerList
         {
