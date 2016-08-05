@@ -27,7 +27,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            var resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this._dbConnect = new System.Windows.Forms.ToolStripStatusLabel();
             this._status = new System.Windows.Forms.ToolStripStatusLabel();
@@ -1654,6 +1654,7 @@
             // 
             // _bWrite
             // 
+            this._bWrite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this._bWrite.Location = new System.Drawing.Point(686, 1);
             this._bWrite.Name = "_bWrite";
             this._bWrite.Size = new System.Drawing.Size(51, 23);
@@ -1665,6 +1666,7 @@
             // 
             // _bLevelScaling
             // 
+            this._bLevelScaling.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this._bLevelScaling.Location = new System.Drawing.Point(808, 1);
             this._bLevelScaling.Name = "_bLevelScaling";
             this._bLevelScaling.Size = new System.Drawing.Size(60, 23);

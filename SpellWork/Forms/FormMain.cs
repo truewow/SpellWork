@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 using SpellWork.Database;
 using SpellWork.DBC.Structures;
@@ -221,15 +219,15 @@ namespace SpellWork.Forms
             var bTarget2 = _cbTarget2.SelectedIndex != 0;
             var fTarget2 = _cbTarget2.SelectedValue.ToInt32();
 
-            // additional filtert
+            // additional filters
             var advVal1 = _tbAdvancedFilter1Val.Text;
             var advVal2 = _tbAdvancedFilter2Val.Text;
 
             var field1 = (MemberInfo)_cbAdvancedFilter1.SelectedValue;
             var field2 = (MemberInfo)_cbAdvancedFilter2.SelectedValue;
 
-            var use1Val = advVal1 != string.Empty;
-            var use2Val = advVal2 != string.Empty;
+            var use1Val = !string.IsNullOrEmpty(advVal1);
+            var use2Val = !string.IsNullOrEmpty(advVal2);
 
             var field1Ct = (CompareType)_cbAdvancedFilter1CompareType.SelectedIndex;
             var field2Ct = (CompareType)_cbAdvancedFilter2CompareType.SelectedIndex;
@@ -243,7 +241,7 @@ namespace SpellWork.Forms
                          (!use1Val || spell.CreateFilter(field1, advVal1, field1Ct)) &&
                          (!use2Val || spell.CreateFilter(field2, advVal2, field2Ct))).ToList();
 
-            _lvSpellList.VirtualListSize = _spellList.Count();
+            _lvSpellList.VirtualListSize = _spellList.Count;
             if (_lvSpellList.SelectedIndices.Count > 0)
                 _lvSpellList.Items[_lvSpellList.SelectedIndices[0]].Selected = false;
         }
@@ -336,7 +334,7 @@ namespace SpellWork.Forms
 
         private void GetProcAttribute(SpellInfo spell)
         {
-            uint[] SpellFamilyFlags = _tvFamilyTree.GetMask();
+            var SpellFamilyFlags = _tvFamilyTree.GetMask();
             var statusproc =
                 $"Spell ({spell.ID}) {spell.Name}. Proc Event ==> SchoolMask 0x{_clbSchools.GetFlagsValue():X2}, SpellFamily {_cbProcFitstSpellFamily.SelectedValue}, 0x{SpellFamilyFlags[0]:X8} {SpellFamilyFlags[1]:X8} {SpellFamilyFlags[2]:X8} {SpellFamilyFlags[3]:X8}, procFlag 0x{_clbProcFlags.GetFlagsValue():X8}, procEx 0x{_clbProcFlagEx.GetFlagsValue():X8}, PPMRate {_tbPPM.Text.ToFloat()}";
 
@@ -478,7 +476,7 @@ namespace SpellWork.Forms
 
         private void SqlSaveClick(object sender, EventArgs e)
         {
-            if (_rtbSqlLog.Text == string.Empty)
+            if (string.IsNullOrEmpty(_rtbSqlLog.Text))
                 return;
 
             var sd = new SaveFileDialog {Filter = @"SQL files|*.sql"};
@@ -498,8 +496,8 @@ namespace SpellWork.Forms
                     form.ShowDialog(this);
                     if (form.DialogResult == DialogResult.OK)
                         _tbSqlSchool.Text = form.Flags.ToString();
-                }
                     break;
+                }
                 case "_bSqlProc":
                 {
                     var val = _tbSqlProc.Text.ToUInt32();
@@ -507,8 +505,8 @@ namespace SpellWork.Forms
                     form.ShowDialog(this);
                     if (form.DialogResult == DialogResult.OK)
                         _tbSqlProc.Text = form.Flags.ToString();
-                }
                     break;
+                }
                 case "_bSqlProcEx":
                 {
                     var val = _tbSqlProcEx.Text.ToUInt32();
@@ -516,8 +514,8 @@ namespace SpellWork.Forms
                     form.ShowDialog(this);
                     if (form.DialogResult == DialogResult.OK)
                         _tbSqlProcEx.Text = form.Flags.ToString();
-                }
                     break;
+                }
             }
         }
 
@@ -541,7 +539,7 @@ namespace SpellWork.Forms
 
             var subquery = sb.ToString() == "WHERE" ? string.Empty : sb.ToString();
 
-            if (subquery == string.Empty && _tbSqlManual.Text != string.Empty)
+            if (string.IsNullOrEmpty(subquery) && !string.IsNullOrEmpty(_tbSqlManual.Text))
                 subquery = "WHERE " + _tbSqlManual.Text;
 
             var query = $"SELECT * FROM `spell_proc_event` {subquery} ORDER BY entry";

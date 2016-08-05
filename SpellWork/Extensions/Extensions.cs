@@ -36,7 +36,7 @@ namespace SpellWork.Extensions
         {
             if (val == null)
                 return 0;
-            string valStr = val.ToString();
+            var valStr = val.ToString();
 
             uint num;
             if (valStr.StartsWith("0x"))
@@ -50,7 +50,7 @@ namespace SpellWork.Extensions
         {
             if (val == null)
                 return 0;
-            string valStr = val.ToString();
+            var valStr = val.ToString();
 
             int num;
             if (valStr.StartsWith("0x"))
@@ -74,7 +74,7 @@ namespace SpellWork.Extensions
         {
             if (val == null)
                 return 0U;
-            string valStr = val.ToString();
+            var valStr = val.ToString();
 
             ulong num;
             if (valStr.StartsWith("0x"))
@@ -85,13 +85,11 @@ namespace SpellWork.Extensions
             return num;
         }
 
-        public static string NormalizeString(this string text, string remove)
+        public static string NormalizeString(this string text, string remove = null)
         {
             var str = string.Empty;
-            if (remove != string.Empty)
-            {
+            if (!string.IsNullOrEmpty(remove))
                 text = text.Replace(remove, string.Empty);
-            }
 
             foreach (var s in text.Split('_'))
             {
@@ -110,14 +108,14 @@ namespace SpellWork.Extensions
         public static void SetCheckedItemFromFlag(this CheckedListBox name, uint value)
         {
             for (var i = 0; i < name.Items.Count; ++i)
-                name.SetItemChecked(i, ((value / (1U << (i - 1))) % 2) != 0);
+                name.SetItemChecked(i, value / (1U << (i - 1)) % 2 != 0);
         }
 
         public static uint GetFlagsValue(this CheckedListBox name)
         {
             uint val = 0;
             for (var i = 0; i < name.CheckedIndices.Count; ++i)
-                val |= 1U << (name.CheckedIndices[i]);
+                val |= 1U << name.CheckedIndices[i];
 
             return val;
         }
@@ -127,7 +125,7 @@ namespace SpellWork.Extensions
             clb.Items.Clear();
 
             foreach (var elem in Enum.GetValues(typeof(T)))
-                clb.Items.Add(elem.ToString().NormalizeString(string.Empty));
+                clb.Items.Add(elem.ToString().NormalizeString());
         }
 
         public static void SetFlags<T>(this CheckedListBox clb, string remove)
@@ -211,7 +209,7 @@ namespace SpellWork.Extensions
         /// <returns>Boolean(true or false)</returns>
         public static bool ContainsText(this string text, string compareText)
         {
-            return (text.ToUpper().IndexOf(compareText.ToUpper(), StringComparison.CurrentCultureIgnoreCase) != -1);
+            return text.ToUpper().IndexOf(compareText.ToUpper(), StringComparison.CurrentCultureIgnoreCase) != -1;
         }
 
         /// <summary>
@@ -222,7 +220,7 @@ namespace SpellWork.Extensions
         /// <returns>Boolean(true or false)</returns>
         public static bool ContainsText(this string text, string[] compareText)
         {
-            return compareText.Any(str => (text.IndexOf(str, StringComparison.CurrentCultureIgnoreCase) != -1));
+            return compareText.Any(str => text.IndexOf(str, StringComparison.CurrentCultureIgnoreCase) != -1);
         }
 
         public static bool ContainsElement(this uint[] array, uint[] value)
@@ -246,11 +244,6 @@ namespace SpellWork.Extensions
             T value;
             dictionary.TryGetValue(key, out value);
             return value;
-        }
-
-        public static bool IsEmpty(this string str)
-        {
-            return str == string.Empty;
         }
 
         public static string GetFullName(this Enum @enum)

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCalculateFlags));
+            var resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCalculateFlags));
             this._bNo = new System.Windows.Forms.Button();
             this._bOk = new System.Windows.Forms.Button();
             this._clbCalcFlags = new System.Windows.Forms.CheckedListBox();

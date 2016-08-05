@@ -37,7 +37,7 @@ namespace SpellWork.Extensions
         {
             ProcInfo.Update = false;
 
-            for (int i = 0; i < tv.Nodes.Count; ++i)
+            for (var i = 0; i < tv.Nodes.Count; ++i)
             {
                 if (i < 32)
                     tv.Nodes[i].Checked = ((mask[0] / (1 << i)) % 2) != 0;

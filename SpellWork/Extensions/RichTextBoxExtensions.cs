@@ -44,7 +44,7 @@ namespace SpellWork.Extensions
 
         public static void AppendFormatLineIfNotNull(this RichTextBox builder, string format, float arg)
         {
-            if (arg != 0.0f)
+            if (Math.Abs(arg) > 1.0E-5f)
             {
                 builder.AppendFormatLine(format, arg);
             }
@@ -52,7 +52,7 @@ namespace SpellWork.Extensions
 
         public static void AppendFormatLineIfNotNull(this RichTextBox builder, string format, string arg)
         {
-            if (arg != string.Empty)
+            if (!string.IsNullOrEmpty(arg))
             {
                 builder.AppendFormatLine(format, arg);
             }
@@ -68,7 +68,7 @@ namespace SpellWork.Extensions
 
         public static void AppendFormatIfNotNull(this RichTextBox builder, string format, float arg)
         {
-            if (arg != 0.0f)
+            if (Math.Abs(arg) > 1.0E-5f)
             {
                 builder.AppendFormat(format, arg);
             }
