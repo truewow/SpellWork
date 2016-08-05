@@ -2,7 +2,7 @@
 {
     public sealed class SpellTargetRestrictionsEntry
     {
-        public uint SpellID;
+        public int SpellID;
         public float ConeAngle;
         public float Width;
         public uint Targets;

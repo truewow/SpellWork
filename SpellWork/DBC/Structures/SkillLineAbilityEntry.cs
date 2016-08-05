@@ -2,7 +2,7 @@
 {
     public sealed class SkillLineAbilityEntry
     {
-        public uint SpellID;
+        public int SpellID;
         public uint RaceMask;
         public uint SupercedesSpell;
         public uint Unknown703;

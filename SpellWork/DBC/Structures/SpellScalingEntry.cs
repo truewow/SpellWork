@@ -2,7 +2,7 @@
 {
     public class SpellScalingEntry
     {
-        public uint SpellID;
+        public int SpellID;
         public ushort ScalesFromItemLevel;
         public int ScalingClass;
         public uint MinScalingLevel;

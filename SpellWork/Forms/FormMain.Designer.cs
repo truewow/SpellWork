@@ -632,7 +632,6 @@
             this._tbAdvancedFilter2Val.Name = "_tbAdvancedFilter2Val";
             this._tbAdvancedFilter2Val.Size = new System.Drawing.Size(85, 20);
             this._tbAdvancedFilter2Val.TabIndex = 1;
-            this._tbAdvancedFilter2Val.Text = "0";
             this._tbAdvancedFilter2Val.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbAdvansedFilterValKeyDown);
             // 
             // _tbAdvancedFilter1Val
@@ -642,7 +641,6 @@
             this._tbAdvancedFilter1Val.Name = "_tbAdvancedFilter1Val";
             this._tbAdvancedFilter1Val.Size = new System.Drawing.Size(85, 20);
             this._tbAdvancedFilter1Val.TabIndex = 1;
-            this._tbAdvancedFilter1Val.Text = "0";
             this._tbAdvancedFilter1Val.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbAdvansedFilterValKeyDown);
             // 
             // _cbAdvancedFilter2

@@ -2,7 +2,7 @@
 {
     public class SpellCastingRequirementsEntry
     {
-        public uint SpellID;
+        public int SpellID;
         public ushort MinFactionID;
         public ushort RequiredAreasID;
         public ushort RequiresSpellFocus;

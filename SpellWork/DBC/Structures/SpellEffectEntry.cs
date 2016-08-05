@@ -28,7 +28,7 @@ namespace SpellWork.DBC.Structures
         public int[] EffectRadiusIndex;
         public uint EffectTriggerSpell;
         public uint[] ImplicitTarget;
-        public uint SpellID;
+        public int SpellID;
         public uint EffectIndex;
         public uint EffectAttributes;
 

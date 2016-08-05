@@ -21,10 +21,10 @@ namespace SpellWork.Spell
         /// <param name="rtb2">RichTextBox 2 in right</param>
         /// <param name="spell1">Compare Spell 1</param>
         /// <param name="spell2">Compare Spell 2</param>
-        public static void Compare(RichTextBox rtb1, RichTextBox rtb2, SpellInfoHelper spell1, SpellInfoHelper spell2)
+        public static void Compare(RichTextBox rtb1, RichTextBox rtb2, SpellInfo spell1, SpellInfo spell2)
         {
-            new SpellInfo(rtb1, spell1);
-            new SpellInfo(rtb2, spell2);
+            spell1.Write(rtb1);
+            spell2.Write(rtb2);
 
             var strsl = rtb1.Text.Split('\n');
             var strsr = rtb2.Text.Split('\n');

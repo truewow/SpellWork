@@ -2,7 +2,7 @@
 {
     public class SpellReagentsEntry
     {
-        public uint SpellID;
+        public int SpellID;
         public uint[] Reagent;
         public uint[] ReagentCount;
     }

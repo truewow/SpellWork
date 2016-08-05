@@ -2,7 +2,7 @@
 {
     public sealed class SpellXSpellVisualEntry
     {
-        public uint SpellID;
+        public int SpellID;
         public float Unk620;
         public ushort SpellVisualID;
         public ushort ViolentSpellVisualID;

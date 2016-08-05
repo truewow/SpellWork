@@ -2,7 +2,7 @@
 {
     public class SpellTotemsEntry
     {
-        public uint SpellID;
+        public int SpellID;
         public uint[] Totem;
         public uint[] RequiredTotemCategoryID;
     }

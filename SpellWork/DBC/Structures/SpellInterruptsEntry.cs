@@ -2,7 +2,7 @@
 {
     public class SpellInterruptsEntry
     {
-        public uint SpellID;
+        public int SpellID;
         public uint[] AuraInterruptFlags;
         public uint[] ChannelInterruptFlags;
         public ushort InterruptFlags;

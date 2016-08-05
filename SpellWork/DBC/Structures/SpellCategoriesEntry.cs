@@ -2,7 +2,7 @@
 {
     public class SpellCategoriesEntry
     {
-        public uint SpellID;
+        public int SpellID;
         public ushort Category;
         public ushort StartRecoveryCategory;
         public ushort ChargeCategory;

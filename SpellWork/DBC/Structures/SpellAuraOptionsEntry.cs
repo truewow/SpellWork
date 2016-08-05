@@ -2,7 +2,7 @@
 {
     public class SpellAuraOptionsEntry
     {
-        public uint SpellID;
+        public int SpellID;
         public uint ProcCharges;
         public uint ProcTypeMask;
         public uint ProcCategoryRecovery;

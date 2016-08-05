@@ -9,7 +9,7 @@ namespace SpellWork.Forms
 {
     public partial class FormSearch : Form
     {
-        private List<SpellInfoHelper> _spellList = new List<SpellInfoHelper>();
+        private List<SpellInfo> _spellList = new List<SpellInfo>();
 
         public FormSearch()
         {
@@ -22,7 +22,7 @@ namespace SpellWork.Forms
             _cbTarget2.SetEnumValues<Targets>("Target B");
         }
 
-        public SpellInfoHelper Spell { get; private set; }
+        public SpellInfo Spell { get; private set; }
 
         private void IdNameKeyDown(object sender, KeyEventArgs e)
         {
@@ -44,11 +44,11 @@ namespace SpellWork.Forms
                                 (spell.AttributesEx2 & at) != 0 || (spell.AttributesEx3 & at) != 0 ||
                                 (spell.AttributesEx4 & at) != 0 || (spell.AttributesEx5 & at) != 0 ||
                                 (spell.AttributesEx6 & at) != 0 || (spell.AttributesEx7 & at) != 0 || (spell.AttributesEx8 & at) != 0)) &&
-                              (id != 0 || ic != 0 && at != 0) || spell.SpellName.ContainsText(name)
+                              (id != 0 || ic != 0 && at != 0) || spell.Name.ContainsText(name)
                           select spell).ToList();
 
-            _lvSpellList.VirtualListSize = _spellList.Count();
-            groupBox1.Text = @"Spell Search count: " + _spellList.Count();
+            _lvSpellList.VirtualListSize = _spellList.Count;
+            groupBox1.Text = @"Spell Search count: " + _spellList.Count;
 
             if (_lvSpellList.SelectedIndices.Count > 0)
                 _lvSpellList.Items[_lvSpellList.SelectedIndices[0]].Selected = false;
@@ -93,7 +93,7 @@ namespace SpellWork.Forms
         private void SpellListSelectedIndexChanged(object sender, EventArgs e)
         {
             if (_lvSpellList.SelectedIndices.Count > 0)
-                new SpellInfo(_rtbSpellInfo, _spellList[_lvSpellList.SelectedIndices[0]]);
+                _spellList[_lvSpellList.SelectedIndices[0]].Write(_rtbSpellInfo);
         }
 
         private void OkClick(object sender, EventArgs e)
@@ -113,7 +113,7 @@ namespace SpellWork.Forms
 
         private void SpellListRetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
-            e.Item = new ListViewItem(new[] {_spellList[e.ItemIndex].ID.ToString(), _spellList[e.ItemIndex].SpellNameRank});
+            e.Item = new ListViewItem(new[] {_spellList[e.ItemIndex].ID.ToString(), _spellList[e.ItemIndex].Name});
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)

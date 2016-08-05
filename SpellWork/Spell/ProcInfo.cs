@@ -9,7 +9,7 @@ namespace SpellWork.Spell
 {
     public static class ProcInfo
     {
-        public static SpellInfoHelper SpellProc { get; set; }
+        public static SpellInfo SpellProc { get; set; }
         public static bool Update = true;
 
         public static void Fill(TreeView familyTree, SpellFamilyNames spellfamily)
@@ -58,11 +58,11 @@ namespace SpellWork.Spell
                 var name    = new StringBuilder();
                 var toolTip = new StringBuilder();
 
-                name.AppendFormat("{0} - {1} ", spell.ID, spell.SpellNameRank);
+                name.AppendFormat("{0} - {1} ", spell.ID, spell.Name);
 
-                toolTip.AppendFormatLine("Spell Name: {0}",  spell.SpellNameRank);
+                toolTip.AppendFormatLine("Spell Name: {0}",  spell.Name);
                 toolTip.AppendFormatLine("Description: {0}", spell.Description);
-                toolTip.AppendFormatLine("ToolTip: {0}",     spell.ToolTip);
+                toolTip.AppendFormatLine("ToolTip: {0}",     spell.Tooltip);
 
                 if (isSkill)
                 {
@@ -73,7 +73,7 @@ namespace SpellWork.Spell
                     toolTip.AppendFormatLine("Description: {0}", elem.skillLine.Description);
                 }
 
-                name.AppendFormat("({0})", spell.School.ToString().NormalizeString("MASK_"));
+                name.AppendFormat("({0})", ((SpellSchoolMask)spell.SchoolMask).ToString().NormalizeString("MASK_"));
 
                 foreach (TreeNode node in familyTree.Nodes)
                 {

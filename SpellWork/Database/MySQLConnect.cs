@@ -32,7 +32,7 @@ namespace SpellWork.Database
         private static string GetSpellName(uint id)
         {
             if (DBC.DBC.SpellInfoStore.ContainsKey((int)id))
-                return DBC.DBC.SpellInfoStore[(int)id].SpellNameRank;
+                return DBC.DBC.SpellInfoStore[(int)id].Name;
 
             Dropped.Add($"DELETE FROM `spell_proc_event` WHERE `entry` IN ({id.ToUInt32()});\r\n");
             return string.Empty;
@@ -50,7 +50,7 @@ namespace SpellWork.Database
                 {
                     while (reader.Read())
                     {
-                        uint spellId = reader.GetUInt32(0);
+                        var spellId = reader.GetUInt32(0);
                         SpellProcEvent.Add(new SpellProcEventEntry
                         {
                             Id                  = spellId,

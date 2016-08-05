@@ -2,7 +2,7 @@
 {
     public class SpellAuraRestrictionsEntry
     {
-        public uint SpellID;
+        public int SpellID;
         public uint CasterAuraSpell;
         public uint TargetAuraSpell;
         public uint ExcludeCasterAuraSpell;

@@ -2,7 +2,7 @@
 {
     public class SpellLevelsEntry
     {
-        public uint SpellID;
+        public int SpellID;
         public ushort BaseLevel;
         public ushort MaxLevel;
         public ushort SpellLevel;

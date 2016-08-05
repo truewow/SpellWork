@@ -2,7 +2,7 @@
 {
     public class SpellClassOptionsEntry
     {
-        public uint SpellID;
+        public int SpellID;
         public uint[] SpellFamilyFlags;
         public byte SpellClassSet;
         public uint ModalNextSpell;

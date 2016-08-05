@@ -213,11 +213,12 @@ namespace SpellWork.Extensions
 
         private static object GetValue<T>(T entry, MemberInfo field)
         {
-            if (field is FieldInfo)
-                return typeof(T).GetField(field.Name).GetValue(entry);
-            if (field is PropertyInfo)
-                return typeof(T).GetProperty(field.Name).GetValue(entry, null);
-            return null;
+            var fieldInfo = field as FieldInfo;
+            if (fieldInfo != null)
+                return fieldInfo.GetValue(entry);
+
+            var propertyInfo = field as PropertyInfo;
+            return propertyInfo?.GetValue(entry, null);
         }
     }
 }
