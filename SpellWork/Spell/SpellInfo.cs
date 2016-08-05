@@ -560,7 +560,7 @@ namespace SpellWork.Spell
                 else
                     level = (int)DBC.DBC.SelectedItemLevel;
 
-                if (Scaling.MaxScalingLevel != 0 && Scaling.MaxScalingLevel > level)
+                if (Scaling.MaxScalingLevel != 0 && Scaling.MaxScalingLevel < level)
                     level = (int)Scaling.MaxScalingLevel;
 
                 if (level < 1)
