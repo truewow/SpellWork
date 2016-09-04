@@ -614,8 +614,8 @@ namespace SpellWork.Spell
 
             foreach (var item in items)
             {
-                var name = string.IsNullOrEmpty(item.LocalesName) ? item.Name : item.LocalesName;
-                var desc = string.IsNullOrEmpty(item.LocalesDescription) ? item.Description : item.LocalesDescription;
+                var name = ((int)DBC.DBC.Locale == 0 || string.IsNullOrEmpty(item.LocalesName)) ? item.Name : item.LocalesName;
+                var desc = ((int)DBC.DBC.Locale == 0 || string.IsNullOrEmpty(item.LocalesDescription)) ? item.Description : item.LocalesDescription;
 
                 desc = string.IsNullOrEmpty(desc) ? string.Empty : string.Format(" - \"{0}\"", desc);
 
