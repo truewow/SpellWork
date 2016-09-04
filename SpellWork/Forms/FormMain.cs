@@ -103,6 +103,7 @@ namespace SpellWork.Forms
                 _dbConnect.ForeColor = Color.Green;
                 // read db data
                 DBC.DBC.ItemTemplate = MySqlConnection.SelectItems();
+                MySqlConnection.LoadSpellsDBCFromDB();
             }
             else
             {

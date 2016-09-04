@@ -180,7 +180,7 @@ namespace SpellWork.DBC
         /// </summary>
         public string SpellName
         {
-            get { return DBC.SpellStrings.GetValue(_SpellName[(uint)DBC.Locale]); }
+            get { return _SpellName == null ? DBC.SpellStringsFromDB.GetValue(ID) : DBC.SpellStrings.GetValue(_SpellName[(uint)DBC.Locale]); }
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace SpellWork.DBC
         /// </summary>
         public string Rank
         {
-            get { return _Rank[(uint)DBC.Locale] != 0 ? DBC.SpellStrings[_Rank[(uint)DBC.Locale]] : string.Empty; }
+            get { return (_Rank != null && _Rank[(uint)DBC.Locale] != 0) ? DBC.SpellStrings[_Rank[(uint)DBC.Locale]] : string.Empty; }
         }
 
         public string SpellNameRank
@@ -201,7 +201,7 @@ namespace SpellWork.DBC
         /// </summary>
         public string Description
         {
-            get { return DBC.SpellStrings.GetValue(_Description[(uint)DBC.Locale]); }
+            get { return _Description == null ? string.Empty : DBC.SpellStrings.GetValue(_Description[(uint)DBC.Locale]); }
         }
 
         /// <summary>
@@ -209,12 +209,12 @@ namespace SpellWork.DBC
         /// </summary>
         public string ToolTip
         {
-            get { return DBC.SpellStrings.GetValue(_ToolTip[(uint)DBC.Locale]); }
+            get { return _ToolTip == null ? string.Empty : DBC.SpellStrings.GetValue(_ToolTip[(uint)DBC.Locale]); }
         }
 
         public string GetName(byte loc)
         {
-            return DBC.SpellStrings.GetValue(_SpellName[loc]);
+            return _SpellName == null ? DBC.SpellStringsFromDB.GetValue(ID) : DBC.SpellStrings.GetValue(_SpellName[loc]);
         }
 
         public string ProcInfo
