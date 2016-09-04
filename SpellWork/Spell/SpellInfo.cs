@@ -438,8 +438,11 @@ namespace SpellWork.Spell
                 rtb.AppendFormatLine("Duration {0}, {1}, {2}", Duration, DurationPerLevel, MaxDuration);
 
             if (Interrupts != null)
-                rtb.AppendFormatLine("Interrupt Flags: 0x{0:X8}, AuraIF 0x{1:X8} 0x{2:X8}, ChannelIF 0x{3:X8} 0x{4:X8}",
-                    Interrupts.InterruptFlags, Interrupts.AuraInterruptFlags[0], Interrupts.AuraInterruptFlags[1], Interrupts.ChannelInterruptFlags[0], Interrupts.ChannelInterruptFlags[1]);
+            {
+                rtb.AppendFormatLine("Interrupt Flags: {0:X8} ({1})", Interrupts.InterruptFlags, (SpellInterruptFlags)Interrupts.InterruptFlags);
+                rtb.AppendFormatLine("AuraInterrupt Flags: {0:X8} ({1}), {2:X8} ({3})", Interrupts.AuraInterruptFlags[0], (SpellAuraInterruptFlags)Interrupts.AuraInterruptFlags[0], Interrupts.AuraInterruptFlags[1], (SpellAuraInterruptFlags)Interrupts.AuraInterruptFlags[1]);
+                rtb.AppendFormatLine("ChannelInterrupt Flags: {0:X8} ({1}, {2:X8} ({3})", Interrupts.ChannelInterruptFlags[0], (SpellChannelInterruptFlags)Interrupts.ChannelInterruptFlags[0], Interrupts.ChannelInterruptFlags[1], (SpellChannelInterruptFlags)Interrupts.ChannelInterruptFlags[1]);
+            }
 
             if (CasterAuraState != 0)
                 rtb.AppendFormatLine("CasterAuraState = {0} ({1})", CasterAuraState, (AuraState)CasterAuraState);
