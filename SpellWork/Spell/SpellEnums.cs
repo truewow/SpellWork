@@ -107,7 +107,7 @@ namespace SpellWork.Spell
         SPELL_EFFECT_SCHOOL_DAMAGE                      = 2,
         SPELL_EFFECT_DUMMY                              = 3,
         SPELL_EFFECT_PORTAL_TELEPORT                    = 4, // Unused (4.3.4)
-        SPELL_EFFECT_5                                  = 5, // Unused (7.0.3)
+        SPELL_EFFECT_TELEPORT_UNITS_OLD                 = 5, // Unused (7.0.3)
         SPELL_EFFECT_APPLY_AURA                         = 6,
         SPELL_EFFECT_ENVIRONMENTAL_DAMAGE               = 7,
         SPELL_EFFECT_POWER_DRAIN                        = 8,
@@ -116,7 +116,7 @@ namespace SpellWork.Spell
         SPELL_EFFECT_BIND                               = 11,
         SPELL_EFFECT_PORTAL                             = 12,
         SPELL_EFFECT_RITUAL_BASE                        = 13, // Unused (4.3.4)
-        SPELL_EFFECT_RITUAL_SPECIALIZE                  = 14, // Unused (4.3.4)
+        SPELL_EFFECT_INCREASE_CURRENCY_CAP              = 14,
         SPELL_EFFECT_RITUAL_ACTIVATE_PORTAL             = 15, // Unused (4.3.4)
         SPELL_EFFECT_QUEST_COMPLETE                     = 16,
         SPELL_EFFECT_WEAPON_DAMAGE_NOSCHOOL             = 17,
@@ -154,7 +154,7 @@ namespace SpellWork.Spell
         SPELL_EFFECT_DETECT                             = 49,
         SPELL_EFFECT_TRANS_DOOR                         = 50,
         SPELL_EFFECT_FORCE_CRITICAL_HIT                 = 51, // Unused (4.3.4)
-        SPELL_EFFECT_GUARANTEE_HIT                      = 52, // Unused (4.3.4)
+        SPELL_EFFECT_SET_MAX_BATTLE_PET_COUNT           = 52,
         SPELL_EFFECT_ENCHANT_ITEM                       = 53,
         SPELL_EFFECT_ENCHANT_ITEM_TEMPORARY             = 54,
         SPELL_EFFECT_TAMECREATURE                       = 55,
@@ -183,7 +183,7 @@ namespace SpellWork.Spell
         SPELL_EFFECT_ATTACK                             = 78,
         SPELL_EFFECT_SANCTUARY                          = 79,
         SPELL_EFFECT_ADD_COMBO_POINTS                   = 80,
-        SPELL_EFFECT_CREATE_HOUSE                       = 81,
+        SPELL_EFFECT_PUSH_ABILITY_TO_ACTION_BAR         = 81,
         SPELL_EFFECT_BIND_SIGHT                         = 82,
         SPELL_EFFECT_DUEL                               = 83,
         SPELL_EFFECT_STUCK                              = 84,
@@ -209,13 +209,13 @@ namespace SpellWork.Spell
         SPELL_EFFECT_SUMMON_OBJECT_SLOT1                = 104,
         SPELL_EFFECT_SURVEY                             = 105,
         SPELL_EFFECT_CHANGE_RAID_MARKER                 = 106,
-        SPELL_EFFECT_SUMMON_OBJECT_SLOT4                = 107,
+        SPELL_EFFECT_SHOW_CORPSE_LOOT                   = 107,
         SPELL_EFFECT_DISPEL_MECHANIC                    = 108,
         SPELL_EFFECT_RESURRECT_PET                      = 109,
         SPELL_EFFECT_DESTROY_ALL_TOTEMS                 = 110,
         SPELL_EFFECT_DURABILITY_DAMAGE                  = 111,
         SPELL_EFFECT_112                                = 112,
-        SPELL_EFFECT_RESURRECT_NEW                      = 113,
+        SPELL_EFFECT_113                                = 113,
         SPELL_EFFECT_ATTACK_ME                          = 114,
         SPELL_EFFECT_DURABILITY_DAMAGE_PCT              = 115,
         SPELL_EFFECT_SKIN_PLAYER_CORPSE                 = 116,
@@ -265,7 +265,7 @@ namespace SpellWork.Spell
         SPELL_EFFECT_FORCE_CAST_2                       = 160,
         SPELL_EFFECT_TALENT_SPEC_COUNT                  = 161,
         SPELL_EFFECT_TALENT_SPEC_SELECT                 = 162,
-        SPELL_EFFECT_163                                = 163, // Unused (4.3.4)
+        SPELL_EFFECT_OBLITERATE_ITEM                    = 163,
         SPELL_EFFECT_REMOVE_AURA                        = 164,
         SPELL_EFFECT_DAMAGE_FROM_MAX_HEALTH_PCT         = 165,
         SPELL_EFFECT_GIVE_CURRENCY                      = 166,
@@ -278,19 +278,19 @@ namespace SpellWork.Spell
         SPELL_EFFECT_UNLOCK_GUILD_VAULT_TAB             = 173, // Guild tab unlocked (guild perk)
         SPELL_EFFECT_APPLY_AURA_ON_PET                  = 174, // NYI
         SPELL_EFFECT_175                                = 175, // Unused (4.3.4)
-        SPELL_EFFECT_SANCTUARY_2                        = 176,
+        SPELL_EFFECT_SANCTUARY_2                        = 176, // NYI
         SPELL_EFFECT_177                                = 177,
         SPELL_EFFECT_178                                = 178, // Unused (4.3.4)
         SPELL_EFFECT_CREATE_AREATRIGGER                 = 179,
         SPELL_EFFECT_UPDATE_AREATRIGGER                 = 180, // NYI
         SPELL_EFFECT_REMOVE_TALENT                      = 181,
-        SPELL_EFFECT_182                                = 182,
+        SPELL_EFFECT_DESPAWN_AREATRIGGER                = 182,
         SPELL_EFFECT_183                                = 183,
         SPELL_EFFECT_REPUTATION_2                       = 184, // NYI
         SPELL_EFFECT_185                                = 185,
         SPELL_EFFECT_186                                = 186,
-        SPELL_EFFECT_RANDOMIZE_ARCHAEOLOGY_DIGSITES     = 187,
-        SPELL_EFFECT_STAMPEDE                           = 188,
+        SPELL_EFFECT_RANDOMIZE_ARCHAEOLOGY_DIGSITES     = 187, // NYI
+        SPELL_EFFECT_188                                = 188,
         SPELL_EFFECT_LOOT                               = 189, // NYI, lootid in MiscValue ?
         SPELL_EFFECT_190                                = 190,
         SPELL_EFFECT_TELEPORT_TO_DIGSITE                = 191, // NYI
@@ -300,12 +300,12 @@ namespace SpellWork.Spell
         SPELL_EFFECT_195                                = 195,
         SPELL_EFFECT_196                                = 196,
         SPELL_EFFECT_197                                = 197,
-        SPELL_EFFECT_198                                = 198,
+        SPELL_EFFECT_PLAY_SCENE                         = 198, // NYI
         SPELL_EFFECT_199                                = 199,
         SPELL_EFFECT_HEAL_BATTLEPET_PCT                 = 200, // NYI
         SPELL_EFFECT_ENABLE_BATTLE_PETS                 = 201, // NYI
         SPELL_EFFECT_202                                = 202,
-        SPELL_EFFECT_CANCEL_AURA                        = 203,
+        SPELL_EFFECT_203                                = 203,
         SPELL_EFFECT_CHANGE_BATTLEPET_QUALITY           = 204,
         SPELL_EFFECT_LAUNCH_QUEST_CHOICE                = 205,
         SPELL_EFFECT_ALTER_ITEM                         = 206, // NYI
@@ -315,7 +315,7 @@ namespace SpellWork.Spell
         SPELL_EFFECT_LEARN_GARRISON_BUILDING            = 210,
         SPELL_EFFECT_LEARN_GARRISON_SPECIALIZATION      = 211,
         SPELL_EFFECT_212                                = 212,
-        SPELL_EFFECT_JUMP_DEST_2                        = 213,
+        SPELL_EFFECT_213                                = 213,
         SPELL_EFFECT_CREATE_GARRISON                    = 214,
         SPELL_EFFECT_UPGRADE_CHARACTER_SPELLS           = 215, // Unlocks boosted players' spells (ChrUpgrade*.db2)
         SPELL_EFFECT_CREATE_SHIPMENT                    = 216,
@@ -344,19 +344,19 @@ namespace SpellWork.Spell
         SPELL_EFFECT_END_GARRISON_BUILDING_CONSTRUCTION = 239, // Instantly finishes building construction
         SPELL_EFFECT_GIVE_ARTIFACT_POWER                = 240,
         SPELL_EFFECT_241                                = 241,
-        SPELL_EFFECT_GIVE_ARTIFACT_POWER_NO_BONUS       = 242,
+        SPELL_EFFECT_GIVE_ARTIFACT_POWER_NO_BONUS       = 242, // Unaffected by Artifact Knowledge
         SPELL_EFFECT_APPLY_ENCHANT_ILLUSION             = 243,
         SPELL_EFFECT_LEARN_FOLLOWER_ABILITY             = 244,
         SPELL_EFFECT_UPGRADE_HEIRLOOM                   = 245,
         SPELL_EFFECT_FINISH_GARRISON_MISSION            = 246,
         SPELL_EFFECT_ADD_GARRISON_MISSION               = 247,
         SPELL_EFFECT_FINISH_SHIPMENT                    = 248,
-        SPELL_EFFECT_CREATE_ARTIFACT                    = 249,
+        SPELL_EFFECT_FORCE_EQUIP_ITEM                   = 249,
         SPELL_EFFECT_TAKE_SCREENSHOT                    = 250, // Serverside marker for selfie screenshot - achievement check
         SPELL_EFFECT_SET_GARRISON_CACHE_SIZE            = 251,
         SPELL_EFFECT_TELEPORT_UNITS                     = 252,
-        SPELL_EFFECT_253                                = 253,
-        SPELL_EFFECT_GIVE_HONOR                         = 254,
+        SPELL_EFFECT_GIVE_HONOR                         = 253,
+        SPELL_EFFECT_254                                = 254,
         SPELL_EFFECT_LEARN_TRANSMOG_SET                 = 255,
         TOTAL_SPELL_EFFECTS                             = 256,
     };
@@ -688,7 +688,7 @@ namespace SpellWork.Spell
         SPELL_AURA_MOD_MELEE_HASTE_3                            = 319,
         SPELL_AURA_MOD_RANGED_HASTE_2                           = 320,
         SPELL_AURA_MOD_NO_ACTIONS                               = 321,
-        SPELL_AURA_INTERFERE_TARGETTING                         = 322,  // NYI
+        SPELL_AURA_INTERFERE_TARGETTING                         = 322,
         SPELL_AURA_323                                          = 323,  // Not used in 4.3.4
         SPELL_AURA_324                                          = 324,  // spell critical chance (probably by school mask)
         SPELL_AURA_325                                          = 325,  // Not used in 4.3.4
@@ -775,7 +775,7 @@ namespace SpellWork.Spell
         SPELL_AURA_406                                          = 406,
         SPELL_AURA_MOD_FEAR_2                                   = 407,  // NYI
         SPELL_AURA_408                                          = 408,
-        SPELL_AURA_409                                          = 409,
+        SPELL_AURA_CAN_TURN_WHILE_FALLING                       = 409,
         SPELL_AURA_410                                          = 410,
         SPELL_AURA_MOD_MAX_CHARGES                              = 411,
         SPELL_AURA_412                                          = 412,
@@ -796,14 +796,14 @@ namespace SpellWork.Spell
         SPELL_AURA_SCALE_PLAYER_LEVEL                           = 427,  // NYI
         SPELL_AURA_428                                          = 428,
         SPELL_AURA_429                                          = 429,
-        SPELL_AURA_430                                          = 430,
+        SPELL_AURA_PLAY_SCENE                                   = 430,
         SPELL_AURA_431                                          = 431,
         SPELL_AURA_432                                          = 432,
         SPELL_AURA_433                                          = 433,
         SPELL_AURA_434                                          = 434,
         SPELL_AURA_435                                          = 435,
         SPELL_AURA_MOD_ENVIRONMENTAL_DAMAGE_TAKEN               = 436,  // NYI
-        SPELL_AURA_437                                          = 437,
+        SPELL_AURA_MOD_MINIMUM_SPEED_RATE                       = 437,
         SPELL_AURA_PRELOAD_PHASE                                = 438,  // NYI
         SPELL_AURA_439                                          = 439,
         SPELL_AURA_MOD_MULTISTRIKE_DAMAGE                       = 440,  // NYI
@@ -821,7 +821,7 @@ namespace SpellWork.Spell
         SPELL_AURA_452                                          = 452,
         SPELL_AURA_CHARGE_RECOVERY_MOD                          = 453,
         SPELL_AURA_CHARGE_RECOVERY_MULTIPLIER                   = 454,
-        SPELL_AURA_455                                          = 455,
+        SPELL_AURA_MOD_ROOT_2                                   = 455,
         SPELL_AURA_CHARGE_RECOVERY_AFFECTED_BY_HASTE            = 456,
         SPELL_AURA_CHARGE_RECOVERY_AFFECTED_BY_HASTE_REGEN      = 457,
         SPELL_AURA_IGNORE_DUAL_WIELD_HIT_PENALTY                = 458,  // NYI
@@ -857,7 +857,8 @@ namespace SpellWork.Spell
         SPELL_AURA_488                                          = 488,
         SPELL_AURA_489                                          = 489,
         SPELL_AURA_490                                          = 490,
-        TOTAL_AURAS                                             = 491
+        SPELL_AURA_491                                          = 491,
+        TOTAL_AURAS                                             = 492
     }
 
     /// <summary>
@@ -1013,6 +1014,7 @@ namespace SpellWork.Spell
         TARGET_UNK_145                          = 145,
         TARGET_UNK_146                          = 146,
         TARGET_UNK_147                          = 147,
+        TARGET_UNK_148                          = 148,
         TOTAL_SPELL_TARGETS,
     };
 
@@ -1914,7 +1916,7 @@ namespace SpellWork.Spell
     [Flags]
     enum SpellAtributeEx11 : uint
     {
-         SPELL_ATTR11_UNK0                            = 0x00000001, //  0
+        SPELL_ATTR11_UNK0                            = 0x00000001, //  0
         SPELL_ATTR11_UNK1                            = 0x00000002, //  1
         SPELL_ATTR11_SCALES_WITH_ITEM_LEVEL          = 0x00000004, //  2
         SPELL_ATTR11_UNK3                            = 0x00000008, //  3
