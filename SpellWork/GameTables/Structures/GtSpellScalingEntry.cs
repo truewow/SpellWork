@@ -4,28 +4,28 @@
     internal class GtSpellScalingEntry : GameTableRecord
     {
         // ReSharper disable MemberCanBePrivate.Global
-        public uint ID;
-        public uint Rogue;
-        public uint Druid;
-        public uint Hunter;
-        public uint Mage;
-        public uint Paladin;
-        public uint Priest;
-        public uint Shaman;
-        public uint Warlock;
-        public uint Warrior;
-        public uint DeathKnight;
-        public uint Monk;
-        public uint DemonHunter;
-        public uint Item;
-        public uint Consumable;
-        public uint Gem1;
-        public uint Gem2;
-        public uint Gem3;
-        public uint Health;
+        public uint ID { get; set; }
+        public float Rogue { get; set; }
+        public float Druid { get; set; }
+        public float Hunter { get; set; }
+        public float Mage { get; set; }
+        public float Paladin { get; set; }
+        public float Priest { get; set; }
+        public float Shaman { get; set; }
+        public float Warlock { get; set; }
+        public float Warrior { get; set; }
+        public float DeathKnight { get; set; }
+        public float Monk { get; set; }
+        public float DemonHunter { get; set; }
+        public float Item { get; set; }
+        public float Consumable { get; set; }
+        public float Gem1 { get; set; }
+        public float Gem2 { get; set; }
+        public float Gem3 { get; set; }
+        public float Health { get; set; }
         // ReSharper restore MemberCanBePrivate.Global
 
-        public uint GetColumnForClass(int columnIndex)
+        public object GetColumnForClass(int columnIndex)
         {
             // ReSharper disable once SwitchStatementMissingSomeCases
             switch (columnIndex)

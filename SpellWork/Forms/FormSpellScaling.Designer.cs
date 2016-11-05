@@ -76,7 +76,7 @@
             // _tbLevel
             //
             this._tbLevel.Location = new System.Drawing.Point(12, 25);
-            this._tbLevel.Maximum = 100;
+            this._tbLevel.Maximum = 110;
             this._tbLevel.Minimum = 1;
             this._tbLevel.Name = "_tbLevel";
             this._tbLevel.Size = new System.Drawing.Size(226, 45);
