@@ -63,6 +63,6 @@ namespace SpellWork.GameTables
 
     public interface GameTableRecord
     {
-        object GetColumnForClass(int columnIndex);
+        float GetColumnForClass(int scalingClass);
     }
 }

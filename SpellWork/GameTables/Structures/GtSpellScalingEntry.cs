@@ -4,53 +4,54 @@
     internal class GtSpellScalingEntry : GameTableRecord
     {
         // ReSharper disable MemberCanBePrivate.Global
-        public uint ID { get; set; }
-        public float Rogue { get; set; }
-        public float Druid { get; set; }
-        public float Hunter { get; set; }
-        public float Mage { get; set; }
-        public float Paladin { get; set; }
-        public float Priest { get; set; }
-        public float Shaman { get; set; }
-        public float Warlock { get; set; }
-        public float Warrior { get; set; }
-        public float DeathKnight { get; set; }
-        public float Monk { get; set; }
-        public float DemonHunter { get; set; }
-        public float Item { get; set; }
-        public float Consumable { get; set; }
-        public float Gem1 { get; set; }
-        public float Gem2 { get; set; }
-        public float Gem3 { get; set; }
-        public float Health { get; set; }
+        public uint ID;
+        public float Rogue;
+        public float Druid;
+        public float Hunter;
+        public float Mage;
+        public float Paladin;
+        public float Priest;
+        public float Shaman;
+        public float Warlock;
+        public float Warrior;
+        public float DeathKnight;
+        public float Monk;
+        public float DemonHunter;
+        public float Item;
+        public float Consumable;
+        public float Gem1;
+        public float Gem2;
+        public float Gem3;
+        public float Health;
         // ReSharper restore MemberCanBePrivate.Global
 
-        public object GetColumnForClass(int columnIndex)
+        public float GetColumnForClass(int scalingClass)
         {
             // ReSharper disable once SwitchStatementMissingSomeCases
-            switch (columnIndex)
+            switch (scalingClass)
             {
-                case 0: return ID;
-                case 1: return Rogue;
-                case 2: return Druid;
+                case 1: return Warrior;
+                case 2: return Paladin;
                 case 3: return Hunter;
-                case 4: return Mage;
-                case 5: return Paladin;
-                case 6: return Priest;
+                case 4: return Rogue;
+                case 5: return Priest;
+                case 6: return DeathKnight;
                 case 7: return Shaman;
-                case 8: return Warlock;
-                case 9: return Warrior;
-                case 10: return DeathKnight;
-                case 11: return Monk;
+                case 8: return Mage;
+                case 9: return Warlock;
+                case 10: return Monk;
+                case 11: return Druid;
                 case 12: return DemonHunter;
-                case 13: return Item;
-                case 14: return Consumable;
-                case 15: return Gem1;
-                case 16: return Gem2;
-                case 17: return Gem3;
-                case 18: return Health;
+                case -1: return Item;
+                case -2: return Consumable;
+                case -3: return Gem1;
+                case -4: return Gem2;
+                case -5: return Gem3;
+                case -6: return Health;
+                default:
+                    break;
             }
-            return 0; // Shut up, compiler
+            return 0.0f; // Shut up, compiler
         }
     }
 }
