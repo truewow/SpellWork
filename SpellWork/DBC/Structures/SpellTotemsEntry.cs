@@ -1,9 +1,12 @@
-﻿namespace SpellWork.DBC.Structures
+﻿using System.Runtime.InteropServices;
+
+namespace SpellWork.DBC.Structures
 {
     public class SpellTotemsEntry
     {
         public int SpellID;
         public uint[] Totem;
-        public uint[] RequiredTotemCategoryID;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public ushort[] RequiredTotemCategoryID;
     }
 }

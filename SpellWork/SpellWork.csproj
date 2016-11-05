@@ -62,8 +62,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DBFilesClient.NET, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DBFilesClient.NET.1.0.0.0\lib\net452\DBFilesClient.NET.dll</HintPath>
+    <Reference Include="DBFilesClient.NET, Version=1.1.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DBFilesClient.NET.1.1.2.4\lib\net452\DBFilesClient.NET.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MySql.Data, Version=6.2.2.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">

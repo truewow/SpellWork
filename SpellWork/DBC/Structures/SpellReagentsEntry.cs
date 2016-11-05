@@ -1,9 +1,12 @@
-﻿namespace SpellWork.DBC.Structures
+﻿using System.Runtime.InteropServices;
+
+namespace SpellWork.DBC.Structures
 {
     public class SpellReagentsEntry
     {
         public int SpellID;
         public uint[] Reagent;
-        public uint[] ReagentCount;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
+        public ushort[] ReagentCount;
     }
 }
