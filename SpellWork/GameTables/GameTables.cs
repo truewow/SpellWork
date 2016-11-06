@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 
@@ -40,13 +41,10 @@ namespace SpellWork.GameTables
                         switch (Type.GetTypeCode(field.FieldType))
                         {
                             case TypeCode.UInt32:
-                                field.SetValue(record, uint.Parse(lineTokens[fieldIndex]));
-                                break;
-                            case TypeCode.Int32:
-                                field.SetValue(record, int.Parse(lineTokens[fieldIndex]));
+                                field.SetValue(record, uint.Parse(lineTokens[fieldIndex], CultureInfo.InvariantCulture));
                                 break;
                             case TypeCode.Single:
-                                field.SetValue(record, float.Parse(lineTokens[fieldIndex]));
+                                field.SetValue(record, float.Parse(lineTokens[fieldIndex], CultureInfo.InvariantCulture));
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
