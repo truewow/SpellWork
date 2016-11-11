@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,6 @@ using SpellWork.DBC.Structures;
 using SpellWork.Extensions;
 using SpellWork.GameTables;
 using SpellWork.GameTables.Structures;
-using System.Diagnostics;
 
 namespace SpellWork.Spell
 {
@@ -29,10 +29,10 @@ namespace SpellWork.Spell
         public SpellReagentsEntry Reagents { get; set; }
         public SpellScalingEntry Scaling { get; set; }
         public SpellShapeshiftEntry Shapeshift { get; set; }
-        public SynchronizedCollection<SpellTargetRestrictionsEntry> TargetRestrictions { get; } = new SynchronizedCollection<SpellTargetRestrictionsEntry>();
+        public List<SpellTargetRestrictionsEntry> TargetRestrictions { get; } = new List<SpellTargetRestrictionsEntry>();
         public SpellTotemsEntry Totems { get; set; }
         public SpellXSpellVisualEntry SpellXSpellVisual { get; set; }
-        public SynchronizedCollection<SpellEffectEntry> Effects { get; } = new SynchronizedCollection<SpellEffectEntry>(40);
+        public List<SpellEffectEntry> Effects { get; } = new List<SpellEffectEntry>(32);
         public SpellProcsPerMinuteEntry ProcsPerMinute { get; set; }
         public SpellDescriptionVariablesEntry DescriptionVariables { get; set; }
         public SpellDurationEntry DurationEntry { get; set; }
@@ -122,6 +122,7 @@ namespace SpellWork.Spell
         public uint ProcChance => AuraOptions?.ProcChance ?? 0;
         public uint ProcFlags => AuraOptions?.ProcTypeMask ?? 0;
         public uint CumulativeAura => AuraOptions?.CumulativeAura ?? 0;
+        public uint ProcCooldown => AuraOptions?.ProcCategoryRecovery ?? 0;
         #endregion
 
         #region SpellLevels
@@ -434,7 +435,7 @@ namespace SpellWork.Spell
                 rtb.AppendFormatLine("StartRecoveryCategory = {0}, StartRecoveryTime = {1:F} ms", StartRecoveryCategory, StartRecoveryTime);
             }
 
-            if (DurationEntry != null)          
+            if (DurationEntry != null)
                 rtb.AppendFormatLine("Duration {0}, {1}, {2}", Duration, DurationPerLevel, MaxDuration);
 
             if (Interrupts != null)
@@ -524,8 +525,8 @@ namespace SpellWork.Spell
             if (ProcFlags != 0)
             {
                 rtb.SetBold();
-                rtb.AppendFormatLine("Proc flag 0x{0:X8}, chance = {1}, charges - {2}",
-                    ProcFlags, ProcChance, ProcCharges);
+                rtb.AppendFormatLine("Proc flag 0x{0:X8}, chance: {1}%, charges: {2}, cooldown: {3}",
+                    ProcFlags, ProcChance, ProcCharges, ProcCooldown);
                 rtb.SetDefaultStyle();
                 rtb.AppendFormatLine(Separator);
                 rtb.AppendText(ProcInfo);
