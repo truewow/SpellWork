@@ -580,9 +580,7 @@ namespace SpellWork.Spell
                         {
                             var gtScaling = GameTable<GtSpellScalingEntry>.GetRecord(level);
                             Debug.Assert(gtScaling != null);
-                            value = Scaling.ScalingClass > 0
-                                ? gtScaling.GetColumnForClass(Scaling.ScalingClass)
-                                : gtScaling.Item;
+                            value = gtScaling.GetColumnForClass(Scaling.ScalingClass);
                         }
                         else if (DBC.DBC.RandPropPoints.ContainsKey(level))
                         {
