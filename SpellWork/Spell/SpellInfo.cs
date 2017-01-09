@@ -10,6 +10,7 @@ using SpellWork.DBC.Structures;
 using SpellWork.Extensions;
 using SpellWork.GameTables;
 using SpellWork.GameTables.Structures;
+using System.Collections.Concurrent;
 
 namespace SpellWork.Spell
 {
@@ -37,6 +38,9 @@ namespace SpellWork.Spell
         public SpellDescriptionVariablesEntry DescriptionVariables { get; set; }
         public SpellDurationEntry DurationEntry { get; set; }
         public SpellRangeEntry Range { get; set; }
+
+        // Helper
+        public readonly IDictionary<uint, SpellEffectInfo> SpellEffectInfoStore = new ConcurrentDictionary<uint, SpellEffectInfo>();
 
         #region SpellDuration
         public int Duration => DurationEntry?.Duration ?? 0;
@@ -111,9 +115,9 @@ namespace SpellWork.Spell
         public int TargetAuraState => AuraRestrictions?.TargetAuraState ?? 0;
         public int CasterAuraStateNot => AuraRestrictions?.ExcludeCasterAuraState ?? 0;
         public int TargetAuraStateNot => AuraRestrictions?.ExcludeTargetAuraState ?? 0;
-        public int CasterAuraSpell => (int) (AuraRestrictions?.CasterAuraSpell ?? 0);
-        public int TargetAuraSpell => (int) (AuraRestrictions?.TargetAuraSpell ?? 0);
-        public int ExcludeCasterAuraSpell => (int) (AuraRestrictions?.ExcludeCasterAuraSpell ?? 0);
+        public int CasterAuraSpell => (int)(AuraRestrictions?.CasterAuraSpell ?? 0);
+        public int TargetAuraSpell => (int)(AuraRestrictions?.TargetAuraSpell ?? 0);
+        public int ExcludeCasterAuraSpell => (int)(AuraRestrictions?.ExcludeCasterAuraSpell ?? 0);
         public int ExcludeTargetAuraSpell => (int)(AuraRestrictions?.ExcludeTargetAuraSpell ?? 0);
         #endregion
 
@@ -555,7 +559,9 @@ namespace SpellWork.Spell
         private void AppendEffectInfo(RichTextBox rtb, SpellEffectEntry effect)
         {
             rtb.SetBold();
-            rtb.AppendFormatLine("Effect {0}: Id {1} ({2}) {3}", effect.EffectIndex, effect.Effect, (SpellEffects)effect.Effect, (Difficulty)effect.DifficultyID);
+            rtb.AppendFormatLine($"Effect { effect.EffectIndex }: Id { effect.Effect } ({ (SpellEffects)effect.Effect })");
+            rtb.SetBold();
+            rtb.AppendFormatLine($"Difficulty: Id { effect.DifficultyID } ({ (Difficulty)effect.DifficultyID })");
             rtb.SetDefaultStyle();
 
             var value = 0.0f;
@@ -810,13 +816,8 @@ namespace SpellWork.Spell
 
         private void AppendItemInfo(RichTextBox rtb)
         {
-            var items = from item in DBC.DBC.ItemTemplate
-                        where item.SpellId.ContainsElement((int)ID)
-                        select item;
-
-            // ReSharper disable once PossibleMultipleEnumeration
-            var enumerable = items as Item[] ?? items.ToArray();
-            if (!enumerable.Any())
+            var items = DBC.DBC.ItemEffect.Where(effect => effect.Value.SpellID == (int)ID).ToArray();
+            if (!items.Any())
                 return;
 
             rtb.AppendLine(Separator);
@@ -824,14 +825,18 @@ namespace SpellWork.Spell
             rtb.AppendLine("Items using this spell:");
             rtb.SetDefaultStyle();
 
-            foreach (var item in enumerable)
+            foreach (var item in items)
             {
-                var name = string.IsNullOrEmpty(item.LocalesName) ? item.Name : item.LocalesName;
-                var desc = string.IsNullOrEmpty(item.LocalesDescription) ? item.Description : item.LocalesDescription;
+                var itemTemplate = DBC.DBC.ItemSparse[(int)item.Value.ItemID];
+                if (itemTemplate == null)
+                    continue;
 
-                desc = string.IsNullOrEmpty(desc) ? string.Empty : $" - \"{desc}\"";
+                var name = itemTemplate.Name;
+                var description = itemTemplate.Description;
 
-                rtb.AppendFormatLine(@"   {0}: {1} {2}", item.Entry, name, desc);
+                description = string.IsNullOrEmpty(description) ? string.Empty : $" - \"{ description }\"";
+
+                rtb.AppendFormatLine($@"   { item.Value.ItemID }: { name } { description }");
             }
         }
 
@@ -900,6 +905,61 @@ namespace SpellWork.Spell
         public bool HasTargetB(Targets target)
         {
             return Effects.Any(eff => eff != null && eff.ImplicitTarget[1] == (uint)target);
+        }
+    }
+
+    public class SpellEffectInfo
+    {
+        public SpellEffectEntry SpellEffect { get; set; }
+
+        public uint ID => SpellEffect.ID;
+
+        public int SpellID => SpellEffect.SpellID;
+
+        public uint DifficultyID => SpellEffect.DifficultyID;
+
+        public uint Effect => SpellEffect.Effect;
+        public uint EffectIndex => SpellEffect.EffectIndex;
+        public uint EffectAttributes => SpellEffect.EffectAttributes;
+
+        public uint EffectAura => SpellEffect.EffectAura;
+        public uint EffectAuraPeriod => SpellEffect.EffectAuraPeriod;
+
+        public int EffectBasePoints => SpellEffect.EffectBasePoints;
+
+        public int EffectMiscValueA => SpellEffect.EffectMiscValues[0];
+        public int EffectMiscValueB => SpellEffect.EffectMiscValues[1];
+
+        public uint EffectSpellClassMaskA => SpellEffect.EffectSpellClassMask[0];
+        public uint EffectSpellClassMaskB => SpellEffect.EffectSpellClassMask[1];
+        public uint EffectSpellClassMaskC => SpellEffect.EffectSpellClassMask[2];
+        public uint EffectSpellClassMaskD => SpellEffect.EffectSpellClassMask[3];
+
+        public uint EffectTriggerSpell => SpellEffect.EffectTriggerSpell;
+
+        public uint TargetA => SpellEffect.ImplicitTarget[0];
+        public uint TargetB => SpellEffect.ImplicitTarget[1];
+
+        public uint EffectRadiusIndex => SpellEffect.EffectRadiusIndex[0];
+        public uint EffectRadiusMaxIndex => SpellEffect.EffectRadiusIndex[1];
+
+        public uint EffectChainTargets => SpellEffect.EffectChainTargets;
+        public uint EffectDieSides => SpellEffect.EffectDieSides;
+        public uint EffectItemType => SpellEffect.EffectItemType;
+        public uint EffectMechanic => SpellEffect.EffectMechanic;
+
+        public float EffectAmplitude => SpellEffect.EffectAmplitude;
+        public float EffectBonusCoefficient => SpellEffect.EffectBonusCoefficient;
+        public float EffectChainAmplitude => SpellEffect.EffectChainAmplitude;
+        public float EffectPointsPerResource => SpellEffect.EffectPointsPerResource;
+        public float EffectRealPointsPerLevel => SpellEffect.EffectRealPointsPerLevel;
+
+        public float EffectPosFacing => SpellEffect.EffectPosFacing;
+        public float BonusCoefficientFromAP => SpellEffect.BonusCoefficientFromAP;
+
+        public SpellEffectInfo(SpellEffectEntry spellEffectEntry)
+        {
+            SpellEffect = spellEffectEntry;
         }
     }
 }

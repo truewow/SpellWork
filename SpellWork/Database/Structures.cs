@@ -34,14 +34,4 @@ namespace SpellWork.Database
             };
         }
     }
-
-    public struct Item
-    {
-        public uint Entry;
-        public string Name;
-        public string Description;
-        public string LocalesName;
-        public string LocalesDescription;
-        public int[] SpellId;
-    }
 }

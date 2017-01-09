@@ -24,7 +24,7 @@ namespace SpellWork.DBC.Structures
         public uint EffectItemType;
         public uint EffectMechanic;
         public int[] EffectMiscValues;
-        public int[] EffectRadiusIndex;
+        public uint[] EffectRadiusIndex;
         public uint EffectTriggerSpell;
         public uint[] ImplicitTarget;
         public int SpellID;
@@ -37,10 +37,11 @@ namespace SpellWork.DBC.Structures
         {
             get
             {
-                if (EffectRadiusIndex[1] == 0 || !DBC.SpellRadius.ContainsKey(EffectRadiusIndex[1]))
+                if (EffectRadiusIndex[1] == 0 || !DBC.SpellRadius.ContainsKey((int)EffectRadiusIndex[1]))
                     return string.Empty;
 
-                return $"Max Radius (Id {EffectRadiusIndex[1]}) {DBC.SpellRadius[EffectRadiusIndex[1]].Radius:F}";
+                return $"Max Radius (Id {EffectRadiusIndex[1]}) {DBC.SpellRadius[(int)EffectRadiusIndex[1]].Radius:F}" +
+                       $" (Min: {DBC.SpellRadius[(int)EffectRadiusIndex[1]].RadiusMin:F} Max: {DBC.SpellRadius[(int)EffectRadiusIndex[1]].MaxRadius:F})";
             }
         }
 
@@ -48,10 +49,11 @@ namespace SpellWork.DBC.Structures
         {
             get
             {
-                if (EffectRadiusIndex[0] == 0 || !DBC.SpellRadius.ContainsKey(EffectRadiusIndex[0]))
+                if (EffectRadiusIndex[0] == 0 || !DBC.SpellRadius.ContainsKey((int)EffectRadiusIndex[0]))
                     return string.Empty;
 
-                return $"Radius (Id {EffectRadiusIndex[0]}) {DBC.SpellRadius[EffectRadiusIndex[0]].Radius:F}";
+                return $"Radius (Id {EffectRadiusIndex[0]}) {DBC.SpellRadius[(int)EffectRadiusIndex[0]].Radius:F}" +
+                       $" (Min: {DBC.SpellRadius[(int)EffectRadiusIndex[0]].RadiusMin:F} Max: {DBC.SpellRadius[(int)EffectRadiusIndex[0]].MaxRadius:F})";
             }
         }
     }

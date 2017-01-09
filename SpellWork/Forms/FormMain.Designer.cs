@@ -27,7 +27,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this._dbConnect = new System.Windows.Forms.ToolStripStatusLabel();
             this._status = new System.Windows.Forms.ToolStripStatusLabel();
@@ -70,6 +70,12 @@
             this._tbAdvancedFilter1Val = new System.Windows.Forms.TextBox();
             this._cbAdvancedFilter2 = new System.Windows.Forms.ComboBox();
             this._cbAdvancedFilter1 = new System.Windows.Forms.ComboBox();
+            this._cbAdvancedEffectFilter2CompareType = new System.Windows.Forms.ComboBox();
+            this._cbAdvancedEffectFilter1CompareType = new System.Windows.Forms.ComboBox();
+            this._tbAdvancedEffectFilter2Val = new System.Windows.Forms.TextBox();
+            this._tbAdvancedEffectFilter1Val = new System.Windows.Forms.TextBox();
+            this._cbAdvancedEffectFilter2 = new System.Windows.Forms.ComboBox();
+            this._cbAdvancedEffectFilter1 = new System.Windows.Forms.ComboBox();
             this._cbTarget2 = new System.Windows.Forms.ComboBox();
             this._cbTarget1 = new System.Windows.Forms.ComboBox();
             this._cbSpellEffect = new System.Windows.Forms.ComboBox();
@@ -431,7 +437,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this._rtbCompareSpell1.BackColor = System.Drawing.Color.Gainsboro;
-            this._rtbCompareSpell1.Font = new System.Drawing.Font("Arial Unicode MS", 9F);
+            this._rtbCompareSpell1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this._rtbCompareSpell1.Location = new System.Drawing.Point(0, 29);
             this._rtbCompareSpell1.Name = "_rtbCompareSpell1";
             this._rtbCompareSpell1.Size = new System.Drawing.Size(423, 522);
@@ -463,7 +469,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this._rtbCompareSpell2.BackColor = System.Drawing.Color.Gainsboro;
-            this._rtbCompareSpell2.Font = new System.Drawing.Font("Arial Unicode MS", 9F);
+            this._rtbCompareSpell2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this._rtbCompareSpell2.Location = new System.Drawing.Point(3, 29);
             this._rtbCompareSpell2.Name = "_rtbCompareSpell2";
             this._rtbCompareSpell2.Size = new System.Drawing.Size(425, 522);
@@ -515,7 +521,7 @@
             // 
             this._rtSpellInfo.BackColor = System.Drawing.Color.Gainsboro;
             this._rtSpellInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._rtSpellInfo.Font = new System.Drawing.Font("Arial Unicode MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._rtSpellInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._rtSpellInfo.Location = new System.Drawing.Point(0, 0);
             this._rtSpellInfo.Name = "_rtSpellInfo";
             this._rtSpellInfo.ReadOnly = true;
@@ -547,10 +553,10 @@
             this._lvSpellList.FullRowSelect = true;
             this._lvSpellList.GridLines = true;
             this._lvSpellList.HideSelection = false;
-            this._lvSpellList.Location = new System.Drawing.Point(6, 284);
+            this._lvSpellList.Location = new System.Drawing.Point(6, 351);
             this._lvSpellList.MultiSelect = false;
             this._lvSpellList.Name = "_lvSpellList";
-            this._lvSpellList.Size = new System.Drawing.Size(385, 261);
+            this._lvSpellList.Size = new System.Drawing.Size(385, 194);
             this._lvSpellList.TabIndex = 7;
             this._lvSpellList.UseCompatibleStateImageBehavior = false;
             this._lvSpellList.View = System.Windows.Forms.View.Details;
@@ -581,7 +587,7 @@
             this._gSpellFilter.Controls.Add(this._cbSpellFamilyName);
             this._gSpellFilter.Location = new System.Drawing.Point(2, 81);
             this._gSpellFilter.Name = "_gSpellFilter";
-            this._gSpellFilter.Size = new System.Drawing.Size(392, 224);
+            this._gSpellFilter.Size = new System.Drawing.Size(392, 264);
             this._gSpellFilter.TabIndex = 8;
             this._gSpellFilter.TabStop = false;
             this._gSpellFilter.Text = "Spell Filter";
@@ -596,9 +602,15 @@
             this._gbAdvansedSearch.Controls.Add(this._tbAdvancedFilter1Val);
             this._gbAdvansedSearch.Controls.Add(this._cbAdvancedFilter2);
             this._gbAdvansedSearch.Controls.Add(this._cbAdvancedFilter1);
+            this._gbAdvansedSearch.Controls.Add(this._cbAdvancedEffectFilter2CompareType);
+            this._gbAdvansedSearch.Controls.Add(this._cbAdvancedEffectFilter1CompareType);
+            this._gbAdvansedSearch.Controls.Add(this._tbAdvancedEffectFilter2Val);
+            this._gbAdvansedSearch.Controls.Add(this._tbAdvancedEffectFilter1Val);
+            this._gbAdvansedSearch.Controls.Add(this._cbAdvancedEffectFilter2);
+            this._gbAdvansedSearch.Controls.Add(this._cbAdvancedEffectFilter1);
             this._gbAdvansedSearch.Location = new System.Drawing.Point(3, 135);
             this._gbAdvansedSearch.Name = "_gbAdvansedSearch";
-            this._gbAdvansedSearch.Size = new System.Drawing.Size(383, 70);
+            this._gbAdvansedSearch.Size = new System.Drawing.Size(383, 123);
             this._gbAdvansedSearch.TabIndex = 6;
             this._gbAdvansedSearch.TabStop = false;
             this._gbAdvansedSearch.Text = "Advanced Filter";
@@ -628,7 +640,7 @@
             // _tbAdvancedFilter2Val
             // 
             this._tbAdvancedFilter2Val.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this._tbAdvancedFilter2Val.Location = new System.Drawing.Point(293, 42);
+            this._tbAdvancedFilter2Val.Location = new System.Drawing.Point(292, 43);
             this._tbAdvancedFilter2Val.Name = "_tbAdvancedFilter2Val";
             this._tbAdvancedFilter2Val.Size = new System.Drawing.Size(85, 20);
             this._tbAdvancedFilter2Val.TabIndex = 1;
@@ -668,6 +680,71 @@
             this._cbAdvancedFilter1.Name = "_cbAdvancedFilter1";
             this._cbAdvancedFilter1.Size = new System.Drawing.Size(203, 21);
             this._cbAdvancedFilter1.TabIndex = 0;
+            // 
+            // _cbAdvancedEffectFilter2CompareType
+            // 
+            this._cbAdvancedEffectFilter2CompareType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._cbAdvancedEffectFilter2CompareType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._cbAdvancedEffectFilter2CompareType.DropDownWidth = 160;
+            this._cbAdvancedEffectFilter2CompareType.FormattingEnabled = true;
+            this._cbAdvancedEffectFilter2CompareType.Location = new System.Drawing.Point(209, 95);
+            this._cbAdvancedEffectFilter2CompareType.Name = "_cbAdvancedEffectFilter2CompareType";
+            this._cbAdvancedEffectFilter2CompareType.Size = new System.Drawing.Size(76, 21);
+            this._cbAdvancedEffectFilter2CompareType.TabIndex = 3;
+            // 
+            // _cbAdvancedEffectFilter1CompareType
+            // 
+            this._cbAdvancedEffectFilter1CompareType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._cbAdvancedEffectFilter1CompareType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._cbAdvancedEffectFilter1CompareType.DropDownWidth = 160;
+            this._cbAdvancedEffectFilter1CompareType.FormattingEnabled = true;
+            this._cbAdvancedEffectFilter1CompareType.Location = new System.Drawing.Point(210, 68);
+            this._cbAdvancedEffectFilter1CompareType.Name = "_cbAdvancedEffectFilter1CompareType";
+            this._cbAdvancedEffectFilter1CompareType.Size = new System.Drawing.Size(76, 21);
+            this._cbAdvancedEffectFilter1CompareType.TabIndex = 2;
+            // 
+            // _tbAdvancedEffectFilter2Val
+            // 
+            this._tbAdvancedEffectFilter2Val.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._tbAdvancedEffectFilter2Val.Location = new System.Drawing.Point(292, 96);
+            this._tbAdvancedEffectFilter2Val.Name = "_tbAdvancedEffectFilter2Val";
+            this._tbAdvancedEffectFilter2Val.Size = new System.Drawing.Size(85, 20);
+            this._tbAdvancedEffectFilter2Val.TabIndex = 1;
+            this._tbAdvancedEffectFilter2Val.TextChanged += new System.EventHandler(this._tbAdvancedEffectFilter2Val_TextChanged);
+            this._tbAdvancedEffectFilter2Val.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbAdvansedFilterValKeyDown);
+            // 
+            // _tbAdvancedEffectFilter1Val
+            // 
+            this._tbAdvancedEffectFilter1Val.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._tbAdvancedEffectFilter1Val.Location = new System.Drawing.Point(292, 68);
+            this._tbAdvancedEffectFilter1Val.Name = "_tbAdvancedEffectFilter1Val";
+            this._tbAdvancedEffectFilter1Val.Size = new System.Drawing.Size(85, 20);
+            this._tbAdvancedEffectFilter1Val.TabIndex = 1;
+            this._tbAdvancedEffectFilter1Val.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbAdvansedFilterValKeyDown);
+            // 
+            // _cbAdvancedEffectFilter2
+            // 
+            this._cbAdvancedEffectFilter2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._cbAdvancedEffectFilter2.DropDownHeight = 500;
+            this._cbAdvancedEffectFilter2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._cbAdvancedEffectFilter2.FormattingEnabled = true;
+            this._cbAdvancedEffectFilter2.IntegralHeight = false;
+            this._cbAdvancedEffectFilter2.Location = new System.Drawing.Point(1, 95);
+            this._cbAdvancedEffectFilter2.Name = "_cbAdvancedEffectFilter2";
+            this._cbAdvancedEffectFilter2.Size = new System.Drawing.Size(203, 21);
+            this._cbAdvancedEffectFilter2.TabIndex = 0;
+            // 
+            // _cbAdvancedEffectFilter1
+            // 
+            this._cbAdvancedEffectFilter1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._cbAdvancedEffectFilter1.DropDownHeight = 500;
+            this._cbAdvancedEffectFilter1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._cbAdvancedEffectFilter1.FormattingEnabled = true;
+            this._cbAdvancedEffectFilter1.IntegralHeight = false;
+            this._cbAdvancedEffectFilter1.Location = new System.Drawing.Point(1, 68);
+            this._cbAdvancedEffectFilter1.Name = "_cbAdvancedEffectFilter1";
+            this._cbAdvancedEffectFilter1.Size = new System.Drawing.Size(203, 21);
+            this._cbAdvancedEffectFilter1.TabIndex = 0;
             // 
             // _cbTarget2
             // 
@@ -1136,7 +1213,7 @@
             // 
             this._rtbProcSpellInfo.BackColor = System.Drawing.SystemColors.MenuBar;
             this._rtbProcSpellInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._rtbProcSpellInfo.Font = new System.Drawing.Font("Arial Unicode MS", 9F);
+            this._rtbProcSpellInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this._rtbProcSpellInfo.Location = new System.Drawing.Point(0, 0);
             this._rtbProcSpellInfo.Name = "_rtbProcSpellInfo";
             this._rtbProcSpellInfo.Size = new System.Drawing.Size(244, 244);
@@ -1795,6 +1872,12 @@
         private System.Windows.Forms.TextBox _tbAdvancedFilter1Val;
         private System.Windows.Forms.ComboBox _cbAdvancedFilter2;
         private System.Windows.Forms.ComboBox _cbAdvancedFilter1;
+        private System.Windows.Forms.ComboBox _cbAdvancedEffectFilter2CompareType;
+        private System.Windows.Forms.ComboBox _cbAdvancedEffectFilter1CompareType;
+        private System.Windows.Forms.ComboBox _cbAdvancedEffectFilter2;
+        private System.Windows.Forms.ComboBox _cbAdvancedEffectFilter1;
+        private System.Windows.Forms.TextBox _tbAdvancedEffectFilter1Val;
+        private System.Windows.Forms.TextBox _tbAdvancedEffectFilter2Val;
         private System.Windows.Forms.ComboBox _cbTarget2;
         private System.Windows.Forms.ComboBox _cbTarget1;
         private System.Windows.Forms.ComboBox _cbSpellEffect;

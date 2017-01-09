@@ -83,6 +83,7 @@ namespace SpellWork.Database
             _command.Connection.Close();
         }
 
+        /*
         public static void AddDBItems()
         {
             // In order to reduce the search time, we make the first selection of all items that have spellid
@@ -130,6 +131,7 @@ namespace SpellWork.Database
                 }
              }
         }
+        */
 
         public static void TestConnect()
         {

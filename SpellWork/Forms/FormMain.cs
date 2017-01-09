@@ -47,8 +47,14 @@ namespace SpellWork.Forms
             _cbAdvancedFilter1.SetStructFields<SpellInfo>();
             _cbAdvancedFilter2.SetStructFields<SpellInfo>();
 
+            _cbAdvancedEffectFilter1.SetStructFields<SpellEffectInfo>();
+            _cbAdvancedEffectFilter2.SetStructFields<SpellEffectInfo>();
+
             _cbAdvancedFilter1CompareType.SetEnumValuesDirect<CompareType>(true);
             _cbAdvancedFilter2CompareType.SetEnumValuesDirect<CompareType>(true);
+
+            _cbAdvancedEffectFilter1CompareType.SetEnumValuesDirect<CompareType>(true);
+            _cbAdvancedEffectFilter2CompareType.SetEnumValuesDirect<CompareType>(true);
 
             ConnStatus();
         }
@@ -94,7 +100,7 @@ namespace SpellWork.Forms
             {
                 _dbConnect.Text = @"Connection successful.";
                 _dbConnect.ForeColor = Color.Green;
-                MySqlConnection.AddDBItems();
+                //MySqlConnection.AddDBItems();
             }
             else
             {
@@ -219,6 +225,19 @@ namespace SpellWork.Forms
             var bTarget2 = _cbTarget2.SelectedIndex != 0;
             var fTarget2 = _cbTarget2.SelectedValue.ToInt32();
 
+            // additional spell effect filters
+            var advEffectVal1 = _tbAdvancedEffectFilter1Val.Text;
+            var advEffectVal2 = _tbAdvancedEffectFilter2Val.Text;
+
+            var fieldEffect1 = (MemberInfo)_cbAdvancedEffectFilter1.SelectedValue;
+            var fieldEffect2 = (MemberInfo)_cbAdvancedEffectFilter2.SelectedValue;
+
+            var use1EffectVal = !string.IsNullOrEmpty(advEffectVal1);
+            var use2EffectVal = !string.IsNullOrEmpty(advEffectVal2);
+
+            var fieldEffect1Ct = (CompareType)_cbAdvancedEffectFilter1CompareType.SelectedIndex;
+            var fieldEffect2Ct = (CompareType)_cbAdvancedEffectFilter2CompareType.SelectedIndex;
+
             // additional filters
             var advVal1 = _tbAdvancedFilter1Val.Text;
             var advVal2 = _tbAdvancedFilter2Val.Text;
@@ -239,7 +258,10 @@ namespace SpellWork.Forms
                          (!bTarget1 || spell.HasTargetA((Targets) fTarget1)) &&
                          (!bTarget2 || spell.HasTargetB((Targets) fTarget2)) &&
                          (!use1Val || spell.CreateFilter(field1, advVal1, field1Ct)) &&
-                         (!use2Val || spell.CreateFilter(field2, advVal2, field2Ct))).ToList();
+                         (!use2Val || spell.CreateFilter(field2, advVal2, field2Ct)) &&
+                         (spell.SpellEffectInfoStore.Any(effect =>
+                         (!use1EffectVal || effect.Value.CreateFilter(fieldEffect1, advEffectVal1, fieldEffect1Ct)) &&
+                         (!use2EffectVal || effect.Value.CreateFilter(fieldEffect2, advEffectVal2, fieldEffect2Ct))))).ToList();
 
             _lvSpellList.VirtualListSize = _spellList.Count;
             if (_lvSpellList.SelectedIndices.Count > 0)
@@ -609,6 +631,7 @@ namespace SpellWork.Forms
         #region VIRTUAL MODE
 
         private List<SpellInfo> _spellList = new List<SpellInfo>();
+        private List<SpellEffectInfo> _spellEffectList = new List<SpellEffectInfo>();
 
         private List<SpellInfo> _spellProcList = new List<SpellInfo>();
 
@@ -631,5 +654,9 @@ namespace SpellWork.Forms
 
         #endregion
 
+        private void _tbAdvancedEffectFilter2Val_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

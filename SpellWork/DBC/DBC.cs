@@ -57,6 +57,7 @@ namespace SpellWork.DBC
         public static Storage<SkillLineEntry>                   SkillLine { get; set; }
 
         public static Storage<ItemEntry>                        Item { get; set; }
+        public static Storage<ItemEffectEntry>                  ItemEffect { get; set; }
         public static Storage<ItemSparseEntry>                  ItemSparse { get; set; }
 
         public static Storage<SpellReagentsEntry>               SpellReagents { get; set; }
@@ -129,6 +130,8 @@ namespace SpellWork.DBC
                     }
 
                     SpellInfoStore[effect.Value.SpellID].Effects.Add(effect.Value);
+                    SpellInfoStore[effect.Value.SpellID].SpellEffectInfoStore[effect.Value.EffectIndex] = new SpellEffectInfo(effect.Value); // Helper
+
                     var triggerId = (int)effect.Value.EffectTriggerSpell;
                     if (triggerId != 0)
                     {
@@ -349,21 +352,8 @@ namespace SpellWork.DBC
                 }
             }));
 
-            /*foreach (var item in ItemSparse.Values)
-            {
-                ItemTemplate.Add(new Item
-                {
-                    Entry = item.ID,
-                    Name = item.Name,
-                    Description = item.Description,
-                    SpellId = new[] { 0, 0, 0, 0, 0 }
-                });
-            }*/
-
             GameTable<GtSpellScalingEntry>.Open($@"{Settings.Default.GtPath}\SpellScaling.txt");
         }
-
-        public static List<Item> ItemTemplate = new List<Item>();
 
         public static uint SelectedLevel = MaxLevel;
         public static uint SelectedItemLevel = 890;
