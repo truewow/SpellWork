@@ -17,7 +17,7 @@ namespace SpellWork.DBC
 {
     public static class DBC
     {
-        public const string Version = "SpellWork 7.1.0 (22900)";
+        public const string Version = "SpellWork 7.1.5 (23360)";
         public const uint MaxLevel = 110;
 
         // ReSharper disable MemberCanBePrivate.Global
@@ -89,7 +89,7 @@ namespace SpellWork.DBC
                     try
                     {
                         dbc.SetValue(dbc.GetValue(null),
-                            Activator.CreateInstance(dbc.PropertyType, $@"{Settings.Default.DbcPath}\{name}.db2"));
+                            Activator.CreateInstance(dbc.PropertyType, $@"{ Settings.Default.DbcPath }\{ Settings.Default.Locale }\{ name }.db2"));
                     }
                     catch (DirectoryNotFoundException)
                     {

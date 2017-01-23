@@ -28,6 +28,7 @@ namespace SpellWork.Forms
             Settings.Default.UseDbConnect = _cbUseDBConnect.Checked;
             Settings.Default.DbcPath = _tbPath.Text;
             Settings.Default.GtPath = _tbGtPath.Text;
+            Settings.Default.Locale = _tbLocale.Text;
 
             MySqlConnection.TestConnect();
 
@@ -40,6 +41,8 @@ namespace SpellWork.Forms
 
             Settings.Default.Save();
             Close();
+
+            Application.Restart();
         }
 
         private void SettingsFormLoad(object sender, EventArgs e)
@@ -52,6 +55,7 @@ namespace SpellWork.Forms
             _gbDbSetting.Enabled = _cbUseDBConnect.Checked = Settings.Default.UseDbConnect;
             _tbPath.Text = Settings.Default.DbcPath;
             _tbGtPath.Text = Settings.Default.GtPath;
+            _tbLocale.Text = Settings.Default.Locale;
         }
 
         private void FormSettings_KeyDown(object sender, KeyEventArgs e)
