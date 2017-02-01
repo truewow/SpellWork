@@ -159,6 +159,15 @@ namespace SpellWork.Spell
         public byte ProcsPerMinuteFlags => ProcsPerMinute?.Flags ?? 0;
         #endregion
 
+        #region SpellInterrupts
+        // SpellInterrupts
+        public uint AuraInterruptFlags => Interrupts?.AuraInterruptFlags[0] ?? 0;
+        public uint AuraInterruptFlags2 => Interrupts?.AuraInterruptFlags[1] ?? 0;
+        public uint ChannelInterruptFlags => Interrupts?.ChannelInterruptFlags[0] ?? 0;
+        public uint ChannelInterruptFlags2 => Interrupts?.ChannelInterruptFlags[1] ?? 0;
+        public uint InterruptFlags => Interrupts?.InterruptFlags ?? 0;
+        #endregion
+
         public string ProcInfo
         {
             get
