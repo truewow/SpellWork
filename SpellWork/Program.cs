@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 using SpellWork.Forms;
+using SpellWork.Properties;
 
 namespace SpellWork
 {
@@ -15,6 +16,13 @@ namespace SpellWork
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            var dbcPath = $"{Settings.Default.DbcPath}\\{Settings.Default.Locale}";
+            if (!Directory.Exists(dbcPath))
+            {
+                MessageBox.Show($"Files in {Path.GetFullPath(dbcPath)} missing", @"Missing files", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             try
             {
