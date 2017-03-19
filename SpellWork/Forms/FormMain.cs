@@ -653,10 +653,5 @@ namespace SpellWork.Forms
         }
 
         #endregion
-
-        private void _tbAdvancedEffectFilter2Val_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
