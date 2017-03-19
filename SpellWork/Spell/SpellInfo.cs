@@ -827,9 +827,13 @@ namespace SpellWork.Spell
 
             foreach (var item in items)
             {
-                var itemTemplate = DBC.DBC.ItemSparse[(int)item.Value.ItemID];
-                if (itemTemplate == null)
+                if (!DBC.DBC.ItemSparse.ContainsKey((int)item.Value.ItemID))
+                {
+                    rtb.AppendFormatLine($@"   Non-existing Item-sparse.db2 entry { item.Value.ItemID }");
                     continue;
+                }
+
+                var itemTemplate = DBC.DBC.ItemSparse[(int)item.Value.ItemID];
 
                 var name = itemTemplate.Name;
                 var description = itemTemplate.Description;

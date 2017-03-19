@@ -710,7 +710,6 @@
             this._tbAdvancedEffectFilter2Val.Name = "_tbAdvancedEffectFilter2Val";
             this._tbAdvancedEffectFilter2Val.Size = new System.Drawing.Size(85, 20);
             this._tbAdvancedEffectFilter2Val.TabIndex = 1;
-            this._tbAdvancedEffectFilter2Val.TextChanged += new System.EventHandler(this._tbAdvancedEffectFilter2Val_TextChanged);
             this._tbAdvancedEffectFilter2Val.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbAdvansedFilterValKeyDown);
             // 
             // _tbAdvancedEffectFilter1Val
