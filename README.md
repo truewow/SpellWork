@@ -1,6 +1,11 @@
 SpellWork
 =========
 
+<a href="https://scan.coverity.com/projects/trinitycore-spellwork">
+  <img alt="Coverity Scan Build Status"
+       src="https://scan.coverity.com/projects/12196/badge.svg"/>
+</a>
+
 SpellWork is a tool to browse and display information about World of Wacraft spells.
 It is implemented in .NET and it runs on Windows and Linux (with Mono).
 
