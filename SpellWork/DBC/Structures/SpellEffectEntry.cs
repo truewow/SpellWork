@@ -36,7 +36,7 @@ namespace SpellWork.DBC.Structures
         public float BonusCoefficientFromAP;
         public float PvPMultiplier;
 
-        public SpellEffectScalingEntry SpellEffectScalingEntry;
+        public SpellEffectScalingEntry SpellEffectScalingEntry { get; set; }
 
         public string MaxRadius
         {
