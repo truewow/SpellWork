@@ -1,8 +1,8 @@
 ﻿namespace SpellWork.DBC.Structures
 {
-    // 7.x ?
     public sealed class SpellVisualEntry
     {
+        public uint ID;
         public uint UnkMoP1;
         public uint PrecastKit;
         public uint CastingKit;

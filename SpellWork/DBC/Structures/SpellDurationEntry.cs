@@ -4,6 +4,6 @@
     {
         public int Duration;
         public int MaxDuration;
-        public ushort DurationPerLevel;
+        public int DurationPerLevel;
     }
 }

@@ -8,8 +8,8 @@
         public ushort CastingTimeIndex;
         public ushort DurationIndex;
         public ushort RangeIndex;
-        public ushort SpellIconID;
-        public ushort ActiveIconID;
         public byte SchoolMask;
+        public uint IconFileDataID;
+        public uint ActiveIconFileDataID;
     }
 }

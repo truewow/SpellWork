@@ -73,8 +73,7 @@ namespace SpellWork.Spell
         public uint AttributesEx13 => Misc?.Attributes[13] ?? 0;
         public float Speed => Misc?.Speed ?? 0;
         public int CastingTimeIndex => Misc?.CastingTimeIndex ?? 0;
-        public int ActiveIconID => Misc?.ActiveIconID ?? 0;
-        public int SpellIconID => Misc?.SpellIconID ?? 0;
+        public uint IconFileDataID => Misc?.IconFileDataID ?? 0;
         public int RangeIndex => Misc?.RangeIndex ?? 0;
         public uint SchoolMask => (uint)(Misc?.SchoolMask ?? 0);
         #endregion
@@ -145,8 +144,7 @@ namespace SpellWork.Spell
         #endregion
 
         #region SpellXSpellVisual
-        public int SpellVisual => SpellXSpellVisual?.SpellVisualID ?? 0;
-        public int ViolentSpellVisual => SpellXSpellVisual?.ViolentSpellVisualID ?? 0;
+        public uint SpellVisualID => SpellXSpellVisual?.SpellVisualID ?? 0;
         #endregion
 
         #region CastingRequirements
@@ -244,8 +242,7 @@ namespace SpellWork.Spell
                 rtb.AppendFormatLine(Separator);
             #endregion
 
-            rtb.AppendFormatLine("Category = {0}, SpellIconID = {1}, activeIconID = {2}, SpellVisual = ({3}, {4})",
-                Category, SpellIconID, ActiveIconID, SpellVisual, ViolentSpellVisual);
+            rtb.AppendFormatLine($"Category = { Category }, IconFileDataID = { IconFileDataID },  SpellVisualID = { SpellVisualID }");
 
             rtb.AppendFormatLine("Family {0} ({1}), flag [0] 0x{2:X8} [1] 0x{3:X8} [2] 0x{4:X8} [3] 0x{5:X8}",
                     (SpellFamilyNames)SpellFamilyName, SpellFamilyName,
@@ -948,7 +945,7 @@ namespace SpellWork.Spell
         public uint EffectRadiusMaxIndex => SpellEffect.EffectRadiusIndex[1];
 
         public uint EffectChainTargets => SpellEffect.EffectChainTargets;
-        public uint EffectDieSides => SpellEffect.EffectDieSides;
+        public int EffectDieSides => SpellEffect.EffectDieSides;
         public uint EffectItemType => SpellEffect.EffectItemType;
         public uint EffectMechanic => SpellEffect.EffectMechanic;
 

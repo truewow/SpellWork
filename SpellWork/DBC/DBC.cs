@@ -17,7 +17,7 @@ namespace SpellWork.DBC
 {
     public static class DBC
     {
-        public const string Version = "SpellWork 7.1.5 (23360)";
+        public const string Version = "SpellWork 7.2.0 (23826)";
         public const uint MaxLevel = 110;
 
         // ReSharper disable MemberCanBePrivate.Global
@@ -82,15 +82,10 @@ namespace SpellWork.DBC
 
                     var name = dbc.Name;
 
-                    var fileNameAttr =
-                        dbc.PropertyType.GetGenericArguments()[0].GetCustomAttribute<DBFileNameAttribute>();
-                    if (fileNameAttr != null)
-                        name = fileNameAttr.FileName;
-
                     try
                     {
                         dbc.SetValue(dbc.GetValue(null),
-                            Activator.CreateInstance(dbc.PropertyType, $@"{ Settings.Default.DbcPath }\{ Settings.Default.Locale }\{ name }.db2"));
+                            Activator.CreateInstance(dbc.PropertyType, $@"{ Settings.Default.DbcPath }\{ Settings.Default.Locale }\{ name }.db2", true));
                     }
                     catch (DirectoryNotFoundException)
                     {

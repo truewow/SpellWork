@@ -195,7 +195,7 @@ namespace SpellWork.Forms
 
             _spellList = (from spellInfo in DBC.DBC.SpellInfoStore.Values
                           where
-                              ((id == 0 || spellInfo.ID == id) && (ic == 0 || spellInfo.SpellIconID == ic) &&
+                              ((id == 0 || spellInfo.ID == id) && (ic == 0 || spellInfo.IconFileDataID == ic) &&
                                (at == 0 || (spellInfo.Attributes & at) != 0 || (spellInfo.AttributesEx & at) != 0 ||
                                 (spellInfo.AttributesEx2 & at) != 0 || (spellInfo.AttributesEx3 & at) != 0 ||
                                 (spellInfo.AttributesEx4 & at) != 0 || (spellInfo.AttributesEx5 & at) != 0 ||

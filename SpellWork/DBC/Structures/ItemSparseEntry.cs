@@ -1,16 +1,13 @@
-﻿using DBFilesClient.NET;
-
-namespace SpellWork.DBC.Structures
+﻿namespace SpellWork.DBC.Structures
 {
-    [DBFileName("Item-sparse")]
     public sealed class ItemSparseEntry
     {
         public uint[] Flags;
         public float Unk1;
         public float Unk2;
+        public uint BuyCount;
         public uint BuyPrice;
         public uint SellPrice;
-        public int AllowableClass;
         public int AllowableRace;
         public uint RequiredSpell;
         public uint MaxCount;
@@ -27,6 +24,7 @@ namespace SpellWork.DBC.Structures
         public float ArmorDamageModifier;
         public uint Duration;
         public float StatScalingFactor;
+        public ushort AllowableClass;
         public ushort ItemLevel;
         public ushort RequiredSkill;
         public ushort RequiredSkillRank;
@@ -42,13 +40,14 @@ namespace SpellWork.DBC.Structures
         public ushort ItemSet;
         public ushort Area;
         public ushort Map;
+        public ushort TotemCategory;
         public ushort SocketBonus;
         public ushort GemProperties;
         public ushort ItemLimitCategory;
         public ushort HolidayID;
+        public ushort RequiredTransmogHolidayID;
         public ushort ItemNameDescriptionID;
         public byte Quality;
-        public byte BuyCount;
         public byte InventoryType;
         public sbyte RequiredLevel;
         public byte RequiredHonorRank;
@@ -62,7 +61,6 @@ namespace SpellWork.DBC.Structures
         public byte PageMaterial;
         public sbyte Material;
         public byte Sheath;
-        public byte TotemCategory;
         public byte[] SocketColor;
         public byte CurrencySubstitutionID;
         public byte CurrencySubstitutionCount;

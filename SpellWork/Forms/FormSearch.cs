@@ -39,7 +39,7 @@ namespace SpellWork.Forms
 
             _spellList = (from spell in DBC.DBC.SpellInfoStore.Values
                           where
-                              ((id == 0 || spell.ID == id) && (ic == 0 || spell.SpellIconID == ic) &&
+                              ((id == 0 || spell.ID == id) && (ic == 0 || spell.IconFileDataID == ic) &&
                                (at == 0 || (spell.Attributes & at) != 0 || (spell.AttributesEx & at) != 0 ||
                                 (spell.AttributesEx2 & at) != 0 || (spell.AttributesEx3 & at) != 0 ||
                                 (spell.AttributesEx4 & at) != 0 || (spell.AttributesEx5 & at) != 0 ||

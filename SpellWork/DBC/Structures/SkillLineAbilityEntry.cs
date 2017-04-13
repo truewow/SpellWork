@@ -5,7 +5,6 @@
         public int SpellID;
         public uint RaceMask;
         public uint SupercedesSpell;
-        public uint Unknown703;
         public ushort SkillLine;
         public ushort MinSkillLineRank;
         public ushort TrivialSkillLineRankHigh;
@@ -14,6 +13,7 @@
         public ushort TradeSkillCategoryID;
         public byte AquireMethod;
         public byte NumSkillUps;
+        public byte Unknown703;
         public uint ClassMask;
     }
 }

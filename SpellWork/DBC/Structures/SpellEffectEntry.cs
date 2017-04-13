@@ -5,33 +5,38 @@ namespace SpellWork.DBC.Structures
     [StructLayout(LayoutKind.Sequential)]
     public class SpellEffectEntry
     {
-        public float EffectAmplitude;
-        public float EffectBonusCoefficient;
-        public float EffectChainAmplitude;
-        public float EffectPointsPerResource;
-        public float EffectRealPointsPerLevel;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
         public uint[] EffectSpellClassMask;
-        public float EffectPosFacing;
-        public float BonusCoefficientFromAP;
         public uint ID;
-        public uint DifficultyID;
+        public int SpellID;
         public uint Effect;
         public uint EffectAura;
-        public uint EffectAuraPeriod;
         public int EffectBasePoints;
+        public uint EffectIndex;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public int[] EffectMiscValues;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public uint[] EffectRadiusIndex;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public uint[] ImplicitTarget;
+        public uint DifficultyID;
+        public float EffectAmplitude;
+        public uint EffectAuraPeriod;
+        public float EffectBonusCoefficient;
+        public float EffectChainAmplitude;
         public uint EffectChainTargets;
-        public uint EffectDieSides;
+        public int EffectDieSides;
         public uint EffectItemType;
         public uint EffectMechanic;
-        public int[] EffectMiscValues;
-        public uint[] EffectRadiusIndex;
+        public float EffectPointsPerResource;
+        public float EffectRealPointsPerLevel;
         public uint EffectTriggerSpell;
-        public uint[] ImplicitTarget;
-        public int SpellID;
-        public uint EffectIndex;
+        public float EffectPosFacing;
         public uint EffectAttributes;
+        public float BonusCoefficientFromAP;
+        public float PvPMultiplier;
 
-        public SpellEffectScalingEntry SpellEffectScalingEntry { get; set; }
+        public SpellEffectScalingEntry SpellEffectScalingEntry;
 
         public string MaxRadius
         {
