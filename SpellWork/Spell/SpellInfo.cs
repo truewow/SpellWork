@@ -73,6 +73,7 @@ namespace SpellWork.Spell
         public uint AttributesEx13 => Misc?.Attributes[13] ?? 0;
         public float Speed => Misc?.Speed ?? 0;
         public int CastingTimeIndex => Misc?.CastingTimeIndex ?? 0;
+        public uint ActiveIconFileDataID => Misc?.ActiveIconFileDataID ?? 0;
         public uint IconFileDataID => Misc?.IconFileDataID ?? 0;
         public int RangeIndex => Misc?.RangeIndex ?? 0;
         public uint SchoolMask => (uint)(Misc?.SchoolMask ?? 0);
@@ -242,7 +243,7 @@ namespace SpellWork.Spell
                 rtb.AppendFormatLine(Separator);
             #endregion
 
-            rtb.AppendFormatLine($"Category = { Category }, IconFileDataID = { IconFileDataID },  SpellVisualID = { SpellVisualID }");
+            rtb.AppendFormatLine($"Category = { Category }, IconFileDataID = { IconFileDataID }, ActiveIconFileDataID = { ActiveIconFileDataID }, SpellVisualID = { SpellVisualID }");
 
             rtb.AppendFormatLine("Family {0} ({1}), flag [0] 0x{2:X8} [1] 0x{3:X8} [2] 0x{4:X8} [3] 0x{5:X8}",
                     (SpellFamilyNames)SpellFamilyName, SpellFamilyName,
