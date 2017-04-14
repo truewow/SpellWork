@@ -62,6 +62,7 @@
             this._lvSpellList = new System.Windows.Forms.ListView();
             this.chSpellID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chSpellName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chMiscID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this._gSpellFilter = new System.Windows.Forms.GroupBox();
             this._gbAdvansedSearch = new System.Windows.Forms.GroupBox();
             this._cbAdvancedFilter2CompareType = new System.Windows.Forms.ComboBox();
@@ -549,14 +550,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this._lvSpellList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chSpellID,
-            this.chSpellName});
+            this.chSpellName,
+            this.chMiscID});
             this._lvSpellList.FullRowSelect = true;
             this._lvSpellList.GridLines = true;
             this._lvSpellList.HideSelection = false;
             this._lvSpellList.Location = new System.Drawing.Point(6, 351);
             this._lvSpellList.MultiSelect = false;
             this._lvSpellList.Name = "_lvSpellList";
-            this._lvSpellList.Size = new System.Drawing.Size(385, 194);
+            this._lvSpellList.Size = new System.Drawing.Size(388, 194);
             this._lvSpellList.TabIndex = 7;
             this._lvSpellList.UseCompatibleStateImageBehavior = false;
             this._lvSpellList.View = System.Windows.Forms.View.Details;
@@ -573,6 +575,11 @@
             // 
             this.chSpellName.Text = "Name";
             this.chSpellName.Width = 250;
+            //
+            // chMiscID
+            //
+            this.chMiscID.Text = "MiscID";
+            this.chMiscID.Width = 64;
             // 
             // _gSpellFilter
             // 
@@ -836,7 +843,7 @@
             this.groupBox7.Controls.Add(this._tbSearchId);
             this.groupBox7.Location = new System.Drawing.Point(0, 2);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(392, 89);
+            this.groupBox7.Size = new System.Drawing.Size(394, 89);
             this.groupBox7.TabIndex = 9;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Spell Search";
@@ -855,9 +862,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(6, 38);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(45, 13);
+            this.label5.Size = new System.Drawing.Size(81, 13);
             this.label5.TabIndex = 2;
-            this.label5.Text = "Icon ID:";
+            this.label5.Text = "IconFileDataID:";
             // 
             // label4
             // 
@@ -871,7 +878,7 @@
             // _bSearch
             // 
             this._bSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this._bSearch.Location = new System.Drawing.Point(341, 11);
+            this._bSearch.Location = new System.Drawing.Point(343, 11);
             this._bSearch.Name = "_bSearch";
             this._bSearch.Size = new System.Drawing.Size(50, 23);
             this._bSearch.TabIndex = 1;
@@ -883,9 +890,9 @@
             // 
             this._tbSearchAttributes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this._tbSearchAttributes.Location = new System.Drawing.Point(73, 57);
+            this._tbSearchAttributes.Location = new System.Drawing.Point(93, 57);
             this._tbSearchAttributes.Name = "_tbSearchAttributes";
-            this._tbSearchAttributes.Size = new System.Drawing.Size(263, 20);
+            this._tbSearchAttributes.Size = new System.Drawing.Size(245, 20);
             this._tbSearchAttributes.TabIndex = 0;
             this._tbSearchAttributes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbSearchIdKeyDown);
             // 
@@ -893,9 +900,9 @@
             // 
             this._tbSearchIcon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this._tbSearchIcon.Location = new System.Drawing.Point(73, 35);
+            this._tbSearchIcon.Location = new System.Drawing.Point(93, 35);
             this._tbSearchIcon.Name = "_tbSearchIcon";
-            this._tbSearchIcon.Size = new System.Drawing.Size(263, 20);
+            this._tbSearchIcon.Size = new System.Drawing.Size(245, 20);
             this._tbSearchIcon.TabIndex = 0;
             this._tbSearchIcon.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbSearchIdKeyDown);
             // 
@@ -903,9 +910,9 @@
             // 
             this._tbSearchId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this._tbSearchId.Location = new System.Drawing.Point(73, 13);
+            this._tbSearchId.Location = new System.Drawing.Point(93, 13);
             this._tbSearchId.Name = "_tbSearchId";
-            this._tbSearchId.Size = new System.Drawing.Size(263, 20);
+            this._tbSearchId.Size = new System.Drawing.Size(245, 20);
             this._tbSearchId.TabIndex = 0;
             this._tbSearchId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbSearchIdKeyDown);
             // 
@@ -1863,6 +1870,7 @@
         private System.Windows.Forms.ListView _lvSpellList;
         private System.Windows.Forms.ColumnHeader chSpellID;
         private System.Windows.Forms.ColumnHeader chSpellName;
+        private System.Windows.Forms.ColumnHeader chMiscID;
         private System.Windows.Forms.GroupBox _gSpellFilter;
         private System.Windows.Forms.GroupBox _gbAdvansedSearch;
         private System.Windows.Forms.ComboBox _cbAdvancedFilter2CompareType;

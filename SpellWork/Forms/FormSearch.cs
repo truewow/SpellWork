@@ -116,7 +116,7 @@ namespace SpellWork.Forms
             e.Item = new ListViewItem(new[] {_spellList[e.ItemIndex].ID.ToString(), _spellList[e.ItemIndex].Name});
         }
 
-        private void buttonSearch_Click(object sender, EventArgs e)
+        private void ButtonSearch_Click(object sender, EventArgs e)
         {
             AdvancedSearch();
         }

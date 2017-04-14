@@ -44,6 +44,7 @@
             this._lvSpellList = new System.Windows.Forms.ListView();
             this._chID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this._chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this._chMiscID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this._cbTarget2 = new System.Windows.Forms.ComboBox();
             this._cbTarget1 = new System.Windows.Forms.ComboBox();
@@ -74,8 +75,8 @@
             this.splitContainer1.Panel2.Controls.Add(this._bOk);
             this.splitContainer1.Panel2.Controls.Add(this._bCancel);
             this.splitContainer1.Panel2.Controls.Add(this.groupBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(672, 455);
-            this.splitContainer1.SplitterDistance = 381;
+            this.splitContainer1.Size = new System.Drawing.Size(731, 455);
+            this.splitContainer1.SplitterDistance = 390;
             this.splitContainer1.TabIndex = 0;
             // 
             // _rtbSpellInfo
@@ -85,14 +86,14 @@
             this._rtbSpellInfo.Location = new System.Drawing.Point(0, 0);
             this._rtbSpellInfo.Name = "_rtbSpellInfo";
             this._rtbSpellInfo.ReadOnly = true;
-            this._rtbSpellInfo.Size = new System.Drawing.Size(381, 455);
+            this._rtbSpellInfo.Size = new System.Drawing.Size(390, 455);
             this._rtbSpellInfo.TabIndex = 11;
             this._rtbSpellInfo.Text = "";
             // 
             // _bOk
             // 
             this._bOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._bOk.Location = new System.Drawing.Point(209, 425);
+            this._bOk.Location = new System.Drawing.Point(259, 425);
             this._bOk.Name = "_bOk";
             this._bOk.Size = new System.Drawing.Size(75, 23);
             this._bOk.TabIndex = 9;
@@ -103,7 +104,7 @@
             // _bCancel
             // 
             this._bCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._bCancel.Location = new System.Drawing.Point(128, 425);
+            this._bCancel.Location = new System.Drawing.Point(178, 425);
             this._bCancel.Name = "_bCancel";
             this._bCancel.Size = new System.Drawing.Size(75, 23);
             this._bCancel.TabIndex = 10;
@@ -127,20 +128,20 @@
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(281, 416);
+            this.groupBox1.Size = new System.Drawing.Size(331, 416);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Spell Search";
             // 
             // buttonSearch
             // 
-            this.buttonSearch.Location = new System.Drawing.Point(219, 13);
+            this.buttonSearch.Location = new System.Drawing.Point(269, 14);
             this.buttonSearch.Name = "buttonSearch";
             this.buttonSearch.Size = new System.Drawing.Size(53, 22);
             this.buttonSearch.TabIndex = 9;
             this.buttonSearch.Text = "Search";
             this.buttonSearch.UseVisualStyleBackColor = true;
-            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
+            this.buttonSearch.Click += new System.EventHandler(this.ButtonSearch_Click);
             // 
             // label3
             // 
@@ -156,9 +157,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 43);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 13);
+            this.label2.Size = new System.Drawing.Size(81, 13);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Icon ID:";
+            this.label2.Text = "IconFileDataID:";
             // 
             // _lIDName
             // 
@@ -173,9 +174,9 @@
             // 
             this._tbAttribute.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this._tbAttribute.Location = new System.Drawing.Point(74, 66);
+            this._tbAttribute.Location = new System.Drawing.Point(90, 66);
             this._tbAttribute.Name = "_tbAttribute";
-            this._tbAttribute.Size = new System.Drawing.Size(198, 20);
+            this._tbAttribute.Size = new System.Drawing.Size(232, 20);
             this._tbAttribute.TabIndex = 2;
             this._tbAttribute.KeyDown += new System.Windows.Forms.KeyEventHandler(this.IdNameKeyDown);
             // 
@@ -183,9 +184,9 @@
             // 
             this._tbIcon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this._tbIcon.Location = new System.Drawing.Point(74, 40);
+            this._tbIcon.Location = new System.Drawing.Point(90, 40);
             this._tbIcon.Name = "_tbIcon";
-            this._tbIcon.Size = new System.Drawing.Size(198, 20);
+            this._tbIcon.Size = new System.Drawing.Size(232, 20);
             this._tbIcon.TabIndex = 1;
             this._tbIcon.KeyDown += new System.Windows.Forms.KeyEventHandler(this.IdNameKeyDown);
             // 
@@ -193,9 +194,9 @@
             // 
             this._tbIdName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this._tbIdName.Location = new System.Drawing.Point(74, 14);
+            this._tbIdName.Location = new System.Drawing.Point(90, 14);
             this._tbIdName.Name = "_tbIdName";
-            this._tbIdName.Size = new System.Drawing.Size(145, 20);
+            this._tbIdName.Size = new System.Drawing.Size(181, 20);
             this._tbIdName.TabIndex = 0;
             this._tbIdName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.IdNameKeyDown);
             // 
@@ -206,13 +207,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this._lvSpellList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this._chID,
-            this._chName});
+            this._chName,
+            this._chMiscID});
             this._lvSpellList.FullRowSelect = true;
             this._lvSpellList.GridLines = true;
             this._lvSpellList.HideSelection = false;
             this._lvSpellList.Location = new System.Drawing.Point(0, 235);
             this._lvSpellList.Name = "_lvSpellList";
-            this._lvSpellList.Size = new System.Drawing.Size(281, 175);
+            this._lvSpellList.Size = new System.Drawing.Size(331, 175);
             this._lvSpellList.TabIndex = 8;
             this._lvSpellList.UseCompatibleStateImageBehavior = false;
             this._lvSpellList.View = System.Windows.Forms.View.Details;
@@ -224,11 +226,17 @@
             // _chID
             // 
             this._chID.Text = "ID";
+            this._chID.Width = 48;
             // 
             // _chName
             // 
             this._chName.Text = "Name";
             this._chName.Width = 213;
+            // 
+            // _chMiscID
+            // 
+            this._chMiscID.Text = "MiscID";
+            this._chMiscID.Width = 64;
             // 
             // groupBox2
             // 
@@ -241,7 +249,7 @@
             this.groupBox2.Controls.Add(this._cbSpellFamily);
             this.groupBox2.Location = new System.Drawing.Point(0, 88);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(281, 141);
+            this.groupBox2.Size = new System.Drawing.Size(331, 141);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Spell Filter";
@@ -255,7 +263,7 @@
             this._cbTarget2.IntegralHeight = false;
             this._cbTarget2.Location = new System.Drawing.Point(9, 113);
             this._cbTarget2.Name = "_cbTarget2";
-            this._cbTarget2.Size = new System.Drawing.Size(263, 21);
+            this._cbTarget2.Size = new System.Drawing.Size(313, 21);
             this._cbTarget2.TabIndex = 7;
             this._cbTarget2.SelectedIndexChanged += new System.EventHandler(this.SpellFamilySelectedIndexChanged);
             // 
@@ -268,7 +276,7 @@
             this._cbTarget1.IntegralHeight = false;
             this._cbTarget1.Location = new System.Drawing.Point(9, 88);
             this._cbTarget1.Name = "_cbTarget1";
-            this._cbTarget1.Size = new System.Drawing.Size(263, 21);
+            this._cbTarget1.Size = new System.Drawing.Size(313, 21);
             this._cbTarget1.TabIndex = 6;
             this._cbTarget1.SelectedIndexChanged += new System.EventHandler(this.SpellFamilySelectedIndexChanged);
             // 
@@ -281,7 +289,7 @@
             this._cbSpellEffect.IntegralHeight = false;
             this._cbSpellEffect.Location = new System.Drawing.Point(9, 63);
             this._cbSpellEffect.Name = "_cbSpellEffect";
-            this._cbSpellEffect.Size = new System.Drawing.Size(263, 21);
+            this._cbSpellEffect.Size = new System.Drawing.Size(313, 21);
             this._cbSpellEffect.TabIndex = 5;
             this._cbSpellEffect.SelectedIndexChanged += new System.EventHandler(this.SpellFamilySelectedIndexChanged);
             // 
@@ -294,7 +302,7 @@
             this._cbSpellAura.IntegralHeight = false;
             this._cbSpellAura.Location = new System.Drawing.Point(9, 39);
             this._cbSpellAura.Name = "_cbSpellAura";
-            this._cbSpellAura.Size = new System.Drawing.Size(263, 21);
+            this._cbSpellAura.Size = new System.Drawing.Size(313, 21);
             this._cbSpellAura.TabIndex = 4;
             this._cbSpellAura.SelectedIndexChanged += new System.EventHandler(this.SpellFamilySelectedIndexChanged);
             // 
@@ -307,7 +315,7 @@
             this._cbSpellFamily.IntegralHeight = false;
             this._cbSpellFamily.Location = new System.Drawing.Point(9, 15);
             this._cbSpellFamily.Name = "_cbSpellFamily";
-            this._cbSpellFamily.Size = new System.Drawing.Size(263, 21);
+            this._cbSpellFamily.Size = new System.Drawing.Size(313, 21);
             this._cbSpellFamily.TabIndex = 3;
             this._cbSpellFamily.SelectedIndexChanged += new System.EventHandler(this.SpellFamilySelectedIndexChanged);
             // 
@@ -315,7 +323,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(672, 455);
+            this.ClientSize = new System.Drawing.Size(731, 455);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormSearch";
@@ -344,6 +352,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ColumnHeader _chID;
         private System.Windows.Forms.ColumnHeader _chName;
+        private System.Windows.Forms.ColumnHeader _chMiscID;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label _lIDName;

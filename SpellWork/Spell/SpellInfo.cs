@@ -53,6 +53,7 @@ namespace SpellWork.Spell
         public string Name => Spell.Name;
         public string Description => Spell.Description;
         public string Tooltip => Spell.AuraDescription;
+        public int MiscID => Spell.MiscID;
         #endregion
 
         #region SpellMisc
@@ -195,8 +196,7 @@ namespace SpellWork.Spell
         public SpellInfo(SpellEntry spellEntry)
         {
             Spell = spellEntry;
-            SpellDescriptionVariablesEntry variables;
-            if (DBC.DBC.SpellDescriptionVariables.TryGetValue(spellEntry.DescriptionVariablesID, out variables))
+            if (DBC.DBC.SpellDescriptionVariables.TryGetValue(spellEntry.DescriptionVariablesID, out SpellDescriptionVariablesEntry variables))
                 DescriptionVariables = variables;
         }
 
