@@ -231,6 +231,18 @@ namespace SpellWork.Database
                         DBC.DBC.SpellStringsFromDB.Add(spellId, DBName);
                     }
                 }
+
+                var sortedList = new List<KeyValuePair<uint, SpellEntry>>(DBC.DBC.Spell);
+                sortedList.Sort(
+                    delegate (KeyValuePair<uint, SpellEntry> firstPair,
+                    KeyValuePair<uint, SpellEntry> nextPair)
+                    {
+                        return firstPair.Key.CompareTo(nextPair.Key);
+                    });
+
+                DBC.DBC.Spell.Clear();
+                foreach (KeyValuePair<uint, SpellEntry> pair in sortedList)
+                    DBC.DBC.Spell.Add(pair.Key, pair.Value);
             }
         }
 
