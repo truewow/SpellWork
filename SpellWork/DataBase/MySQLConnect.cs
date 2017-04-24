@@ -287,8 +287,8 @@ namespace SpellWork.Database
                 @"SELECT    t.entry,
                             t.name,
                             t.description,
-                            l.name_loc{0},
-                            l.description_loc{0},
+                            l.Name,
+                            l.Description,
                             t.spellid_1,
                             t.spellid_2,
                             t.spellid_3,
@@ -297,16 +297,12 @@ namespace SpellWork.Database
                 FROM
                     `item_template` t
                 LEFT JOIN
-                    `locales_item` l
+                    `item_template_locale` l
                 ON
-                    t.entry = l.entry
+                    t.entry = l.ID && (l.locale = '{0}' || l.locale IS NULL)
                 WHERE
-                    t.spellid_1 > 0 ||
-                    t.spellid_2 > 0 ||
-                    t.spellid_3 > 0 ||
-                    t.spellid_4 > 0 ||
-                    t.spellid_5 > 0;",
-                (int)DBC.DBC.Locale == 0 ? 1 : (int)DBC.DBC.Locale /* it's hack TODO: replace code*/);
+                    (t.spellid_1 > 0 || t.spellid_2 > 0 || t.spellid_3 > 0 || t.spellid_4 > 0 || t.spellid_5 > 0);",
+                Enum.GetName(typeof(Spell.LocalesDBC), DBC.DBC.Locale));
 
             using (_conn = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString))
             {
