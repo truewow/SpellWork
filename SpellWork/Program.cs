@@ -1,46 +1,44 @@
 ﻿using System;
 using System.IO;
-using System.Windows.Forms;
-using SpellWork.Forms;
-using SpellWork.Properties;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SpellWork
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
-            var dbcPath = $"{Settings.Default.DbcPath}\\{Settings.Default.Locale}";
+            var dbcPath = $"dbc";
             if (!Directory.Exists(dbcPath))
             {
-                MessageBox.Show($"Files in {Path.GetFullPath(dbcPath)} missing", @"Missing files", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine($"Files in {Path.GetFullPath(dbcPath)} missing");
                 return;
             }
 
             try
             {
-                DBC.DBC.Load();
-                Application.Run(new FormMain());
+                Task.Run(() => DBC.DBC.Load()).GetAwaiter().GetResult();
+                var sb = new StringBuilder();
+                var spellInfo = DBC.DBC.SpellInfoStore[int.Parse(args[0])];
+                spellInfo.Write(sb);
+                Console.WriteLine(sb.ToString());
+
+                // Application.Run(new FormMain());
             }
             catch (DirectoryNotFoundException dnfe)
             {
-                MessageBox.Show(dnfe.Message, @"Missing required DBC file!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine(dnfe.Message, @"Missing required DBC file!");
             }
             catch (ArgumentException ae)
             {
-                MessageBox.Show(ae.Message, @"DBC file has wrong structure!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine(ae.Message, @"DBC file has wrong structure!");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, @"SpellWork Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                MessageBox.Show(ex.ToString());
+                Console.WriteLine(ex.Message, @"SpellWork Error!");
+                Console.WriteLine(ex.ToString());
             }
         }
     }

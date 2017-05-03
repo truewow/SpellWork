@@ -1,8 +1,6 @@
-using SpellWork.Database;
 using SpellWork.DBC.Structures;
 using SpellWork.GameTables;
 using SpellWork.GameTables.Structures;
-using SpellWork.Properties;
 using SpellWork.Spell;
 using System;
 using System.Collections.Concurrent;
@@ -85,7 +83,7 @@ namespace SpellWork.DBC
                     try
                     {
                         dbc.SetValue(dbc.GetValue(null),
-                            Activator.CreateInstance(dbc.PropertyType, $@"{ Settings.Default.DbcPath }\{ Settings.Default.Locale }\{ name }.db2", true));
+                            Activator.CreateInstance(dbc.PropertyType, $@"dbc\{ name }.db2", true));
                     }
                     catch (DirectoryNotFoundException)
                     {
@@ -119,8 +117,8 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine(
-                            $"Spell effect {effect.Value.ID} is referencing unknown spell {effect.Value.SpellID}, ignoring!");
+                        // TODO Console.WriteLine(
+                        //    $"Spell effect {effect.Value.ID} is referencing unknown spell {effect.Value.SpellID}, ignoring!");
                         continue;
                     }
 
@@ -142,8 +140,8 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine(
-                            $"SpellTargetRestrictions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                        // TODO Console.WriteLine(
+                        //    $"SpellTargetRestrictions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                         continue;
                     }
 
@@ -156,8 +154,8 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine(
-                            $"SpellXSpellVisual: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                        // TODO Console.WriteLine(
+                        //$"SpellXSpellVisual: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                         continue;
                     }
 
@@ -169,8 +167,8 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine(
-                            $"SpellScaling: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                        //Console.WriteLine(
+                        // TODO    $"SpellScaling: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                         continue;
                     }
 
@@ -182,8 +180,8 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine(
-                            $"SpellAuraOptions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                        //Console.WriteLine(
+                        // TODO     $"SpellAuraOptions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                         continue;
                     }
 
@@ -197,8 +195,8 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine(
-                            $"SpellAuraRestrictions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                        // TODO Console.WriteLine(
+                        //$"SpellAuraRestrictions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                         continue;
                     }
 
@@ -210,8 +208,8 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine(
-                            $"SpellCategories: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                        // TODO Console.WriteLine(
+                        //$"SpellCategories: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                         continue;
                     }
 
@@ -223,8 +221,8 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine(
-                            $"SpellCastingRequirements: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                        // TODO Console.WriteLine(
+                        //$"SpellCastingRequirements: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                         return;
                     }
 
@@ -236,8 +234,8 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine(
-                            $"SpellClassOptions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                        // TODO Console.WriteLine(
+                        //$"SpellClassOptions: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                         continue;
                     }
 
@@ -249,8 +247,8 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine(
-                            $"SpellCooldowns: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                        // TODO Console.WriteLine(
+                        //$"SpellCooldowns: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                         continue;
                     }
 
@@ -262,8 +260,8 @@ namespace SpellWork.DBC
                 {
                     if (!SpellEffect.ContainsKey(effect.Value.SpellEffectId))
                     {
-                        Console.WriteLine(
-                            $"SpellEffectScaling: Unknown spell effect {effect.Value.SpellEffectId} referenced, ignoring!");
+                        // TODO Console.WriteLine(
+                        //$"SpellEffectScaling: Unknown spell effect {effect.Value.SpellEffectId} referenced, ignoring!");
                         continue;
                     }
 
@@ -275,8 +273,8 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine(
-                            $"SpellInterrupts: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                        // TODO Console.WriteLine(
+                        //$"SpellInterrupts: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                         continue;
                     }
 
@@ -288,8 +286,8 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine(
-                            $"SpellEquippedItems: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                        // TODO Console.WriteLine(
+                        //$"SpellEquippedItems: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                         continue;
                     }
 
@@ -301,7 +299,7 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine($"SpellLevels: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                        // TODO Console.WriteLine($"SpellLevels: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                         continue;
                     }
 
@@ -313,8 +311,8 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine(
-                            $"SpellReagents: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                        // TODO Console.WriteLine(
+                        //$"SpellReagents: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                         continue;
                     }
 
@@ -326,8 +324,8 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine(
-                            $"SpellShapeshift: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                        // TODO Console.WriteLine(
+                        //$"SpellShapeshift: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                         continue;
                     }
 
@@ -339,7 +337,7 @@ namespace SpellWork.DBC
                 {
                     if (!SpellInfoStore.ContainsKey(effect.Value.SpellID))
                     {
-                        Console.WriteLine($"SpellTotems: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
+                        // TODO Console.WriteLine($"SpellTotems: Unknown spell {effect.Value.SpellID} referenced, ignoring!");
                         continue;
                     }
 
@@ -347,7 +345,7 @@ namespace SpellWork.DBC
                 }
             }));
 
-            GameTable<GtSpellScalingEntry>.Open($@"{Settings.Default.GtPath}\SpellScaling.txt");
+            GameTable<GtSpellScalingEntry>.Open($@"gt\SpellScaling.txt");
         }
 
         public static uint SelectedLevel = MaxLevel;

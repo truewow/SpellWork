@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using SpellWork.Database;
 using SpellWork.DBC.Structures;
 using SpellWork.Extensions;
 using SpellWork.GameTables;
@@ -77,7 +74,7 @@ namespace SpellWork.Spell
         public uint ActiveIconFileDataID => Misc?.ActiveIconFileDataID ?? 0;
         public uint IconFileDataID => Misc?.IconFileDataID ?? 0;
         public int RangeIndex => Misc?.RangeIndex ?? 0;
-        public uint SchoolMask => (uint)(Misc?.SchoolMask ?? 0);
+        public uint SchoolMask => Misc?.SchoolMask ?? 0;
         #endregion
 
         #region SpellClassOptions
@@ -200,14 +197,12 @@ namespace SpellWork.Spell
                 DescriptionVariables = variables;
         }
 
-        public void Write(RichTextBox rtb)
+        public void Write(StringBuilder rtb)
         {
             rtb.Clear();
 
-            rtb.SetBold();
             rtb.AppendFormatLine("ID - {0} {1}{2}",
                 ID, Name, Scaling != null ? $" (Level {DBC.DBC.SelectedLevel})" : string.Empty);
-            rtb.SetDefaultStyle();
 
             rtb.AppendFormatLine(Separator);
 
@@ -232,10 +227,8 @@ namespace SpellWork.Spell
                     var procname = "Spell Not Found";
                     if (DBC.DBC.Spell.ContainsKey(procSpellId))
                         procname = DBC.DBC.Spell[procSpellId].Name;
-                    rtb.SetStyle(Color.Blue, FontStyle.Bold);
 
                     rtb.AppendFormatLine("Triggered by spell: ({0}) {1}", procSpellId, procname);
-                    rtb.SetDefaultStyle();
                     addline = true;
                 }
             }
@@ -260,7 +253,6 @@ namespace SpellWork.Spell
                           (eff.EffectSpellClassMask[3] & SpellFamilyFlags[3]) != 0)
                     select eff)
             {
-                rtb.SetStyle(Color.Blue, FontStyle.Bold);
                 rtb.AppendFormatLine("Modified by {0} ({1})",
                     DBC.DBC.SpellInfoStore[eff.SpellID].Spell.Name, eff.SpellID);
             }
@@ -508,7 +500,6 @@ namespace SpellWork.Spell
                 else
                 {
                     rtb.AppendLine();
-                    rtb.SetBold();
                     rtb.AppendLine("Allowed areas:");
                     foreach (var areaGroupMember in areas)
                     {
@@ -528,19 +519,15 @@ namespace SpellWork.Spell
 
             if (Math.Abs(BaseProcRate) > 1.0E-5f)
             {
-                rtb.SetBold();
                 rtb.AppendFormatLine("PPM flag 0x{0:X2} BaseRate {1}", ProcsPerMinuteFlags, BaseProcRate);
-                rtb.SetDefaultStyle();
             }
 
             if (ProcFlags != 0)
             {
-                rtb.SetBold();
                 rtb.AppendFormatLine("Proc flag 0x{0:X8}, chance: {1}%, charges: {2}, cooldown: {3}",
                     ProcFlags, ProcChance, ProcCharges, ProcCooldown);
-                rtb.SetDefaultStyle();
                 rtb.AppendFormatLine(Separator);
-                rtb.AppendText(ProcInfo);
+                rtb.Append(ProcInfo);
             }
             else
                 rtb.AppendFormatLine("Chance = {0}, charges - {1}", ProcChance, ProcCharges);
@@ -554,13 +541,10 @@ namespace SpellWork.Spell
             AppendSpellVisualInfo();
         }
 
-        private void AppendEffectInfo(RichTextBox rtb, SpellEffectEntry effect)
+        private void AppendEffectInfo(StringBuilder rtb, SpellEffectEntry effect)
         {
-            rtb.SetBold();
             rtb.AppendFormatLine($"Effect { effect.EffectIndex }: Id { effect.Effect } ({ (SpellEffects)effect.Effect })");
-            rtb.SetBold();
             rtb.AppendFormatLine($"Difficulty: Id { effect.DifficultyID } ({ (Difficulty)effect.DifficultyID })");
-            rtb.SetDefaultStyle();
 
             var value = 0.0f;
 
@@ -690,15 +674,12 @@ namespace SpellWork.Spell
                 {
                     if (row.SkillId > 0)
                     {
-                        rtb.SelectionColor = Color.Blue;
                         rtb.AppendFormatLine("\t+ {0} - {1}", row.SpellID, row.SpellName);
                     }
                     else
                     {
-                        rtb.SelectionColor = Color.Red;
                         rtb.AppendFormatLine("\t- {0} - {1}", row.SpellID, row.SpellName);
                     }
-                    rtb.SelectionColor = Color.Black;
                 }
             }
 
@@ -712,11 +693,9 @@ namespace SpellWork.Spell
                 if (DBC.DBC.SpellInfoStore.ContainsKey((int)trigger))
                 {
                     var triggerSpell = DBC.DBC.SpellInfoStore[(int)trigger];
-                    rtb.SetStyle(Color.Blue, FontStyle.Bold);
                     rtb.AppendFormatLine("   Trigger spell ({0}) {1}. Chance = {2}", trigger, triggerSpell.Spell.Name, ProcChance);
                     rtb.AppendFormatLineIfNotNull("   Description: {0}", triggerSpell.Spell.Description);
                     rtb.AppendFormatLineIfNotNull("   ToolTip: {0}", triggerSpell.Spell.AuraDescription);
-                    rtb.SetDefaultStyle();
                     if (triggerSpell.ProcFlags != 0)
                     {
                         rtb.AppendFormatLine("Charges - {0}", triggerSpell.ProcCharges);
@@ -739,7 +718,7 @@ namespace SpellWork.Spell
             rtb.AppendLine();
         }
 
-        private static void AuraModTypeName(RichTextBox rtb, SpellEffectEntry effect)
+        private static void AuraModTypeName(StringBuilder rtb, SpellEffectEntry effect)
         {
             var aura = (AuraType)effect.EffectAura;
             var misc = effect.EffectMiscValues[0];
@@ -784,20 +763,17 @@ namespace SpellWork.Spell
                 case AuraType.SPELL_AURA_OVERRIDE_SPELLS:
                     if (!DBC.DBC.OverrideSpellData.ContainsKey(misc))
                     {
-                        rtb.SetStyle(Color.Red, FontStyle.Bold);
                         rtb.AppendFormatLine("Cannot find key {0} in OverrideSpellData.dbc", (uint)misc);
                     }
                     else
                     {
                         rtb.AppendLine();
-                        rtb.SetStyle(Color.DarkRed, FontStyle.Bold);
                         var @override = DBC.DBC.OverrideSpellData[misc];
                         for (var i = 0; i < 10; ++i)
                         {
                             if (@override.Spells[i] == 0)
                                 continue;
 
-                            rtb.SetStyle(Color.DarkBlue, FontStyle.Regular);
                             rtb.AppendFormatLine("\t - #{0} ({1}) {2}", i + 1, @override.Spells[i],
                                 DBC.DBC.SpellInfoStore.ContainsKey((int)@override.Spells[i]) ? DBC.DBC.SpellInfoStore[(int)@override.Spells[i]].Name : "?????");
                         }
@@ -805,23 +781,20 @@ namespace SpellWork.Spell
                     }
                     break;
                 case AuraType.SPELL_AURA_SCREEN_EFFECT:
-                    rtb.SetStyle(Color.DarkBlue, FontStyle.Bold);
                     rtb.AppendFormatLine("ScreenEffect: {0}",
                         DBC.DBC.ScreenEffect.ContainsKey(misc) ? DBC.DBC.ScreenEffect[misc].Name : "?????");
                     break;
             }
         }
 
-        private void AppendItemInfo(RichTextBox rtb)
+        private void AppendItemInfo(StringBuilder rtb)
         {
-            var items = DBC.DBC.ItemEffect.Where(effect => effect.Value.SpellID == (int)ID).ToArray();
+            var items = DBC.DBC.ItemEffect.Where(effect => effect.Value.SpellID == ID).ToArray();
             if (!items.Any())
                 return;
 
             rtb.AppendLine(Separator);
-            rtb.SetStyle(Color.Blue, FontStyle.Bold);
             rtb.AppendLine("Items using this spell:");
-            rtb.SetDefaultStyle();
 
             foreach (var item in items)
             {
@@ -885,7 +858,7 @@ namespace SpellWork.Spell
                 _rtb.AppendFormatLine("Missile motion: {0}", missileMotionEntry.Name);
                 _rtb.AppendFormatLine("Missile count: {0}", missileMotionEntry.MissileCount);
                 _rtb.AppendLine("Missile Script body:");
-                _rtb.AppendText(missileMotionEntry.Script);
+                _rtb.Append(missileMotionEntry.Script);
             }*/
         }
 
