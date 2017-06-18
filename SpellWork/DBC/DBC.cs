@@ -17,7 +17,7 @@ namespace SpellWork.DBC
 {
     public static class DBC
     {
-        public const string Version = "SpellWork 7.2.0 (23826)";
+        public const string Version = "SpellWork 7.2.5 (24330)";
         public const uint MaxLevel = 110;
 
         // ReSharper disable MemberCanBePrivate.Global
