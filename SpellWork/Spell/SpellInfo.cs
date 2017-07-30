@@ -91,7 +91,7 @@ namespace SpellWork.Spell
         // SpellCategories
         public int DamageClass => Categories?.DefenseType ?? 0;
         public int PreventionType => Categories?.PreventionType ?? 0;
-        public ushort Category => Categories?.Category ?? 0;
+        public uint Category => Categories?.Category ?? 0;
         public int Dispel => Categories?.DispelType ?? 0;
         public int Mechanic => Categories?.Mechanic ?? 0;
         #endregion
