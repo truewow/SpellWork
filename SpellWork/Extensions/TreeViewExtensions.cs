@@ -21,9 +21,9 @@ namespace SpellWork.Extensions
                 else if (node.Index < 64)
                     val[1] += 1U << (node.Index - 32);
                 else if (node.Index < 96)
-                    val[2] += 1U << (node.Index - 96);
+                    val[2] += 1U << (node.Index - 64);
                 else
-                    val[3] += 1U << (node.Index - 128);
+                    val[3] += 1U << (node.Index - 96);
             }
             return val;
         }
