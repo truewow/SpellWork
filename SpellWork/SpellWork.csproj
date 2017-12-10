@@ -117,6 +117,7 @@
     <Compile Include="DBC\Structures\SpellProcsPerMinuteEntry.cs" />
     <Compile Include="DBC\Structures\SpellRadiusEntry.cs" />
     <Compile Include="DBC\Structures\SpellRangeEntry.cs" />
+    <Compile Include="DBC\Structures\SpellReagentsCurrencyEntry.cs" />
     <Compile Include="DBC\Structures\SpellReagentsEntry.cs" />
     <Compile Include="DBC\Structures\SpellScalingEntry.cs" />
     <Compile Include="DBC\Structures\SpellShapeshiftEntry.cs" />

@@ -61,6 +61,7 @@ namespace SpellWork.DBC
         public static Storage<ItemSparseEntry>                  ItemSparse { get; set; }
 
         public static Storage<SpellReagentsEntry>               SpellReagents { get; set; }
+        public static Storage<SpellReagentsCurrencyEntry>       SpellReagentsCurrency { get; set; }
         public static Storage<SpellMissileEntry>                SpellMissile { get; set; }
         // ReSharper restore MemberCanBePrivate.Global
         // ReSharper restore CollectionNeverUpdated.Global
@@ -319,6 +320,19 @@ namespace SpellWork.DBC
                     }
 
                     SpellInfoStore[effect.Value.SpellID].Reagents = effect.Value;
+                }
+            }), Task.Run(() =>
+            {
+                foreach (var reagentsCurrency in SpellReagentsCurrency)
+                {
+                    if (!SpellInfoStore.ContainsKey(reagentsCurrency.Value.SpellID))
+                    {
+                        Console.WriteLine(
+                            $"SpellReagentsCurrency: Unknown spell {reagentsCurrency.Value.SpellID} referenced, ignoring!");
+                        continue;
+                    }
+
+                    SpellInfoStore[reagentsCurrency.Value.SpellID].ReagentsCurrency.Add(reagentsCurrency.Value);
                 }
             }), Task.Run(() =>
             {

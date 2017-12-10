@@ -28,6 +28,7 @@ namespace SpellWork.Spell
         public SpellLevelsEntry Levels { get; set; }
         public SpellMiscEntry Misc { get; set; }
         public SpellReagentsEntry Reagents { get; set; }
+        public List<SpellReagentsCurrencyEntry> ReagentsCurrency { get; } = new List<SpellReagentsCurrencyEntry>();
         public SpellScalingEntry Scaling { get; set; }
         public SpellShapeshiftEntry Shapeshift { get; set; }
         public List<SpellTargetRestrictionsEntry> TargetRestrictions { get; } = new List<SpellTargetRestrictionsEntry>();
@@ -364,6 +365,25 @@ namespace SpellWork.Spell
                     }
 
                     rtb.AppendFormat("  {0} x{1}", Reagents.Reagent[i], Reagents.ReagentCount[i]);
+                }
+
+                if (printedHeader)
+                    rtb.AppendLine();
+            }
+
+            // SpellReagentsCurrency
+            {
+                var printedHeader = false;
+                foreach (var reagentsCurrency in ReagentsCurrency)
+                {
+                    if (!printedHeader)
+                    {
+                        rtb.AppendLine();
+                        rtb.Append("ReagentsCurrency:");
+                        printedHeader = true;
+                    }
+
+                    rtb.AppendFormat("  {0} x{1}", reagentsCurrency.CurrencyTypeID, reagentsCurrency.CurrencyCount);
                 }
 
                 if (printedHeader)
