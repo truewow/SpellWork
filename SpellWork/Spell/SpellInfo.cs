@@ -412,7 +412,7 @@ namespace SpellWork.Spell
             if (Misc != null)
                 rtb.AppendFormatLineIfNotNull("Speed {0:F}", Speed);
 
-            rtb.AppendFormatLineIfNotNull("Stackable up to {0}", ProcCharges);
+            rtb.AppendFormatLineIfNotNull("Stackable up to {0}", CumulativeAura);
 
             if (CastingTimeIndex != 0)
             {
