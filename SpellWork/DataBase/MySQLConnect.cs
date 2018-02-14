@@ -223,7 +223,8 @@ namespace SpellWork.Database
                             Reagent = new int[DBC.DBC.MaxReagentCount],
                             ReagentCount = new uint[DBC.DBC.MaxReagentCount],
                             EffectPointsPerComboPoint = new float[DBC.DBC.MaxEffectIndex],
-                            EffectChainTarget = new uint[DBC.DBC.MaxEffectIndex]
+                            EffectChainTarget = new uint[DBC.DBC.MaxEffectIndex],
+                            DamageCoeficient = new float[DBC.DBC.MaxEffectIndex]
                         });
 
                         string DBName = reader.GetString(index);

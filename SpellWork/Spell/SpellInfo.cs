@@ -38,8 +38,8 @@ namespace SpellWork.Spell
             if (_spell.Description != string.Empty && _spell.ToolTip != string.Empty && _spell.ModalNextSpell != 0)
                 _rtb.AppendFormatLine(_line);
 
-            _rtb.AppendFormatLine("Category = {0}, SpellIconID = {1}, activeIconID = {2}, SpellVisual = ({3},{4})",
-                _spell.Category, _spell.SpellIconID, _spell.ActiveIconID, _spell.SpellVisual[0], _spell.SpellVisual[1]);
+            _rtb.AppendFormatLine("Category = {0}, SpellIconID = {1}, activeIconID = {2}, SpellVisual = ({3},{4}), SpellPriority = {5}",
+                _spell.Category, _spell.SpellIconID, _spell.ActiveIconID, _spell.SpellVisual[0], _spell.SpellVisual[1], _spell.SpellPriority);
 
             _rtb.AppendFormatLine("Family {0}, flag [0] 0x{1:X8} [1] 0x{2:X8} [2] 0x{3:X8}",
                 (SpellFamilyNames)_spell.SpellFamilyName, _spell.SpellFamilyFlags[0], _spell.SpellFamilyFlags[1], _spell.SpellFamilyFlags[2]);
@@ -345,6 +345,7 @@ namespace SpellWork.Spell
                     _rtb.AppendFormat(" x {0:F}", _spell.DmgMultiplier[effectIndex]);
 
                 _rtb.AppendFormatIfNotNull("  Multiple = {0:F}", _spell.EffectMultipleValue[effectIndex]);
+                _rtb.AppendFormatIfNotNull(" Bonus = {0:F}", _spell.DamageCoeficient[effectIndex]);
                 _rtb.AppendLine();
 
                 _rtb.AppendFormatLine("Targets ({0}, {1}) ({2}, {3})",
