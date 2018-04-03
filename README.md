@@ -1,11 +1,12 @@
 SpellWork
 =========
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/36e4ae29c00947cbace18b5003141bb1)](https://www.codacy.com/app/TrinityCore/SpellWork?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=TrinityCore/SpellWork&amp;utm_campaign=Badge_Grade)
+
 <a href="https://scan.coverity.com/projects/trinitycore-spellwork">
   <img alt="Coverity Scan Build Status"
        src="https://scan.coverity.com/projects/12196/badge.svg"/>
 </a>
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/36e4ae29c00947cbace18b5003141bb1)](https://www.codacy.com/app/TrinityCore/SpellWork?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=TrinityCore/SpellWork&amp;utm_campaign=Badge_Grade)
 
 SpellWork is a tool to browse and display information about World of Wacraft spells.
 It is implemented in .NET and it runs on Windows and Linux (with Mono).
