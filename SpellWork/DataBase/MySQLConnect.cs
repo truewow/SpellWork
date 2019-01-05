@@ -50,7 +50,7 @@ namespace SpellWork.Database
                     EffectMultipleValue1,EffectMultipleValue2,EffectMultipleValue3,EffectItemType1,EffectItemType2,EffectItemType3,EffectMiscValue1,EffectMiscValue2,EffectMiscValue3,EffectMiscValueB1,EffectMiscValueB2,EffectMiscValueB3,
                     EffectTriggerSpell1,EffectTriggerSpell2,EffectTriggerSpell3,EffectSpellClassMaskA1,EffectSpellClassMaskA2,EffectSpellClassMaskA3,EffectSpellClassMaskB1,EffectSpellClassMaskB2,EffectSpellClassMaskB3,
                     EffectSpellClassMaskC1,EffectSpellClassMaskC2,EffectSpellClassMaskC3,MaxTargetLevel,SpellFamilyName,SpellFamilyFlags1,SpellFamilyFlags2,SpellFamilyFlags3,MaxAffectedTargets,DmgClass,PreventionType,DmgMultiplier1,DmgMultiplier2,DmgMultiplier3,
-                    AreaGroupId,SchoolMask,Comment FROM `spell_dbc` ORDER BY Id ASC;";
+                    AreaGroupId,SchoolMask,SpellName FROM `spell_dbc` ORDER BY Id ASC;";
                 DBC.DBC.SpellStringsFromDB.Clear();
 
                 _command = new MySqlCommand(query, _conn);
