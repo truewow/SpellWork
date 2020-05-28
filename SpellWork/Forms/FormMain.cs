@@ -1,4 +1,8 @@
-﻿using System;
+﻿using SpellWork.Database;
+using SpellWork.DBC.Structures;
+using SpellWork.Extensions;
+using SpellWork.Spell;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -7,10 +11,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using SpellWork.Database;
-using SpellWork.DBC.Structures;
-using SpellWork.Extensions;
-using SpellWork.Spell;
 
 namespace SpellWork.Forms
 {
@@ -195,12 +195,16 @@ namespace SpellWork.Forms
 
             _spellList = (from spellInfo in DBC.DBC.SpellInfoStore.Values
                           where
-                              ((id == 0 || spellInfo.ID == id) && (ic == 0 || spellInfo.IconFileDataID == ic) &&
+                              ((id == 0 || spellInfo.ID == id) && (ic == 0 || spellInfo.SpellIconFileDataID == ic) &&
                                (at == 0 || (spellInfo.Attributes & at) != 0 || (spellInfo.AttributesEx & at) != 0 ||
                                 (spellInfo.AttributesEx2 & at) != 0 || (spellInfo.AttributesEx3 & at) != 0 ||
                                 (spellInfo.AttributesEx4 & at) != 0 || (spellInfo.AttributesEx5 & at) != 0 ||
-                                (spellInfo.AttributesEx6 & at) != 0 || (spellInfo.AttributesEx7 & at) != 0)) &&
+                                (spellInfo.AttributesEx6 & at) != 0 || (spellInfo.AttributesEx7 & at) != 0 ||
+                                (spellInfo.AttributesEx8 & at) != 0 || (spellInfo.AttributesEx9 & at) != 0 ||
+                                (spellInfo.AttributesEx10 & at) != 0 || (spellInfo.AttributesEx11 & at) != 0 ||
+                                (spellInfo.AttributesEx12 & at) != 0 || (spellInfo.AttributesEx13 & at) != 0)) &&
                               ((id != 0 || ic != 0 && at != 0) || spellInfo.Name.ContainsText(name))
+                          orderby spellInfo.ID
                           select spellInfo).ToList();
 
             _lvSpellList.VirtualListSize = _spellList.Count;
@@ -253,15 +257,17 @@ namespace SpellWork.Forms
 
             _spellList = DBC.DBC.SpellInfoStore.Values.Where(
                 spell => (!bFamilyNames || spell.SpellFamilyName == fFamilyNames) &&
-                         (!bSpellEffect || spell.HasEffect((SpellEffects) fSpellEffect)) &&
-                         (!bSpellAura || spell.HasAura((AuraType) fSpellAura)) &&
-                         (!bTarget1 || spell.HasTargetA((Targets) fTarget1)) &&
-                         (!bTarget2 || spell.HasTargetB((Targets) fTarget2)) &&
+                         (!bSpellEffect || spell.HasEffect((SpellEffects)fSpellEffect)) &&
+                         (!bSpellAura || spell.HasAura((AuraType)fSpellAura)) &&
+                         (!bTarget1 || spell.HasTargetA((Targets)fTarget1)) &&
+                         (!bTarget2 || spell.HasTargetB((Targets)fTarget2)) &&
                          (!use1Val || spell.CreateFilter(field1, advVal1, field1Ct)) &&
                          (!use2Val || spell.CreateFilter(field2, advVal2, field2Ct)) &&
                          (spell.SpellEffectInfoStore.Any(effect =>
                          (!use1EffectVal || effect.Value.CreateFilter(fieldEffect1, advEffectVal1, fieldEffect1Ct)) &&
-                         (!use2EffectVal || effect.Value.CreateFilter(fieldEffect2, advEffectVal2, fieldEffect2Ct))))).ToList();
+                         (!use2EffectVal || effect.Value.CreateFilter(fieldEffect2, advEffectVal2, fieldEffect2Ct)))))
+                .OrderBy(spell => spell.ID)
+                .ToList();
 
             _lvSpellList.VirtualListSize = _spellList.Count;
             if (_lvSpellList.SelectedIndices.Count > 0)
@@ -402,6 +408,7 @@ namespace SpellWork.Forms
                                   (!bSpellAura || spell.HasAura((AuraType)fSpellAura)) &&
                                   (!bTarget1 || spell.HasTargetA((Targets)fTarget1)) &&
                                   (!bTarget2 || spell.HasTargetB((Targets)fTarget2))
+                              orderby spell.ID
                               select spell).ToList();
 
             _lvProcSpellList.VirtualListSize = _spellProcList.Count();
@@ -422,11 +429,12 @@ namespace SpellWork.Forms
             var query = from spell in DBC.DBC.SpellInfoStore.Values
                         where
                             spell.SpellFamilyName == ProcInfo.SpellProc.SpellFamilyName &&
-                            spell.SpellFamilyFlags.ContainsElement(mask)
-                        join sk in DBC.DBC.SkillLineAbility.Values on spell.ID equals sk.SpellID into temp1
+                            spell.SpellClassMask.ContainsElement(mask)
+                        join sk in DBC.DBC.SkillLineAbility.Values on spell.ID equals sk.Spell into temp1
                         from skill in temp1.DefaultIfEmpty(new SkillLineAbilityEntry())
                         join skl in DBC.DBC.SkillLine on skill.SkillLine equals skl.Key into temp2
                         from SkillLine in temp2.DefaultIfEmpty()
+                        orderby spell.ID, skill.SkillLine
                         select
                             new
                             {
@@ -501,7 +509,7 @@ namespace SpellWork.Forms
             if (string.IsNullOrEmpty(_rtbSqlLog.Text))
                 return;
 
-            var sd = new SaveFileDialog {Filter = @"SQL files|*.sql"};
+            var sd = new SaveFileDialog { Filter = @"SQL files|*.sql" };
             if (sd.ShowDialog() == DialogResult.OK)
                 using (var sw = new StreamWriter(sd.FileName, false, Encoding.UTF8))
                     sw.Write(_rtbSqlLog.Text);
@@ -638,13 +646,13 @@ namespace SpellWork.Forms
         private void LvSpellListRetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
             e.Item =
-                new ListViewItem(new[] { _spellList[e.ItemIndex].ID.ToString(), _spellList[e.ItemIndex].Name, _spellList[e.ItemIndex].MiscID.ToString() });
+                new ListViewItem(new[] { _spellList[e.ItemIndex].ID.ToString(), _spellList[e.ItemIndex].Name, (_spellList[e.ItemIndex].Misc?.ID ?? 0).ToString() });
         }
 
         private void LvProcSpellListRetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
             e.Item =
-                new ListViewItem(new[] {_spellProcList[e.ItemIndex].ID.ToString(), _spellProcList[e.ItemIndex].Name});
+                new ListViewItem(new[] { _spellProcList[e.ItemIndex].ID.ToString(), _spellProcList[e.ItemIndex].Name });
         }
 
         private void LvSqlDataRetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)

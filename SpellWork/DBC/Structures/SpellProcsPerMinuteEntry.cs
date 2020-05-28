@@ -1,7 +1,11 @@
-﻿namespace SpellWork.DBC.Structures
+﻿using DBFileReaderLib.Attributes;
+
+namespace SpellWork.DBC.Structures
 {
-    public class SpellProcsPerMinuteEntry
+    public sealed class SpellProcsPerMinuteEntry
     {
+        [Index(true)]
+        public uint ID;
         public float BaseProcRate;
         public byte Flags;
     }

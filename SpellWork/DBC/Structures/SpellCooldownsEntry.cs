@@ -1,11 +1,15 @@
-﻿namespace SpellWork.DBC.Structures
+﻿using DBFileReaderLib.Attributes;
+
+namespace SpellWork.DBC.Structures
 {
     public class SpellCooldownsEntry
     {
-        public int SpellID;
-        public uint CategoryRecoveryTime;
-        public uint RecoveryTime;
-        public uint StartRecoveryTime;
+        [Index(true)]
+        public uint ID;
         public byte DifficultyID;
+        public int CategoryRecoveryTime;
+        public int RecoveryTime;
+        public int StartRecoveryTime;
+        public int SpellID;
     }
 }

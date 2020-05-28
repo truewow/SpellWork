@@ -7,7 +7,7 @@ namespace SpellWork.Extensions
     public static class RichTextBoxExtensions
     {
         public const string DefaultFamily = "Arial Unicode MS";
-        public const float  DefaultSize   = 9f;
+        public const float DefaultSize = 9f;
 
         public static void AppendFormatLine(this RichTextBox textbox, string format, params object[] arg0)
         {

@@ -1,11 +1,15 @@
-﻿namespace SpellWork.DBC.Structures
+﻿using DBFileReaderLib.Attributes;
+
+namespace SpellWork.DBC.Structures
 {
     public class SpellScalingEntry
     {
+        [Index(true)]
+        public uint ID;
         public int SpellID;
-        public ushort ScalesFromItemLevel;
-        public int ScalingClass;
+        public int Class;
         public uint MinScalingLevel;
         public uint MaxScalingLevel;
+        public short ScalesFromItemLevel;
     }
 }

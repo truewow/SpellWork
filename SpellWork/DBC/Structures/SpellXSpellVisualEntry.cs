@@ -1,19 +1,22 @@
-﻿namespace SpellWork.DBC.Structures
+﻿using DBFileReaderLib.Attributes;
+
+namespace SpellWork.DBC.Structures
 {
     public sealed class SpellXSpellVisualEntry
     {
-        public int SpellID;
-        public uint SpellVisualID;
-        public uint ID;
-        public float Chance;
-        public ushort CasterPlayerConditionID;
-        public ushort CasterUnitConditionID;
-        public ushort PlayerConditionID;
-        public ushort UnitConditionID;
-        public uint IconFileDataID;
-        public uint ActiveIconFileDataID;
-        public byte Flags;
+        [Index(false)]
+        public int ID;
         public byte DifficultyID;
+        public uint SpellVisualID;
+        public float Probability;
+        public byte Flags;
         public byte Priority;
+        public int SpellIconFileID;
+        public int ActiveIconFileID;
+        public ushort ViewerUnitConditionID;
+        public uint ViewerPlayerConditionID;
+        public ushort CasterUnitConditionID;
+        public uint CasterPlayerConditionID;
+        public int SpellID;
     }
 }

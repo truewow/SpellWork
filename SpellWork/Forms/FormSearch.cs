@@ -1,9 +1,9 @@
-﻿using System;
+﻿using SpellWork.Extensions;
+using SpellWork.Spell;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using SpellWork.Extensions;
-using SpellWork.Spell;
 
 namespace SpellWork.Forms
 {
@@ -39,12 +39,13 @@ namespace SpellWork.Forms
 
             _spellList = (from spell in DBC.DBC.SpellInfoStore.Values
                           where
-                              ((id == 0 || spell.ID == id) && (ic == 0 || spell.IconFileDataID == ic) &&
+                              ((id == 0 || spell.ID == id) && (ic == 0 || spell.SpellIconFileDataID == ic) &&
                                (at == 0 || (spell.Attributes & at) != 0 || (spell.AttributesEx & at) != 0 ||
                                 (spell.AttributesEx2 & at) != 0 || (spell.AttributesEx3 & at) != 0 ||
                                 (spell.AttributesEx4 & at) != 0 || (spell.AttributesEx5 & at) != 0 ||
                                 (spell.AttributesEx6 & at) != 0 || (spell.AttributesEx7 & at) != 0 || (spell.AttributesEx8 & at) != 0)) &&
                               (id != 0 || ic != 0 && at != 0) || spell.Name.ContainsText(name)
+                          orderby spell.ID
                           select spell).ToList();
 
             _lvSpellList.VirtualListSize = _spellList.Count;
@@ -81,6 +82,7 @@ namespace SpellWork.Forms
                               (!bSpellAura || spell.HasAura((AuraType)fSpellAura)) &&
                               (!bTarget1 || spell.HasTargetA((Targets)fTarget1)) &&
                               (!bTarget2 || spell.HasTargetB((Targets)fTarget2))
+                          orderby spell.ID
                           select spell).ToList();
 
             _lvSpellList.VirtualListSize = _spellList.Count();
@@ -113,7 +115,7 @@ namespace SpellWork.Forms
 
         private void SpellListRetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
-            e.Item = new ListViewItem(new[] { _spellList[e.ItemIndex].ID.ToString(), _spellList[e.ItemIndex].Name, _spellList[e.ItemIndex].MiscID.ToString() });
+            e.Item = new ListViewItem(new[] { _spellList[e.ItemIndex].ID.ToString(), _spellList[e.ItemIndex].Name, (_spellList[e.ItemIndex].Misc?.ID ?? 0).ToString() });
         }
 
         private void ButtonSearch_Click(object sender, EventArgs e)

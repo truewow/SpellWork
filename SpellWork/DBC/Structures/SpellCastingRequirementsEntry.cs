@@ -1,13 +1,17 @@
-﻿namespace SpellWork.DBC.Structures
+﻿using DBFileReaderLib.Attributes;
+
+namespace SpellWork.DBC.Structures
 {
     public class SpellCastingRequirementsEntry
     {
+        [Index(true)]
+        public uint ID;
         public int SpellID;
-        public ushort MinFactionID;
-        public ushort RequiredAreasID;
-        public ushort RequiresSpellFocus;
         public byte FacingCasterFlags;
-        public byte MinReputation;
+        public ushort MinFactionID;
+        public sbyte MinReputation;
+        public ushort RequiredAreasID;
         public byte RequiredAuraVision;
+        public ushort RequiresSpellFocus;
     }
 }

@@ -1,8 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Windows.Forms;
-using SpellWork.Forms;
+﻿using SpellWork.Forms;
 using SpellWork.Properties;
+using System;
+using System.Globalization;
+using System.IO;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace SpellWork
 {
@@ -14,6 +16,11 @@ namespace SpellWork
         [STAThread]
         static void Main()
         {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

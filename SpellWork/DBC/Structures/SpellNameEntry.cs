@@ -2,12 +2,10 @@
 
 namespace SpellWork.DBC.Structures
 {
-    public class SpellCastTimesEntry
+    public sealed class SpellNameEntry
     {
         [Index(true)]
         public uint ID;
-        public int Base;
-        public short PerLevel;
-        public int Minimum;
+        public string Name;
     }
 }

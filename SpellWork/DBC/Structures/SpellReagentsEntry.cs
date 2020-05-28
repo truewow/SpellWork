@@ -1,12 +1,15 @@
-﻿using System.Runtime.InteropServices;
+﻿using DBFileReaderLib.Attributes;
 
 namespace SpellWork.DBC.Structures
 {
     public class SpellReagentsEntry
     {
+        [Index(true)]
+        public uint ID;
         public int SpellID;
-        public uint[] Reagent;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
-        public ushort[] ReagentCount;
+        [Cardinality(8)]
+        public int[] Reagent = new int[8];
+        [Cardinality(8)]
+        public short[] ReagentCount = new short[8];
     }
 }

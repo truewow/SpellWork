@@ -1,6 +1,6 @@
-﻿using System.Drawing;
+﻿using SpellWork.Extensions;
+using System.Drawing;
 using System.Windows.Forms;
-using SpellWork.Extensions;
 
 namespace SpellWork.Spell
 {

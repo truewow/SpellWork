@@ -1,12 +1,16 @@
-﻿namespace SpellWork.DBC.Structures
+﻿using DBFileReaderLib.Attributes;
+
+namespace SpellWork.DBC.Structures
 {
     public class SpellLevelsEntry
     {
+        [Index(true)]
+        public uint ID;
+        public byte DifficultyID;
+        public short BaseLevel;
+        public short MaxLevel;
+        public short SpellLevel;
+        public byte MaxPassiveAuraLevel;
         public int SpellID;
-        public ushort BaseLevel;
-        public ushort MaxLevel;
-        public ushort SpellLevel;
-        public byte Difficulty;
-        public byte MaxUsableLevel;
     }
 }

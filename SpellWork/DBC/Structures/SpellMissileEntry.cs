@@ -1,8 +1,13 @@
-﻿namespace SpellWork.DBC.Structures
+﻿using DBFileReaderLib.Attributes;
+
+namespace SpellWork.DBC.Structures
 {
     public sealed class SpellMissileEntry
     {
-        public uint Flags;
+        [Index(true)]
+        public uint ID;
+        public int SpellID;
+        public byte Flags;
         public float DefaultPitchMin;
         public float DefaultPitchMax;
         public float DefaultSpeedMin;
@@ -16,6 +21,5 @@
         public float Gravity;
         public float MaxDuration;
         public float CollisionRadius;
-        public byte UnkLegion;
     }
 }

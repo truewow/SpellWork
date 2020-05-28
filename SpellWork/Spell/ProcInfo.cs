@@ -1,9 +1,9 @@
-﻿using System.Drawing;
+﻿using SpellWork.DBC.Structures;
+using SpellWork.Extensions;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using SpellWork.DBC.Structures;
-using SpellWork.Extensions;
 
 namespace SpellWork.Spell
 {
@@ -19,7 +19,7 @@ namespace SpellWork.Spell
             var spells = from spell in DBC.DBC.SpellInfoStore.Values
                          where spell.SpellFamilyName == (uint)spellfamily
 
-                         join sk in DBC.DBC.SkillLineAbility.Values on spell.ID equals sk.SpellID into temp1
+                         join sk in DBC.DBC.SkillLineAbility.Values on spell.ID equals sk.Spell into temp1
                          from skill in temp1.DefaultIfEmpty(new SkillLineAbilityEntry())
 
                          join skl in DBC.DBC.SkillLine on skill.SkillLine equals skl.Key into temp2
@@ -45,7 +45,7 @@ namespace SpellWork.Spell
                 else
                     mask[3] = 1U << (i - 96);
 
-                var node   = new TreeNode
+                var node = new TreeNode
                 {
                     Text = $"0x{mask[3]:X8} {mask[2]:X8} {mask[1]:X8} {mask[0]:X8}",
                     ImageKey = @"family.ico"
@@ -58,7 +58,7 @@ namespace SpellWork.Spell
                 var spell = elem.spell;
                 var isSkill = elem.SkillLine != 0;
 
-                var name    = new StringBuilder();
+                var name = new StringBuilder();
                 var toolTip = new StringBuilder();
 
                 name.AppendFormat("{0} - {1} ", spell.ID, spell.Name);
@@ -91,7 +91,7 @@ namespace SpellWork.Spell
                     else
                         mask[3] = 1U << (node.Index - 96);
 
-                    if ((!spell.SpellFamilyFlags.ContainsElement(mask)))
+                    if (!spell.SpellClassMask.ContainsElement(mask))
                         continue;
 
                     var child       = node.Nodes.Add(name.ToString());

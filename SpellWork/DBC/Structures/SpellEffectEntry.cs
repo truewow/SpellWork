@@ -1,65 +1,42 @@
-﻿using System.Runtime.InteropServices;
+﻿using DBFileReaderLib.Attributes;
 
 namespace SpellWork.DBC.Structures
 {
-    [StructLayout(LayoutKind.Sequential)]
-    public class SpellEffectEntry
+    public sealed class SpellEffectEntry
     {
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public uint[] EffectSpellClassMask;
+        [Index(true)]
         public uint ID;
-        public int SpellID;
+        public short EffectAura;
+        public int DifficultyID;
+        public int EffectIndex;
         public uint Effect;
-        public uint EffectAura;
-        public int EffectBasePoints;
-        public uint EffectIndex;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public int[] EffectMiscValues;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public uint[] EffectRadiusIndex;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        public uint[] ImplicitTarget;
-        public uint DifficultyID;
         public float EffectAmplitude;
-        public uint EffectAuraPeriod;
+        public int EffectAttributes;
+        public int EffectAuraPeriod;
         public float EffectBonusCoefficient;
         public float EffectChainAmplitude;
-        public uint EffectChainTargets;
-        public int EffectDieSides;
-        public uint EffectItemType;
-        public uint EffectMechanic;
+        public int EffectChainTargets;
+        public int EffectItemType;
+        public int EffectMechanic;
         public float EffectPointsPerResource;
-        public float EffectRealPointsPerLevel;
-        public uint EffectTriggerSpell;
         public float EffectPosFacing;
-        public uint EffectAttributes;
+        public float EffectRealPointsPerLevel;
+        public int EffectTriggerSpell;
         public float BonusCoefficientFromAP;
-        public float PvPMultiplier;
-
-        public SpellEffectScalingEntry SpellEffectScalingEntry { get; set; }
-
-        public string MaxRadius
-        {
-            get
-            {
-                if (EffectRadiusIndex[1] == 0 || !DBC.SpellRadius.ContainsKey((int)EffectRadiusIndex[1]))
-                    return string.Empty;
-
-                return $"Max Radius (Id {EffectRadiusIndex[1]}) {DBC.SpellRadius[(int)EffectRadiusIndex[1]].Radius:F}" +
-                       $" (Min: {DBC.SpellRadius[(int)EffectRadiusIndex[1]].RadiusMin:F} Max: {DBC.SpellRadius[(int)EffectRadiusIndex[1]].MaxRadius:F})";
-            }
-        }
-
-        public string Radius
-        {
-            get
-            {
-                if (EffectRadiusIndex[0] == 0 || !DBC.SpellRadius.ContainsKey((int)EffectRadiusIndex[0]))
-                    return string.Empty;
-
-                return $"Radius (Id {EffectRadiusIndex[0]}) {DBC.SpellRadius[(int)EffectRadiusIndex[0]].Radius:F}" +
-                       $" (Min: {DBC.SpellRadius[(int)EffectRadiusIndex[0]].RadiusMin:F} Max: {DBC.SpellRadius[(int)EffectRadiusIndex[0]].MaxRadius:F})";
-            }
-        }
+        public float PvpMultiplier;
+        public float Coefficient;
+        public float Variance;
+        public float ResourceCoefficient;
+        public float GroupSizeBasePointsCoefficient;
+        public float EffectBasePoints;
+        [Cardinality(2)]
+        public int[] EffectMiscValue = new int[2];
+        [Cardinality(2)]
+        public uint[] EffectRadiusIndex = new uint[2];
+        [Cardinality(4)]
+        public int[] EffectSpellClassMask = new int[4];
+        [Cardinality(2)]
+        public short[] ImplicitTarget = new short[2];
+        public int SpellID;
     }
 }

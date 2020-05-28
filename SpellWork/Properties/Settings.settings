@@ -23,8 +23,14 @@
     <Setting Name="DbcPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">dbc</Value>
     </Setting>
+    <Setting Name="HotfixCachePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DBCache.bin</Value>
+    </Setting>
     <Setting Name="GtPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">gt</Value>
+    </Setting>
+    <Setting Name="Locale" Type="System.String" Scope="User">
+      <Value Profile="(Default)">enUS</Value>
     </Setting>
   </Settings>
 </SettingsFile>

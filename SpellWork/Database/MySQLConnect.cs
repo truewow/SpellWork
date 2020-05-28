@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using SpellWork.Extensions;
 using SpellWork.Properties;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace SpellWork.Database
 {
@@ -76,7 +76,7 @@ namespace SpellWork.Database
 
         public static void Insert(string query)
         {
-            _conn    = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString);
+            _conn = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString);
             _command = new MySqlCommand(query, _conn);
             _conn.Open();
             _command.ExecuteNonQuery();

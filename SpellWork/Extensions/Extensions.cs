@@ -40,7 +40,7 @@ namespace SpellWork.Extensions
 
             uint num;
             if (valStr.StartsWith("0x"))
-                uint.TryParse(valStr.Substring(2),NumberStyles.HexNumber, CultureInfo.InvariantCulture, out num);
+                uint.TryParse(valStr.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out num);
             else
                 uint.TryParse(valStr, out num);
             return num;
@@ -239,17 +239,15 @@ namespace SpellWork.Extensions
             return array.Any(i => i.Equals(value));
         }
 
-        public static T GetValue<T>(this Dictionary<uint, T> dictionary, uint key)
+        public static TValue GetValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) where TValue : class
         {
-            T value;
-            dictionary.TryGetValue(key, out value);
-            return value;
+            return dictionary.TryGetValue(key, out TValue value) ? value : null;
         }
 
         public static string GetFullName(this Enum @enum)
         {
             var field = @enum.GetType().GetField(@enum.ToString());
-            var attrs = (FullNameAttribute[]) field?.GetCustomAttributes(typeof(FullNameAttribute), false);
+            var attrs = (FullNameAttribute[])field?.GetCustomAttributes(typeof(FullNameAttribute), false);
 
             return attrs?.Length > 0 ? attrs[0].FullName : @enum.ToString();
         }

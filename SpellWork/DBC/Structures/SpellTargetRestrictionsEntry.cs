@@ -1,14 +1,18 @@
-﻿namespace SpellWork.DBC.Structures
+﻿using DBFileReaderLib.Attributes;
+
+namespace SpellWork.DBC.Structures
 {
     public sealed class SpellTargetRestrictionsEntry
     {
-        public int SpellID;
-        public float ConeAngle;
-        public float Width;
-        public uint Targets;
-        public ushort TargetCreatureType;
+        [Index(true)]
+        public uint ID;
         public byte DifficultyID;
-        public byte MaxAffectedTargets;
+        public float ConeDegrees;
+        public byte MaxTargets;
         public uint MaxTargetLevel;
+        public short TargetCreatureType;
+        public int Targets;
+        public float Width;
+        public int SpellID;
     }
 }

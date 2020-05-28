@@ -1,5 +1,7 @@
 ﻿using System;
 
+#pragma warning disable CA1712 // Do not prefix enum values with type name
+
 namespace SpellWork.Spell
 {
     // ReSharper disable InconsistentNaming
@@ -8,27 +10,44 @@ namespace SpellWork.Spell
     /// </summary>
     public enum Difficulty
     {
-        DIFFICULTY_NONE = 0,
-        DIFFICULTY_NORMAL = 1,
-        DIFFICULTY_HEROIC = 2,
-        DIFFICULTY_10_N = 3,
-        DIFFICULTY_25_N = 4,
-        DIFFICULTY_10_HC = 5,
-        DIFFICULTY_25_HC = 6,
-        DIFFICULTY_LFR = 7,
-        DIFFICULTY_CHALLENGE = 8,
-        DIFFICULTY_40 = 9,
-        DIFFICULTY_HC_SCENARIO = 11,
-        DIFFICULTY_N_SCENARIO = 12,
-        DIFFICULTY_NORMAL_RAID = 14,
-        DIFFICULTY_HEROIC_RAID = 15,
-        DIFFICULTY_MYTHIC_RAID = 16,
-        DIFFICULTY_LFR_NEW = 17,
-        DIFFICULTY_EVENT_RAID = 18,
-        DIFFICULTY_EVENT_DUNGEON = 19,
-        DIFFICULTY_EVENT_SCENARIO = 20,
-        DIFFICULTY_MYTHIC_DUNGEON = 23,
-        DIFFICULTY_TIMEWALKER_DUNGEON = 24,
+        DIFFICULTY_NONE                 = 0,
+        DIFFICULTY_NORMAL               = 1,
+        DIFFICULTY_HEROIC               = 2,
+        DIFFICULTY_10_N                 = 3,
+        DIFFICULTY_25_N                 = 4,
+        DIFFICULTY_10_HC                = 5,
+        DIFFICULTY_25_HC                = 6,
+        DIFFICULTY_LFR                  = 7,
+        DIFFICULTY_MYTHIC_KEYSTONE      = 8,
+        DIFFICULTY_40                   = 9,
+        DIFFICULTY_3_MAN_SCENARIO_HC    = 11,
+        DIFFICULTY_3_MAN_SCENARIO_N     = 12,
+        DIFFICULTY_NORMAL_RAID          = 14,
+        DIFFICULTY_HEROIC_RAID          = 15,
+        DIFFICULTY_MYTHIC_RAID          = 16,
+        DIFFICULTY_LFR_NEW              = 17,
+        DIFFICULTY_EVENT_RAID           = 18,
+        DIFFICULTY_EVENT_DUNGEON        = 19,
+        DIFFICULTY_EVENT_SCENARIO       = 20,
+        DIFFICULTY_MYTHIC               = 23,
+        DIFFICULTY_TIMEWALKING          = 24,
+        DIFFICULTY_WORLD_PVP_SCENARIO   = 25,
+        DIFFICULTY_5_MAN_SCENARIO_N     = 26,
+        DIFFICULTY_20_MAN_SCENARIO_N    = 27,
+        DIFFICULTY_PVEVP_SCENARIO       = 29,
+        DIFFICULTY_EVENT_SCENARIO_6     = 30,
+        DIFFICULTY_WORLD_PVP_SCENARIO_2 = 32,
+        DIFFICULTY_TIMEWALKING_RAID     = 33,
+        DIFFICULTY_PVP                  = 34,
+        DIFFICULTY_NORMAL_ISLAND        = 38,
+        DIFFICULTY_HEROIC_ISLAND        = 39,
+        DIFFICULTY_MYTHIC_ISLAND        = 40,
+        DIFFICULTY_PVP_ISLAND           = 45,
+        DIFFICULTY_NORMAL_WARFRONT      = 147,
+        DIFFICULTY_HEROIC_WARFRONT      = 149,
+        DIFFICULTY_LFR_15TH_ANNIVERSARY = 151,
+        DIFFICULTY_VISIONS_OF_NZOTH     = 152,
+        DIFFICULTY_TEEMING_ISLAND       = 153
     };
 
     /// <summary>
@@ -65,37 +84,6 @@ namespace SpellWork.Spell
         SPELLFAMILY_UNK91 = 91,     // only Gara'jal the Spiritbinder spells
         SPELLFAMILY_UNK100 = 100,   // smoke bomb
         SPELLFAMILY_DEMON_HUNTER = 107,
-    };
-
-    /// <summary>
-    ///
-    /// </summary>
-    public enum SpellSpecific
-    {
-        SPELL_SPECIFIC_NORMAL                   = 0,
-        SPELL_SPECIFIC_SEAL                     = 1,
-        SPELL_SPECIFIC_AURA                     = 3,
-        SPELL_SPECIFIC_STING                    = 4,
-        SPELL_SPECIFIC_CURSE                    = 5,
-        SPELL_SPECIFIC_ASPECT                   = 6,
-        SPELL_SPECIFIC_TRACKER                  = 7,
-        SPELL_SPECIFIC_WARLOCK_ARMOR            = 8,
-        SPELL_SPECIFIC_MAGE_ARMOR               = 9,
-        SPELL_SPECIFIC_ELEMENTAL_SHIELD         = 10,
-        SPELL_SPECIFIC_MAGE_POLYMORPH           = 11,
-        SPELL_SPECIFIC_JUDGEMENT                = 13,
-        SPELL_SPECIFIC_WARLOCK_CORRUPTION       = 17,
-        SPELL_SPECIFIC_FOOD                     = 19,
-        SPELL_SPECIFIC_DRINK                    = 20,
-        SPELL_SPECIFIC_FOOD_AND_DRINK           = 21,
-        SPELL_SPECIFIC_PRESENCE                 = 22,
-        SPELL_SPECIFIC_CHARM                    = 23,
-        SPELL_SPECIFIC_SCROLL                   = 24,
-        SPELL_SPECIFIC_MAGE_ARCANE_BRILLANCE    = 25,
-        SPELL_SPECIFIC_WARRIOR_ENRAGE           = 26,
-        SPELL_SPECIFIC_PRIEST_DIVINE_SPIRIT     = 27,
-        SPELL_SPECIFIC_HAND                     = 28,
-        SPELL_SPECIFIC_PHASE                    = 29,
     };
 
     /// <summary>
@@ -168,7 +156,7 @@ namespace SpellWork.Spell
         SPELL_EFFECT_THREAT                             = 63,
         SPELL_EFFECT_TRIGGER_SPELL                      = 64,
         SPELL_EFFECT_APPLY_AREA_AURA_RAID               = 65,
-        SPELL_EFFECT_CREATE_MANA_GEM                    = 66,
+        SPELL_EFFECT_RECHARGE_ITEM                      = 66,
         SPELL_EFFECT_HEAL_MAX_HEALTH                    = 67,
         SPELL_EFFECT_INTERRUPT_CAST                     = 68,
         SPELL_EFFECT_DISTRACT                           = 69,
@@ -259,7 +247,7 @@ namespace SpellWork.Spell
         SPELL_EFFECT_DISCOVER_TAXI                      = 154,
         SPELL_EFFECT_TITAN_GRIP                         = 155,
         SPELL_EFFECT_ENCHANT_ITEM_PRISMATIC             = 156,
-        SPELL_EFFECT_CREATE_ITEM_2                      = 157,
+        SPELL_EFFECT_CREATE_LOOT                        = 157, // crafting loot
         SPELL_EFFECT_MILLING                            = 158,
         SPELL_EFFECT_ALLOW_RENAME_PET                   = 159,
         SPELL_EFFECT_FORCE_CAST_2                       = 160,
@@ -300,11 +288,11 @@ namespace SpellWork.Spell
         SPELL_EFFECT_195                                = 195,
         SPELL_EFFECT_196                                = 196,
         SPELL_EFFECT_197                                = 197,
-        SPELL_EFFECT_PLAY_SCENE                         = 198, // NYI
+        SPELL_EFFECT_PLAY_SCENE                         = 198,
         SPELL_EFFECT_199                                = 199,
         SPELL_EFFECT_HEAL_BATTLEPET_PCT                 = 200, // NYI
         SPELL_EFFECT_ENABLE_BATTLE_PETS                 = 201, // NYI
-        SPELL_EFFECT_202                                = 202,
+        SPELL_EFFECT_202                                = 202, // some sort of apply aura effect
         SPELL_EFFECT_203                                = 203,
         SPELL_EFFECT_CHANGE_BATTLEPET_QUALITY           = 204,
         SPELL_EFFECT_LAUNCH_QUEST_CHOICE                = 205,
@@ -321,7 +309,7 @@ namespace SpellWork.Spell
         SPELL_EFFECT_CREATE_SHIPMENT                    = 216,
         SPELL_EFFECT_UPGRADE_GARRISON                   = 217,
         SPELL_EFFECT_218                                = 218,
-        SPELL_EFFECT_219                                = 219,
+        SPELL_EFFECT_CREATE_CONVERSATION                = 219,
         SPELL_EFFECT_ADD_GARRISON_FOLLOWER              = 220,
         SPELL_EFFECT_221                                = 221,
         SPELL_EFFECT_CREATE_HEIRLOOM_ITEM               = 222,
@@ -358,7 +346,23 @@ namespace SpellWork.Spell
         SPELL_EFFECT_GIVE_HONOR                         = 253,
         SPELL_EFFECT_254                                = 254,
         SPELL_EFFECT_LEARN_TRANSMOG_SET                 = 255,
-        TOTAL_SPELL_EFFECTS                             = 256,
+        SPELL_EFFECT_256                                = 256,
+        SPELL_EFFECT_257                                = 257,
+        SPELL_EFFECT_MODIFY_KEYSTONE                    = 258,
+        SPELL_EFFECT_RESPEC_AZERITE_EMPOWERED_ITEM      = 259,
+        SPELL_EFFECT_SUMMON_STABLED_PET                 = 260,
+        SPELL_EFFECT_SCRAP_ITEM                         = 261,
+        SPELL_EFFECT_262                                = 262,
+        SPELL_EFFECT_REPAIR_ITEM                        = 263,
+        SPELL_EFFECT_REMOVE_GEM                         = 264,
+        SPELL_EFFECT_LEARN_AZERITE_ESSENCE_POWER        = 265,
+        SPELL_EFFECT_266                                = 266,
+        SPELL_EFFECT_267                                = 267,
+        SPELL_EFFECT_APPLY_MOUNT_EQUIPMENT              = 268,
+        SPELL_EFFECT_UPGRADE_ITEM                       = 269,
+        SPELL_EFFECT_270                                = 270,
+        SPELL_EFFECT_APPLY_AREA_AURA_PARTY_NONRANDOM    = 271,
+        TOTAL_SPELL_EFFECTS
     };
 
     /// <summary>
@@ -429,7 +433,7 @@ namespace SpellWork.Spell
         SPELL_AURA_MOD_PACIFY_SILENCE                           = 60,
         SPELL_AURA_MOD_SCALE                                    = 61,
         SPELL_AURA_PERIODIC_HEALTH_FUNNEL                       = 62,
-        SPELL_AURA_63                                           = 63,   // old SPELL_AURA_PERIODIC_MANA_FUNNEL
+        SPELL_AURA_MOD_ADDITIONAL_POWER_COST                    = 63,
         SPELL_AURA_PERIODIC_MANA_LEECH                          = 64,
         SPELL_AURA_MOD_CASTING_SPEED_NOT_STACK                  = 65,
         SPELL_AURA_FEIGN_DEATH                                  = 66,
@@ -437,7 +441,7 @@ namespace SpellWork.Spell
         SPELL_AURA_MOD_STALKED                                  = 68,
         SPELL_AURA_SCHOOL_ABSORB                                = 69,
         SPELL_AURA_EXTRA_ATTACKS                                = 70,
-        SPELL_AURA_MOD_SPELL_CRIT_CHANCE_SCHOOL                 = 71,
+        SPELL_AURA_71                                           = 71,
         SPELL_AURA_MOD_POWER_COST_SCHOOL_PCT                    = 72,
         SPELL_AURA_MOD_POWER_COST_SCHOOL                        = 73,
         SPELL_AURA_REFLECT_SPELLS_SCHOOL                        = 74,
@@ -477,7 +481,7 @@ namespace SpellWork.Spell
         SPELL_AURA_ADD_PCT_MODIFIER                             = 108,
         SPELL_AURA_ADD_TARGET_TRIGGER                           = 109,
         SPELL_AURA_MOD_POWER_REGEN_PERCENT                      = 110,
-        SPELL_AURA_ADD_CASTER_HIT_TRIGGER                       = 111,
+        SPELL_AURA_INTERCEPT_MELEE_RANGED_ATTACKS               = 111,
         SPELL_AURA_OVERRIDE_CLASS_SCRIPTS                       = 112,
         SPELL_AURA_MOD_RANGED_DAMAGE_TAKEN                      = 113,
         SPELL_AURA_MOD_RANGED_DAMAGE_TAKEN_PCT                  = 114,
@@ -485,7 +489,7 @@ namespace SpellWork.Spell
         SPELL_AURA_MOD_REGEN_DURING_COMBAT                      = 116,
         SPELL_AURA_MOD_MECHANIC_RESISTANCE                      = 117,
         SPELL_AURA_MOD_HEALING_PCT                              = 118,
-        SPELL_AURA_119                                          = 119,  // old SPELL_AURA_SHARE_PET_TRACKING
+        SPELL_AURA_PVP_TALENTS                                  = 119,
         SPELL_AURA_UNTRACKABLE                                  = 120,
         SPELL_AURA_EMPATHY                                      = 121,
         SPELL_AURA_MOD_OFFHAND_DAMAGE_PCT                       = 122,
@@ -509,7 +513,7 @@ namespace SpellWork.Spell
         SPELL_AURA_MOD_RANGED_HASTE                             = 140,
         SPELL_AURA_141                                          = 141,  // old SPELL_AURA_MOD_RANGED_AMMO_HASTE, unused now
         SPELL_AURA_MOD_BASE_RESISTANCE_PCT                      = 142,
-        SPELL_AURA_MOD_RESISTANCE_EXCLUSIVE                     = 143,
+        SPELL_AURA_MOD_RECOVERY_RATE                            = 143,  // NYI
         SPELL_AURA_SAFE_FALL                                    = 144,
         SPELL_AURA_MOD_PET_TALENT_POINTS                        = 145,
         SPELL_AURA_ALLOW_TAME_PET_TYPE                          = 146,
@@ -524,7 +528,7 @@ namespace SpellWork.Spell
         SPELL_AURA_MOD_WATER_BREATHING                          = 155,  //    Mod Water Breathing
         SPELL_AURA_MOD_REPUTATION_GAIN                          = 156,  //    Mod Reputation Gain
         SPELL_AURA_PET_DAMAGE_MULTI                             = 157,  //    Mod Pet Damage
-        SPELL_AURA_MOD_SHIELD_BLOCKVALUE                        = 158,
+        SPELL_AURA_ALLOW_TALENT_SWAPPING                        = 158,
         SPELL_AURA_NO_PVP_CREDIT                                = 159,
         SPELL_AURA_160                                          = 160,  // old SPELL_AURA_MOD_AOE_AVOIDANCE. Unused 4.3.4
         SPELL_AURA_MOD_HEALTH_REGEN_IN_COMBAT                   = 161,
@@ -539,12 +543,12 @@ namespace SpellWork.Spell
         SPELL_AURA_DETECT_AMORE                                 = 170,
         SPELL_AURA_MOD_SPEED_NOT_STACK                          = 171,
         SPELL_AURA_MOD_MOUNTED_SPEED_NOT_STACK                  = 172,
-        SPELL_AURA_173                                          = 173,  // old SPELL_AURA_ALLOW_CHAMPION_SPELLS
+        SPELL_AURA_MOD_RECOVERY_RATE_2                          = 173,  // NYI
         SPELL_AURA_MOD_SPELL_DAMAGE_OF_STAT_PERCENT             = 174,  // by defeult intelect, dependent from SPELL_AURA_MOD_SPELL_HEALING_OF_STAT_PERCENT
         SPELL_AURA_MOD_SPELL_HEALING_OF_STAT_PERCENT            = 175,
         SPELL_AURA_SPIRIT_OF_REDEMPTION                         = 176,
         SPELL_AURA_AOE_CHARM                                    = 177,
-        SPELL_AURA_178                                          = 178,  // old SPELL_AURA_MOD_DEBUFF_RESISTANCE, unused
+        SPELL_AURA_MOD_MAX_POWER_PCT                            = 178,
         SPELL_AURA_MOD_POWER_DISPLAY                            = 179,
         SPELL_AURA_MOD_FLAT_SPELL_DAMAGE_VERSUS                 = 180,
         SPELL_AURA_181                                          = 181,  // old SPELL_AURA_MOD_FLAT_SPELL_CRIT_DAMAGE_VERSUS - possible flat spell crit damage versus
@@ -569,29 +573,29 @@ namespace SpellWork.Spell
         SPELL_AURA_MOD_XP_PCT                                   = 200,
         SPELL_AURA_FLY                                          = 201,
         SPELL_AURA_IGNORE_COMBAT_RESULT                         = 202,
-        SPELL_AURA_MOD_ATTACKER_MELEE_CRIT_DAMAGE               = 203,
-        SPELL_AURA_MOD_ATTACKER_RANGED_CRIT_DAMAGE              = 204,
-        SPELL_AURA_MOD_SCHOOL_CRIT_DMG_TAKEN                    = 205,
+        SPELL_AURA_PREVENT_INTERRUPT                            = 203, // NYI
+        SPELL_AURA_PREVENT_CORPSE_RELEASE                       = 204, // NYI
+        SPELL_AURA_MOD_CHARGE_COOLDOWN                          = 205, // NYI
         SPELL_AURA_MOD_INCREASE_VEHICLE_FLIGHT_SPEED            = 206,
         SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED            = 207,
         SPELL_AURA_MOD_INCREASE_FLIGHT_SPEED                    = 208,
         SPELL_AURA_MOD_MOUNTED_FLIGHT_SPEED_ALWAYS              = 209,
         SPELL_AURA_MOD_VEHICLE_SPEED_ALWAYS                     = 210,
         SPELL_AURA_MOD_FLIGHT_SPEED_NOT_STACK                   = 211,
-        SPELL_AURA_212                                          = 212,  // old SPELL_AURA_MOD_RANGED_ATTACK_POWER_OF_STAT_PERCENT. unused 4.3.4
+        SPELL_AURA_MOD_HONOR_GAIN_PCT                           = 212,
         SPELL_AURA_MOD_RAGE_FROM_DAMAGE_DEALT                   = 213,
         SPELL_AURA_214                                          = 214,
         SPELL_AURA_ARENA_PREPARATION                            = 215,
         SPELL_AURA_HASTE_SPELLS                                 = 216,
         SPELL_AURA_MOD_MELEE_HASTE_2                            = 217,
-        SPELL_AURA_HASTE_RANGED                                 = 218,
+        SPELL_AURA_218                                          = 218,  // old SPELL_AURA_HASTE_RANGED
         SPELL_AURA_MOD_MANA_REGEN_FROM_STAT                     = 219,
         SPELL_AURA_MOD_RATING_FROM_STAT                         = 220,
         SPELL_AURA_MOD_DETAUNT                                  = 221,
         SPELL_AURA_222                                          = 222,
-        SPELL_AURA_RAID_PROC_FROM_CHARGE                        = 223,
+        SPELL_AURA_223                                          = 223,  // old SPELL_AURA_RAID_PROC_FROM_CHARGE
         SPELL_AURA_224                                          = 224,
-        SPELL_AURA_RAID_PROC_FROM_CHARGE_WITH_VALUE             = 225,
+        SPELL_AURA_MOD_VISIBILITY_RANGE                         = 225,
         SPELL_AURA_PERIODIC_DUMMY                               = 226,
         SPELL_AURA_PERIODIC_TRIGGER_SPELL_WITH_VALUE            = 227,
         SPELL_AURA_DETECT_STEALTH                               = 228,
@@ -615,7 +619,7 @@ namespace SpellWork.Spell
         SPELL_AURA_MOD_AURA_DURATION_BY_DISPEL_NOT_STACK        = 246,
         SPELL_AURA_CLONE_CASTER                                 = 247,
         SPELL_AURA_MOD_COMBAT_RESULT_CHANCE                     = 248,
-        SPELL_AURA_CONVERT_RUNE                                 = 249,
+        SPELL_AURA_MOD_DAMAGE_PERCENT_DONE_BY_TARGET_AURA_MECHANIC = 249, // NYI
         SPELL_AURA_MOD_INCREASE_HEALTH_2                        = 250,
         SPELL_AURA_MOD_ENEMY_DODGE                              = 251,
         SPELL_AURA_MOD_SPEED_SLOW_ALL                           = 252,
@@ -624,7 +628,7 @@ namespace SpellWork.Spell
         SPELL_AURA_MOD_MECHANIC_DAMAGE_TAKEN_PERCENT            = 255,
         SPELL_AURA_NO_REAGENT_USE                               = 256,
         SPELL_AURA_MOD_TARGET_RESIST_BY_SPELL_CLASS             = 257,
-        SPELL_AURA_258                                          = 258,
+        SPELL_AURA_OVERRIDE_SUMMONED_OBJECT                     = 258,
         SPELL_AURA_259                                          = 259,  // old SPELL_AURA_MOD_HOT_PCT, unused 4.3.4
         SPELL_AURA_SCREEN_EFFECT                                = 260,
         SPELL_AURA_PHASE                                        = 261,
@@ -636,7 +640,7 @@ namespace SpellWork.Spell
         SPELL_AURA_MOD_IMMUNE_AURA_APPLY_SCHOOL                 = 267,
         SPELL_AURA_268                                          = 268,  // old SPELL_AURA_MOD_ATTACK_POWER_OF_STAT_PERCENT. unused 4.3.4
         SPELL_AURA_MOD_IGNORE_TARGET_RESIST                     = 269,
-        SPELL_AURA_270                                          = 270,  // old SPELL_AURA_MOD_ABILITY_IGNORE_TARGET_RESIST, unused 4.3.4
+        SPELL_AURA_MOD_SCHOOL_MASK_DAMAGE_FROM_CASTER           = 270,  // NYI
         SPELL_AURA_MOD_SPELL_DAMAGE_FROM_CASTER                 = 271,
         SPELL_AURA_IGNORE_MELEE_RESET                           = 272,
         SPELL_AURA_X_RAY                                        = 273,
@@ -647,11 +651,11 @@ namespace SpellWork.Spell
         SPELL_AURA_MOD_DISARM_RANGED                            = 278,
         SPELL_AURA_INITIALIZE_IMAGES                            = 279,
         SPELL_AURA_280                                          = 280,  // old SPELL_AURA_MOD_ARMOR_PENETRATION_PCT unused 4.3.4
-        SPELL_AURA_MOD_HONOR_GAIN_PCT                           = 281,
+        SPELL_AURA_MOD_GUILD_REPUTATION_GAIN_PCT                = 281,  // NYI
         SPELL_AURA_MOD_BASE_HEALTH_PCT                          = 282,
         SPELL_AURA_MOD_HEALING_RECEIVED                         = 283,  // Possibly only for some spell family class spells
         SPELL_AURA_LINKED                                       = 284,
-        SPELL_AURA_MOD_ATTACK_POWER_OF_ARMOR                    = 285,
+        SPELL_AURA_LINKED_2                                     = 285,
         SPELL_AURA_ABILITY_PERIODIC_CRIT                        = 286,
         SPELL_AURA_DEFLECT_SPELLS                               = 287,
         SPELL_AURA_IGNORE_HIT_DIRECTION                         = 288,
@@ -691,18 +695,18 @@ namespace SpellWork.Spell
         SPELL_AURA_INTERFERE_TARGETTING                         = 322,
         SPELL_AURA_323                                          = 323,  // Not used in 4.3.4
         SPELL_AURA_324                                          = 324,  // spell critical chance (probably by school mask)
-        SPELL_AURA_325                                          = 325,  // Not used in 4.3.4
+        SPELL_AURA_LEARN_PVP_TALENT                             = 325,  // NYI
         SPELL_AURA_PHASE_GROUP                                  = 326,  // Puts the player in all the phases that are in the group with id = miscB
         SPELL_AURA_327                                          = 327,  // Not used in 4.3.4
-        SPELL_AURA_PROC_ON_POWER_AMOUNT                         = 328,
-        SPELL_AURA_MOD_RUNE_REGEN_SPEED                         = 329,  // NYI
+        SPELL_AURA_TRIGGER_SPELL_ON_POWER_PCT                   = 328,  // NYI Triggers spell when power goes above (MiscB = 0) or falls below (MiscB = 1) specified percent value (once, not every time condition has meet)
+        SPELL_AURA_MOD_POWER_GAIN_PCT                           = 329,  // NYI
         SPELL_AURA_CAST_WHILE_WALKING                           = 330,
         SPELL_AURA_FORCE_WEATHER                                = 331,
         SPELL_AURA_OVERRIDE_ACTIONBAR_SPELLS                    = 332,
         SPELL_AURA_OVERRIDE_ACTIONBAR_SPELLS_TRIGGERED          = 333,  // Spells cast with this override have no cast time or power cost
         SPELL_AURA_MOD_BLIND                                    = 334,  // NYI
         SPELL_AURA_335                                          = 335,
-        SPELL_AURA_MOD_FLYING_RESTRICTIONS                      = 336,  // NYI
+        SPELL_AURA_MOUNT_RESTRICTIONS                           = 336,
         SPELL_AURA_MOD_VENDOR_ITEMS_PRICES                      = 337,
         SPELL_AURA_MOD_DURABILITY_LOSS                          = 338,
         SPELL_AURA_INCREASE_SKILL_GAIN_CHANCE                   = 339,  // NYI
@@ -714,20 +718,20 @@ namespace SpellWork.Spell
         SPELL_AURA_BYPASS_ARMOR_FOR_CASTER                      = 345,
         SPELL_AURA_ENABLE_ALT_POWER                             = 346,  // NYI
         SPELL_AURA_MOD_SPELL_COOLDOWN_BY_HASTE                  = 347,
-        SPELL_AURA_DEPOSIT_BONUS_MONEY_IN_GUILD_BANK_ON_LOOT    = 348,
+        SPELL_AURA_MOD_MONEY_GAIN                               = 348,  // Modifies gold gains from source: [Misc = 0, Quests][Misc = 1, Loot]
         SPELL_AURA_MOD_CURRENCY_GAIN                            = 349,
         SPELL_AURA_MOD_GATHERING_ITEMS_GAINED_PERCENT           = 350,  // NYI
         SPELL_AURA_351                                          = 351,
         SPELL_AURA_352                                          = 352,
         SPELL_AURA_MOD_CAMOUFLAGE                               = 353,  // NYI
         SPELL_AURA_354                                          = 354,  // Restoration Shaman mastery - mod healing based on target's health (less = more healing)
-        SPELL_AURA_355                                          = 355,
+        SPELL_AURA_MOD_CASTING_SPEED                            = 355,  // NYI
         SPELL_AURA_356                                          = 356,  // Arcane Mage mastery - mod damage based on current mana
         SPELL_AURA_ENABLE_BOSS1_UNIT_FRAME                      = 357,
         SPELL_AURA_WORGEN_ALTERED_FORM                          = 358,
         SPELL_AURA_359                                          = 359,
         SPELL_AURA_PROC_TRIGGER_SPELL_COPY                      = 360,  // Procs the same spell that caused this proc (Dragonwrath, Tarecgosa's Rest)
-        SPELL_AURA_OVERRIDE_AUTOATTACK_WITH_MELEE_SPELL         = 361,  // NYI
+        SPELL_AURA_OVERRIDE_AUTOATTACK_WITH_MELEE_SPELL         = 361,
         SPELL_AURA_362                                          = 362,  // Not used in 4.3.4
         SPELL_AURA_MOD_NEXT_SPELL                               = 363,  // Used by 101601 Throw Totem - causes the client to initialize spell cast with specified spell
         SPELL_AURA_364                                          = 364,  // Not used in 4.3.4
@@ -739,13 +743,13 @@ namespace SpellWork.Spell
         SPELL_AURA_SET_FAIR_FAR_CLIP                            = 370,  // Overrides client's View Distance setting to max("Fair", current_setting)
         SPELL_AURA_371                                          = 371,
         SPELL_AURA_372                                          = 372,
-        SPELL_AURA_373                                          = 373,
+        SPELL_AURA_MOD_SPEED_NO_CONTROL                         = 373,  // NYI
         SPELL_AURA_MODIFY_FALL_DAMAGE_PCT                       = 374,  // NYI
         SPELL_AURA_375                                          = 375,
         SPELL_AURA_MOD_CURRENCY_GAIN_FROM_SOURCE                = 376,  // NYI
         SPELL_AURA_CAST_WHILE_WALKING_2                         = 377,  // NYI
         SPELL_AURA_378                                          = 378,
-        SPELL_AURA_379                                          = 379,
+        SPELL_AURA_MOD_MANA_REGEN_PCT                           = 379,
         SPELL_AURA_MOD_GLOBAL_COOLDOWN_BY_HASTE                 = 380,  // Allows melee abilities to benefit from haste GCD reduction
         SPELL_AURA_381                                          = 381,
         SPELL_AURA_MOD_PET_STAT_PCT                             = 382,  // NYI
@@ -762,7 +766,7 @@ namespace SpellWork.Spell
         SPELL_AURA_393                                          = 393,
         SPELL_AURA_SHOW_CONFIRMATION_PROMPT                     = 394,
         SPELL_AURA_AREA_TRIGGER                                 = 395,  // NYI
-        SPELL_AURA_PROC_ON_POWER_AMOUNT_2                       = 396,  // missing MicValueB handling, probably OnAmountReach ascending/descending or spell/stack add/remove
+        SPELL_AURA_TRIGGER_SPELL_ON_POWER_AMOUNT                = 396,  // NYI Triggers spell when health goes above (MiscA = 0) or falls below (MiscA = 1) specified percent value (once, not every time condition has meet)
         SPELL_AURA_397                                          = 397,
         SPELL_AURA_398                                          = 398,
         SPELL_AURA_399                                          = 399,
@@ -772,7 +776,7 @@ namespace SpellWork.Spell
         SPELL_AURA_OVERRIDE_SPELL_VISUAL                        = 403,
         SPELL_AURA_OVERRIDE_ATTACK_POWER_BY_SP_PCT              = 404,
         SPELL_AURA_MOD_RATING_PCT                               = 405,  // NYI
-        SPELL_AURA_406                                          = 406,
+        SPELL_AURA_KEYBOUND_OVERRIDE                            = 406,  // NYI
         SPELL_AURA_MOD_FEAR_2                                   = 407,  // NYI
         SPELL_AURA_408                                          = 408,
         SPELL_AURA_CAN_TURN_WHILE_FALLING                       = 409,
@@ -794,10 +798,10 @@ namespace SpellWork.Spell
         SPELL_AURA_425                                          = 425,
         SPELL_AURA_426                                          = 426,
         SPELL_AURA_SCALE_PLAYER_LEVEL                           = 427,  // NYI
-        SPELL_AURA_428                                          = 428,
+        SPELL_AURA_LINKED_SUMMON                                = 428,
         SPELL_AURA_429                                          = 429,
         SPELL_AURA_PLAY_SCENE                                   = 430,
-        SPELL_AURA_431                                          = 431,
+        SPELL_AURA_MOD_OVERRIDE_ZONE_PVP_TYPE                   = 431,  // NYI
         SPELL_AURA_432                                          = 432,
         SPELL_AURA_433                                          = 433,
         SPELL_AURA_434                                          = 434,
@@ -834,10 +838,10 @@ namespace SpellWork.Spell
         SPELL_AURA_MOD_BONUS_ARMOR                              = 465,  // NYI
         SPELL_AURA_MOD_BONUS_ARMOR_PCT                          = 466,  // Affects bonus armor gain from all sources except base stats
         SPELL_AURA_MOD_STAT_BONUS_PCT                           = 467,  // Affects stat gain from all sources except base stats
-        SPELL_AURA_TRIGGER_SPELL_ON_HEALTH_BELOW_PCT            = 468,  // Triggers spell when health falls below specified percent value (once, not every time damage is taken below threshold)
+        SPELL_AURA_TRIGGER_SPELL_ON_HEALTH_PCT                  = 468,  // Triggers spell when health goes above (MiscA = 0) or falls below (MiscA = 1) specified percent value (once, not every time condition has meet)
         SPELL_AURA_SHOW_CONFIRMATION_PROMPT_WITH_DIFFICULTY     = 469,
         SPELL_AURA_470                                          = 470,
-        SPELL_AURA_MOD_VERSATILITY                              = 471,  // NYI
+        SPELL_AURA_MOD_VERSATILITY                              = 471,
         SPELL_AURA_472                                          = 472,
         SPELL_AURA_PREVENT_DURABILITY_LOSS_FROM_COMBAT          = 473,  // Prevents durability loss from dealing/taking damage
         SPELL_AURA_474                                          = 474,
@@ -851,13 +855,15 @@ namespace SpellWork.Spell
         SPELL_AURA_482                                          = 482,
         SPELL_AURA_SUPPRESS_TRANSFORMS                          = 483,  // NYI
         SPELL_AURA_484                                          = 484,
-        SPELL_AURA_485                                          = 485,
+        SPELL_AURA_MOD_MOVEMENT_FORCE_MAGNITUDE                 = 485,
         SPELL_AURA_486                                          = 486,
         SPELL_AURA_487                                          = 487,
         SPELL_AURA_488                                          = 488,
         SPELL_AURA_489                                          = 489,
         SPELL_AURA_490                                          = 490,
         SPELL_AURA_491                                          = 491,
+        SPELL_AURA_492                                          = 492,
+        SPELL_AURA_493                                          = 493, // 1 spell, 267116 - Animal Companion (modifies Call Pet)
         TOTAL_AURAS                                             = 492
     }
 
@@ -866,155 +872,156 @@ namespace SpellWork.Spell
     /// </summary>
     public enum Targets
     {
-        NO_TARGET                               = 0,
-        TARGET_UNIT_CASTER                      = 1,
-        TARGET_UNIT_NEARBY_ENEMY                = 2,
-        TARGET_UNIT_NEARBY_PARTY                = 3,
-        TARGET_UNIT_NEARBY_ALLY                 = 4,
-        TARGET_UNIT_PET                         = 5,
-        TARGET_UNIT_TARGET_ENEMY                = 6,
-        TARGET_UNIT_SRC_AREA_ENTRY              = 7,
-        TARGET_UNIT_DEST_AREA_ENTRY             = 8,
-        TARGET_DEST_HOME                        = 9,
-        TARGET_10                               = 10,
-        TARGET_UNIT_SRC_AREA_UNK_11             = 11, // teleport target to caster
-        TARGET_12                               = 12,
-        TARGET_13                               = 13,
-        TARGET_14                               = 14,
-        TARGET_UNIT_SRC_AREA_ENEMY              = 15,
-        TARGET_UNIT_DEST_AREA_ENEMY             = 16,
-        TARGET_DEST_DB                          = 17,
-        TARGET_DEST_CASTER                      = 18,
-        TARGET_19                               = 19,
-        TARGET_UNIT_CASTER_AREA_PARTY           = 20,
-        TARGET_UNIT_TARGET_ALLY                 = 21,
-        TARGET_SRC_CASTER                       = 22,
-        TARGET_GAMEOBJECT_TARGET                = 23,
-        TARGET_UNIT_CONE_ENEMY_24               = 24,
-        TARGET_UNIT_TARGET_ANY                  = 25,
-        TARGET_GAMEOBJECT_ITEM_TARGET           = 26,
-        TARGET_UNIT_MASTER                      = 27,
-        TARGET_DEST_DYNOBJ_ENEMY                = 28,
-        TARGET_DEST_DYNOBJ_ALLY                 = 29,
-        TARGET_UNIT_SRC_AREA_ALLY               = 30,
-        TARGET_UNIT_DEST_AREA_ALLY              = 31,
-        TARGET_DEST_CASTER_SUMMON               = 32, // front left, doesn't use radius
-        TARGET_UNIT_SRC_AREA_PARTY              = 33,
-        TARGET_UNIT_DEST_AREA_PARTY             = 34,
-        TARGET_UNIT_TARGET_PARTY                = 35,
-        TARGET_DEST_CASTER_UNK_36               = 36,
-        TARGET_UNIT_LASTTARGET_AREA_PARTY       = 37,
-        TARGET_UNIT_NEARBY_ENTRY                = 38,
-        TARGET_DEST_CASTER_FISHING              = 39,
-        TARGET_GAMEOBJECT_NEARBY_ENTRY          = 40,
-        TARGET_DEST_CASTER_FRONT_RIGHT          = 41,
-        TARGET_DEST_CASTER_BACK_RIGHT           = 42,
-        TARGET_DEST_CASTER_BACK_LEFT            = 43,
-        TARGET_DEST_CASTER_FRONT_LEFT           = 44,
-        TARGET_UNIT_TARGET_CHAINHEAL_ALLY       = 45,
-        TARGET_DEST_NEARBY_ENTRY                = 46,
-        TARGET_DEST_CASTER_FRONT                = 47,
-        TARGET_DEST_CASTER_BACK                 = 48,
-        TARGET_DEST_CASTER_RIGHT                = 49,
-        TARGET_DEST_CASTER_LEFT                 = 50,
-        TARGET_GAMEOBJECT_SRC_AREA              = 51,
-        TARGET_GAMEOBJECT_DEST_AREA             = 52,
-        TARGET_DEST_TARGET_ENEMY                = 53,
-        TARGET_UNIT_CONE_ENEMY_54               = 54,
-        TARGET_DEST_CASTER_FRONT_LEAP           = 55, // for a leap spell
-        TARGET_UNIT_CASTER_AREA_RAID            = 56,
-        TARGET_UNIT_TARGET_RAID                 = 57,
-        TARGET_UNIT_NEARBY_RAID                 = 58,
-        TARGET_UNIT_CONE_ALLY                   = 59,
-        TARGET_UNIT_CONE_ENTRY                  = 60,
-        TARGET_UNIT_TARGET_AREA_RAID_CLASS      = 61,
-        TARGET_UNK_62                           = 62,
-        TARGET_DEST_TARGET_ANY                  = 63,
-        TARGET_DEST_TARGET_FRONT                = 64,
-        TARGET_DEST_TARGET_BACK                 = 65,
-        TARGET_DEST_TARGET_RIGHT                = 66,
-        TARGET_DEST_TARGET_LEFT                 = 67,
-        TARGET_DEST_TARGET_FRONT_RIGHT          = 68,
-        TARGET_DEST_TARGET_BACK_RIGHT           = 69,
-        TARGET_DEST_TARGET_BACK_LEFT            = 70,
-        TARGET_DEST_TARGET_FRONT_LEFT           = 71,
-        TARGET_DEST_CASTER_RANDOM               = 72,
-        TARGET_DEST_CASTER_RADIUS               = 73,
-        TARGET_DEST_TARGET_RANDOM               = 74,
-        TARGET_DEST_TARGET_RADIUS               = 75,
-        TARGET_DEST_CHANNEL_TARGET              = 76,
-        TARGET_UNIT_CHANNEL_TARGET              = 77,
-        TARGET_DEST_DEST_FRONT                  = 78,
-        TARGET_DEST_DEST_BACK                   = 79,
-        TARGET_DEST_DEST_RIGHT                  = 80,
-        TARGET_DEST_DEST_LEFT                   = 81,
-        TARGET_DEST_DEST_FRONT_RIGHT            = 82,
-        TARGET_DEST_DEST_BACK_RIGHT             = 83,
-        TARGET_DEST_DEST_BACK_LEFT              = 84,
-        TARGET_DEST_DEST_FRONT_LEFT             = 85,
-        TARGET_DEST_DEST_RANDOM                 = 86,
-        TARGET_DEST_DEST                        = 87,
-        TARGET_DEST_DYNOBJ_NONE                 = 88,
-        TARGET_DEST_TRAJ                        = 89,
-        TARGET_UNIT_TARGET_MINIPET              = 90,
-        TARGET_DEST_DEST_RADIUS                 = 91,
-        TARGET_UNIT_SUMMONER                    = 92,
-        TARGET_CORPSE_SRC_AREA_ENEMY            = 93, // NYI
-        TARGET_UNIT_VEHICLE                     = 94,
-        TARGET_UNIT_TARGET_PASSENGER            = 95,
-        TARGET_UNIT_PASSENGER_0                 = 96,
-        TARGET_UNIT_PASSENGER_1                 = 97,
-        TARGET_UNIT_PASSENGER_2                 = 98,
-        TARGET_UNIT_PASSENGER_3                 = 99,
-        TARGET_UNIT_PASSENGER_4                 = 100,
-        TARGET_UNIT_PASSENGER_5                 = 101,
-        TARGET_UNIT_PASSENGER_6                 = 102,
-        TARGET_UNIT_PASSENGER_7                 = 103,
-        TARGET_UNIT_CONE_ENEMY_104              = 104,
-        TARGET_UNIT_UNK_105                     = 105, // 1 spell
-        TARGET_DEST_CHANNEL_CASTER              = 106,
-        TARGET_UNK_DEST_AREA_UNK_107            = 107, // not enough info - only generic spells avalible
-        TARGET_GAMEOBJECT_CONE                  = 108,
-        TARGET_109                              = 109,
-        TARGET_DEST_UNK_110                     = 110, // 1 spell
-        TARGET_UNK_111                          = 111,
-        TARGET_UNK_112                          = 112,
-        TARGET_UNK_113                          = 113,
-        TARGET_UNK_114                          = 114,
-        TARGET_UNK_115                          = 115,
-        TARGET_UNK_116                          = 116,
-        TARGET_UNK_117                          = 117,
-        TARGET_UNK_118                          = 118,
-        TARGET_UNK_119                          = 119,
-        TARGET_UNK_120                          = 120,
-        TARGET_UNK_121                          = 121,
-        TARGET_UNK_122                          = 122,
-        TARGET_UNK_123                          = 123,
-        TARGET_UNK_124                          = 124,
-        TARGET_UNK_125                          = 125,
-        TARGET_UNK_126                          = 126,
-        TARGET_UNK_127                          = 127,
-        TARGET_UNK_128                          = 128,
-        TARGET_UNK_129                          = 129,
-        TARGET_UNK_130                          = 130,
-        TARGET_UNK_131                          = 131,
-        TARGET_UNK_132                          = 132,
-        TARGET_UNK_133                          = 133,
-        TARGET_UNK_134                          = 134,
-        TARGET_UNK_135                          = 135,
-        TARGET_UNK_136                          = 136,
-        TARGET_UNK_137                          = 137,
-        TARGET_UNK_138                          = 138,
-        TARGET_UNK_139                          = 139,
-        TARGET_UNK_140                          = 140,
-        TARGET_UNK_141                          = 141,
-        TARGET_UNK_142                          = 142,
-        TARGET_UNK_143                          = 143,
-        TARGET_UNK_144                          = 144,
-        TARGET_UNK_145                          = 145,
-        TARGET_UNK_146                          = 146,
-        TARGET_UNK_147                          = 147,
-        TARGET_UNK_148                          = 148,
+        NO_TARGET                          = 0,
+        TARGET_UNIT_CASTER                 = 1,
+        TARGET_UNIT_NEARBY_ENEMY           = 2,
+        TARGET_UNIT_NEARBY_PARTY           = 3,
+        TARGET_UNIT_NEARBY_ALLY            = 4,
+        TARGET_UNIT_PET                    = 5,
+        TARGET_UNIT_TARGET_ENEMY           = 6,
+        TARGET_UNIT_SRC_AREA_ENTRY         = 7,
+        TARGET_UNIT_DEST_AREA_ENTRY        = 8,
+        TARGET_DEST_HOME                   = 9,
+        TARGET_UNK_10                      = 10,
+        TARGET_UNIT_SRC_AREA_UNK_11        = 11,
+        TARGET_UNK_12                      = 12,
+        TARGET_UNK_13                      = 13,
+        TARGET_UNK_14                      = 14,
+        TARGET_UNIT_SRC_AREA_ENEMY         = 15,
+        TARGET_UNIT_DEST_AREA_ENEMY        = 16,
+        TARGET_DEST_DB                     = 17,
+        TARGET_DEST_CASTER                 = 18,
+        TARGET_UNIT_CASTER_AREA_PARTY      = 20,
+        TARGET_UNIT_TARGET_ALLY            = 21,
+        TARGET_SRC_CASTER                  = 22,
+        TARGET_GAMEOBJECT_TARGET           = 23,
+        TARGET_UNIT_CONE_ENEMY_24          = 24,
+        TARGET_UNIT_TARGET_ANY             = 25,
+        TARGET_GAMEOBJECT_ITEM_TARGET      = 26,
+        TARGET_UNIT_MASTER                 = 27,
+        TARGET_DEST_DYNOBJ_ENEMY           = 28,
+        TARGET_DEST_DYNOBJ_ALLY            = 29,
+        TARGET_UNIT_SRC_AREA_ALLY          = 30,
+        TARGET_UNIT_DEST_AREA_ALLY         = 31,
+        TARGET_DEST_CASTER_SUMMON          = 32, // front left, doesn't use radius
+        TARGET_UNIT_SRC_AREA_PARTY         = 33,
+        TARGET_UNIT_DEST_AREA_PARTY        = 34,
+        TARGET_UNIT_TARGET_PARTY           = 35,
+        TARGET_DEST_CASTER_UNK_36          = 36,
+        TARGET_UNIT_LASTTARGET_AREA_PARTY  = 37,
+        TARGET_UNIT_NEARBY_ENTRY           = 38,
+        TARGET_DEST_CASTER_FISHING         = 39,
+        TARGET_GAMEOBJECT_NEARBY_ENTRY     = 40,
+        TARGET_DEST_CASTER_FRONT_RIGHT     = 41,
+        TARGET_DEST_CASTER_BACK_RIGHT      = 42,
+        TARGET_DEST_CASTER_BACK_LEFT       = 43,
+        TARGET_DEST_CASTER_FRONT_LEFT      = 44,
+        TARGET_UNIT_TARGET_CHAINHEAL_ALLY  = 45,
+        TARGET_DEST_NEARBY_ENTRY           = 46,
+        TARGET_DEST_CASTER_FRONT           = 47,
+        TARGET_DEST_CASTER_BACK            = 48,
+        TARGET_DEST_CASTER_RIGHT           = 49,
+        TARGET_DEST_CASTER_LEFT            = 50,
+        TARGET_GAMEOBJECT_SRC_AREA         = 51,
+        TARGET_GAMEOBJECT_DEST_AREA        = 52,
+        TARGET_DEST_TARGET_ENEMY           = 53,
+        TARGET_UNIT_CONE_ENEMY_54          = 54,
+        TARGET_DEST_CASTER_FRONT_LEAP      = 55, // for a leap spell
+        TARGET_UNIT_CASTER_AREA_RAID       = 56,
+        TARGET_UNIT_TARGET_RAID            = 57,
+        TARGET_UNIT_NEARBY_RAID            = 58,
+        TARGET_UNIT_CONE_ALLY              = 59,
+        TARGET_UNIT_CONE_ENTRY             = 60,
+        TARGET_UNIT_TARGET_AREA_RAID_CLASS = 61,
+        TARGET_UNK_62                      = 62,
+        TARGET_DEST_TARGET_ANY             = 63,
+        TARGET_DEST_TARGET_FRONT           = 64,
+        TARGET_DEST_TARGET_BACK            = 65,
+        TARGET_DEST_TARGET_RIGHT           = 66,
+        TARGET_DEST_TARGET_LEFT            = 67,
+        TARGET_DEST_TARGET_FRONT_RIGHT     = 68,
+        TARGET_DEST_TARGET_BACK_RIGHT      = 69,
+        TARGET_DEST_TARGET_BACK_LEFT       = 70,
+        TARGET_DEST_TARGET_FRONT_LEFT      = 71,
+        TARGET_DEST_CASTER_RANDOM          = 72,
+        TARGET_DEST_CASTER_RADIUS          = 73,
+        TARGET_DEST_TARGET_RANDOM          = 74,
+        TARGET_DEST_TARGET_RADIUS          = 75,
+        TARGET_DEST_CHANNEL_TARGET         = 76,
+        TARGET_UNIT_CHANNEL_TARGET         = 77,
+        TARGET_DEST_DEST_FRONT             = 78,
+        TARGET_DEST_DEST_BACK              = 79,
+        TARGET_DEST_DEST_RIGHT             = 80,
+        TARGET_DEST_DEST_LEFT              = 81,
+        TARGET_DEST_DEST_FRONT_RIGHT       = 82,
+        TARGET_DEST_DEST_BACK_RIGHT        = 83,
+        TARGET_DEST_DEST_BACK_LEFT         = 84,
+        TARGET_DEST_DEST_FRONT_LEFT        = 85,
+        TARGET_DEST_DEST_RANDOM            = 86,
+        TARGET_DEST_DEST                   = 87,
+        TARGET_DEST_DYNOBJ_NONE            = 88,
+        TARGET_DEST_TRAJ                   = 89,
+        TARGET_UNIT_TARGET_MINIPET         = 90,
+        TARGET_DEST_DEST_RADIUS            = 91,
+        TARGET_UNIT_SUMMONER               = 92,
+        TARGET_CORPSE_SRC_AREA_ENEMY       = 93, // NYI
+        TARGET_UNIT_VEHICLE                = 94,
+        TARGET_UNIT_TARGET_PASSENGER       = 95,
+        TARGET_UNIT_PASSENGER_0            = 96,
+        TARGET_UNIT_PASSENGER_1            = 97,
+        TARGET_UNIT_PASSENGER_2            = 98,
+        TARGET_UNIT_PASSENGER_3            = 99,
+        TARGET_UNIT_PASSENGER_4            = 100,
+        TARGET_UNIT_PASSENGER_5            = 101,
+        TARGET_UNIT_PASSENGER_6            = 102,
+        TARGET_UNIT_PASSENGER_7            = 103,
+        TARGET_UNIT_CONE_ENEMY_104         = 104,
+        TARGET_UNIT_UNK_105                = 105, // 1 spell
+        TARGET_DEST_CHANNEL_CASTER         = 106,
+        TARGET_UNK_DEST_AREA_UNK_107       = 107, // not enough info - only generic spells avalible
+        TARGET_GAMEOBJECT_CONE_108         = 108,
+        TARGET_GAMEOBJECT_CONE_109         = 109,
+        TARGET_UNIT_CONE_ENTRY_110         = 110,
+        TARGET_UNK_111                     = 111,
+        TARGET_UNK_112                     = 112,
+        TARGET_UNK_113                     = 113,
+        TARGET_UNK_114                     = 114,
+        TARGET_UNK_115                     = 115,
+        TARGET_UNK_116                     = 116,
+        TARGET_UNK_117                     = 117,
+        TARGET_UNK_118                     = 118,
+        TARGET_UNK_119                     = 119,
+        TARGET_UNK_120                     = 120,
+        TARGET_UNK_121                     = 121,
+        TARGET_UNK_122                     = 122,
+        TARGET_UNK_123                     = 123,
+        TARGET_UNK_124                     = 124,
+        TARGET_UNK_125                     = 125,
+        TARGET_UNK_126                     = 126,
+        TARGET_UNK_127                     = 127,
+        TARGET_UNK_128                     = 128,
+        TARGET_UNIT_CONE_ENTRY_129         = 129,
+        TARGET_UNK_130                     = 130,
+        TARGET_UNK_131                     = 131,
+        TARGET_UNK_132                     = 132,
+        TARGET_UNK_133                     = 133,
+        TARGET_UNK_134                     = 134,
+        TARGET_UNK_135                     = 135,
+        TARGET_UNK_136                     = 136,
+        TARGET_UNK_137                     = 137,
+        TARGET_UNK_138                     = 138,
+        TARGET_UNK_139                     = 139,
+        TARGET_UNK_140                     = 140,
+        TARGET_UNK_141                     = 141,
+        TARGET_UNK_142                     = 142,
+        TARGET_UNK_143                     = 143,
+        TARGET_UNK_144                     = 144,
+        TARGET_UNK_145                     = 145,
+        TARGET_UNK_146                     = 146,
+        TARGET_UNK_147                     = 147,
+        TARGET_UNK_148                     = 148,
+        TARGET_UNK_149                     = 149,
+        TARGET_UNIT_OWN_CRITTER            = 150, // own battle pet from UNIT_FIELD_CRITTER
         TOTAL_SPELL_TARGETS,
     };
 
@@ -1024,43 +1031,47 @@ namespace SpellWork.Spell
     [Flags]
     public enum ProcFlags
     {
-        PROC_FLAG_KILLED                            = 0x00000001,    // 00 Killed by agressor - not sure about this flag
-        PROC_FLAG_KILL                              = 0x00000002,    // 01 Kill target (in most cases need XP/Honor reward)
+        PROC_FLAG_KILLED                          = 0x00000001,    // 00 Killed by agressor - not sure about this flag
+        PROC_FLAG_KILL                            = 0x00000002,    // 01 Kill target (in most cases need XP/Honor reward)
 
-        PROC_FLAG_DONE_MELEE_AUTO_ATTACK            = 0x00000004,    // 02 Done melee auto attack
-        PROC_FLAG_TAKEN_MELEE_AUTO_ATTACK           = 0x00000008,    // 03 Taken melee auto attack
+        PROC_FLAG_DONE_MELEE_AUTO_ATTACK          = 0x00000004,    // 02 Done melee auto attack
+        PROC_FLAG_TAKEN_MELEE_AUTO_ATTACK         = 0x00000008,    // 03 Taken melee auto attack
 
-        PROC_FLAG_DONE_SPELL_MELEE_DMG_CLASS        = 0x00000010,    // 04 Done attack by Spell that has dmg class melee
-        PROC_FLAG_TAKEN_SPELL_MELEE_DMG_CLASS       = 0x00000020,    // 05 Taken attack by Spell that has dmg class melee
+        PROC_FLAG_DONE_SPELL_MELEE_DMG_CLASS      = 0x00000010,    // 04 Done attack by Spell that has dmg class melee
+        PROC_FLAG_TAKEN_SPELL_MELEE_DMG_CLASS     = 0x00000020,    // 05 Taken attack by Spell that has dmg class melee
 
-        PROC_FLAG_DONE_RANGED_AUTO_ATTACK           = 0x00000040,    // 06 Done ranged auto attack
-        PROC_FLAG_TAKEN_RANGED_AUTO_ATTACK          = 0x00000080,    // 07 Taken ranged auto attack
+        PROC_FLAG_DONE_RANGED_AUTO_ATTACK         = 0x00000040,    // 06 Done ranged auto attack
+        PROC_FLAG_TAKEN_RANGED_AUTO_ATTACK        = 0x00000080,    // 07 Taken ranged auto attack
 
-        PROC_FLAG_DONE_SPELL_RANGED_DMG_CLASS       = 0x00000100,    // 08 Done attack by Spell that has dmg class ranged
-        PROC_FLAG_TAKEN_SPELL_RANGED_DMG_CLASS      = 0x00000200,    // 09 Taken attack by Spell that has dmg class ranged
+        PROC_FLAG_DONE_SPELL_RANGED_DMG_CLASS     = 0x00000100,    // 08 Done attack by Spell that has dmg class ranged
+        PROC_FLAG_TAKEN_SPELL_RANGED_DMG_CLASS    = 0x00000200,    // 09 Taken attack by Spell that has dmg class ranged
 
-        PROC_FLAG_DONE_SPELL_NONE_DMG_CLASS_POS     = 0x00000400,    // 10 Done positive spell that has dmg class none
-        PROC_FLAG_TAKEN_SPELL_NONE_DMG_CLASS_POS    = 0x00000800,    // 11 Taken positive spell that has dmg class none
+        PROC_FLAG_DONE_SPELL_NONE_DMG_CLASS_POS   = 0x00000400,    // 10 Done positive spell that has dmg class none
+        PROC_FLAG_TAKEN_SPELL_NONE_DMG_CLASS_POS  = 0x00000800,    // 11 Taken positive spell that has dmg class none
 
-        PROC_FLAG_DONE_SPELL_NONE_DMG_CLASS_NEG     = 0x00001000,    // 12 Done negative spell that has dmg class none
-        PROC_FLAG_TAKEN_SPELL_NONE_DMG_CLASS_NEG    = 0x00002000,    // 13 Taken negative spell that has dmg class none
+        PROC_FLAG_DONE_SPELL_NONE_DMG_CLASS_NEG   = 0x00001000,    // 12 Done negative spell that has dmg class none
+        PROC_FLAG_TAKEN_SPELL_NONE_DMG_CLASS_NEG  = 0x00002000,    // 13 Taken negative spell that has dmg class none
 
-        PROC_FLAG_DONE_SPELL_MAGIC_DMG_CLASS_POS    = 0x00004000,    // 14 Done positive spell that has dmg class magic
-        PROC_FLAG_TAKEN_SPELL_MAGIC_DMG_CLASS_POS   = 0x00008000,    // 15 Taken positive spell that has dmg class magic
+        PROC_FLAG_DONE_SPELL_MAGIC_DMG_CLASS_POS  = 0x00004000,    // 14 Done positive spell that has dmg class magic
+        PROC_FLAG_TAKEN_SPELL_MAGIC_DMG_CLASS_POS = 0x00008000,    // 15 Taken positive spell that has dmg class magic
 
-        PROC_FLAG_DONE_SPELL_MAGIC_DMG_CLASS_NEG    = 0x00010000,    // 16 Done negative spell that has dmg class magic
-        PROC_FLAG_TAKEN_SPELL_MAGIC_DMG_CLASS_NEG   = 0x00020000,    // 17 Taken negative spell that has dmg class magic
+        PROC_FLAG_DONE_SPELL_MAGIC_DMG_CLASS_NEG  = 0x00010000,    // 16 Done negative spell that has dmg class magic
+        PROC_FLAG_TAKEN_SPELL_MAGIC_DMG_CLASS_NEG = 0x00020000,    // 17 Taken negative spell that has dmg class magic
 
-        PROC_FLAG_DONE_PERIODIC                     = 0x00040000,    // 18 Successful do periodic (damage / healing)
-        PROC_FLAG_TAKEN_PERIODIC                    = 0x00080000,    // 19 Taken spell periodic (damage / healing)
+        PROC_FLAG_DONE_PERIODIC                   = 0x00040000,    // 18 Successful do periodic (damage / healing)
+        PROC_FLAG_TAKEN_PERIODIC                  = 0x00080000,    // 19 Taken spell periodic (damage / healing)
 
-        PROC_FLAG_TAKEN_DAMAGE                      = 0x00100000,    // 20 Taken any damage
-        PROC_FLAG_DONE_TRAP_ACTIVATION              = 0x00200000,    // 21 On trap activation (possibly needs name change to ON_GAMEOBJECT_CAST or USE)
+        PROC_FLAG_TAKEN_DAMAGE                    = 0x00100000,    // 20 Taken any damage
+        PROC_FLAG_DONE_TRAP_ACTIVATION            = 0x00200000,    // 21 On trap activation (possibly needs name change to ON_GAMEOBJECT_CAST or USE)
 
-        PROC_FLAG_DONE_MAINHAND_ATTACK              = 0x00400000,    // 22 Done main-hand melee attacks (spell and autoattack)
-        PROC_FLAG_DONE_OFFHAND_ATTACK               = 0x00800000,    // 23 Done off-hand melee attacks (spell and autoattack)
+        PROC_FLAG_DONE_MAINHAND_ATTACK            = 0x00400000,    // 22 Done main-hand melee attacks (spell and autoattack)
+        PROC_FLAG_DONE_OFFHAND_ATTACK             = 0x00800000,    // 23 Done off-hand melee attacks (spell and autoattack)
 
-        PROC_FLAG_DEATH                             = 0x01000000     // 24 Died in any way
+        PROC_FLAG_DEATH                           = 0x01000000,    // 24 Died in any way
+        PROC_FLAG_JUMP                            = 0x02000000,    // 25 Jumped
+
+        PROC_FLAG_ENTER_COMBAT                    = 0x08000000,    // 27 Entered combat
+        PROC_FLAG_ENCOUNTER_START                 = 0x10000000,    // 28 Encounter started
     };
 
     [Flags]
@@ -1125,65 +1136,39 @@ namespace SpellWork.Spell
 
     public enum Mechanics
     {
-        MECHANIC_NONE               = 0,
-        MECHANIC_CHARM              = 1,
-        MECHANIC_DISORIENTED        = 2,
-        MECHANIC_DISARM             = 3,
-        MECHANIC_DISTRACT           = 4,
-        MECHANIC_FEAR               = 5,
-        MECHANIC_GRIP               = 6,
-        MECHANIC_ROOT               = 7,
-        MECHANIC_SLOW_ATTACK        = 8,
-        MECHANIC_SILENCE            = 9,
-        MECHANIC_SLEEP              = 10,
-        MECHANIC_SNARE              = 11,
-        MECHANIC_STUN               = 12,
-        MECHANIC_FREEZE             = 13,
-        MECHANIC_KNOCKOUT           = 14,
-        MECHANIC_BLEED              = 15,
-        MECHANIC_BANDAGE            = 16,
-        MECHANIC_POLYMORPH          = 17,
-        MECHANIC_BANISH             = 18,
-        MECHANIC_SHIELD             = 19,
-        MECHANIC_SHACKLE            = 20,
-        MECHANIC_MOUNT              = 21,
-        MECHANIC_INFECTED           = 22,
-        MECHANIC_TURN               = 23,
-        MECHANIC_HORROR             = 24,
-        MECHANIC_INVULNERABILITY    = 25,
-        MECHANIC_INTERRUPT          = 26,
-        MECHANIC_DAZE               = 27,
-        MECHANIC_DISCOVERY          = 28,
-        MECHANIC_IMMUNE_SHIELD      = 29,  // Divine (Blessing) Shield/Protection and Ice Block
-        MECHANIC_SAPPED             = 30,
-        MECHANIC_ENRAGED            = 31
-    };
-
-    public enum SpellMissInfo
-    {
-        SPELL_MISS_NONE     = 0,
-        SPELL_MISS_MISS     = 1,
-        SPELL_MISS_RESIST   = 2,
-        SPELL_MISS_DODGE    = 3,
-        SPELL_MISS_PARRY    = 4,
-        SPELL_MISS_BLOCK    = 5,
-        SPELL_MISS_EVADE    = 6,
-        SPELL_MISS_IMMUNE   = 7,
-        SPELL_MISS_IMMUNE2  = 8, // one of these 2 is MISS_TEMPIMMUNE
-        SPELL_MISS_DEFLECT  = 9,
-        SPELL_MISS_ABSORB   = 10,
-        SPELL_MISS_REFLECT  = 11
-    };
-
-    [Flags]
-    public enum SpellHitType
-    {
-        SPELL_HIT_TYPE_UNK1 = 0x00001,
-        SPELL_HIT_TYPE_CRIT = 0x00002,
-        SPELL_HIT_TYPE_UNK3 = 0x00004,
-        SPELL_HIT_TYPE_UNK4 = 0x00008,
-        SPELL_HIT_TYPE_UNK5 = 0x00010,                          // replace caster?
-        SPELL_HIT_TYPE_UNK6 = 0x00020
+        MECHANIC_NONE             = 0,
+        MECHANIC_CHARM            = 1,
+        MECHANIC_DISORIENTED      = 2,
+        MECHANIC_DISARM           = 3,
+        MECHANIC_DISTRACT         = 4,
+        MECHANIC_FEAR             = 5,
+        MECHANIC_GRIP             = 6,
+        MECHANIC_ROOT             = 7,
+        MECHANIC_SLOW_ATTACK      = 8,
+        MECHANIC_SILENCE          = 9,
+        MECHANIC_SLEEP            = 10,
+        MECHANIC_SNARE            = 11,
+        MECHANIC_STUN             = 12,
+        MECHANIC_FREEZE           = 13,
+        MECHANIC_KNOCKOUT         = 14,
+        MECHANIC_BLEED            = 15,
+        MECHANIC_BANDAGE          = 16,
+        MECHANIC_POLYMORPH        = 17,
+        MECHANIC_BANISH           = 18,
+        MECHANIC_SHIELD           = 19,
+        MECHANIC_SHACKLE          = 20,
+        MECHANIC_MOUNT            = 21,
+        MECHANIC_INFECTED         = 22,
+        MECHANIC_TURN             = 23,
+        MECHANIC_HORROR           = 24,
+        MECHANIC_INVULNERABILITY  = 25,
+        MECHANIC_INTERRUPT        = 26,
+        MECHANIC_DAZE             = 27,
+        MECHANIC_DISCOVERY        = 28,
+        MECHANIC_IMMUNE_SHIELD    = 29, // Divine (Blessing) Shield/Protection and Ice Block
+        MECHANIC_SAPPED           = 30,
+        MECHANIC_ENRAGED          = 31,
+        MECHANIC_WOUNDED          = 32,
     };
 
     public enum SpellDmgClass
@@ -1194,50 +1179,60 @@ namespace SpellWork.Spell
         SPELL_DAMAGE_CLASS_RANGED = 3
     };
 
+    [Flags]
     public enum SpellPreventionType
     {
-        SPELL_PREVENTION_TYPE_NONE    = 0,
-        SPELL_PREVENTION_TYPE_SILENCE = 1,
-        SPELL_PREVENTION_TYPE_PACIFY  = 2
+        SPELL_PREVENTION_TYPE_NONE          = 0,
+        SPELL_PREVENTION_TYPE_SILENCE       = 1,
+        SPELL_PREVENTION_TYPE_PACIFY        = 2,
+        SPELL_PREVENTION_TYPE_NO_ACTIONS    = 4
     };
 
     [Flags]
-    public enum ShapeshiftFormMask : uint
+    public enum ShapeshiftFormMask : ulong
     {
-        FORM_ALL                = 0xFFFFFFFF,
-        FORM_NONE               = 0x00000000,
-        FORM_CAT                = 0x00000001,   // 1
-        FORM_TREE               = 0x00000002,   // 2
-        FORM_TRAVEL             = 0x00000004,   // 3
-        FORM_AQUA               = 0x00000008,   // 4
-        FORM_BEAR               = 0x00000010,   // 5
-        FORM_AMBIENT            = 0x00000020,   // 6
-        FORM_GHOUL              = 0x00000040,   // 7
-        FORM_DIREBEAR           = 0x00000080,   // 8
-        FORM_STEVES_GHOUL       = 0x00000100,   // 9
-        FORM_THARONJA_SKELETON  = 0x00000200,   // 10
-        FORM_TEST_OF_STRENGTH   = 0x00000400,   // 11
-        FORM_BLB_PLAYER         = 0x00000800,   // 12
-        FORM_SHADOW_DANCE       = 0x00001000,   // 13
-        FORM_CREATUREBEAR       = 0x00002000,   // 14
-        FORM_CREATURECAT        = 0x00004000,   // 15
-        FORM_GHOSTWOLF          = 0x00008000,   // 16
-        FORM_BATTLESTANCE       = 0x00010000,   // 17
-        FORM_DEFENSIVESTANCE    = 0x00020000,   // 18
-        FORM_BERSERKERSTANCE    = 0x00040000,   // 19
-        FORM_TEST               = 0x00080000,   // 20
-        FORM_ZOMBIE             = 0x00100000,   // 21
-        FORM_METAMORPHOSIS      = 0x00200000,   // 22
-        FORM_UNK1               = 0x00400000,   // 23
-        FORM_UNK2               = 0x00800000,   // 24
-        FORM_UNDEAD             = 0x01000000,   // 25
-        FORM_MASTER_ANGLER      = 0x02000000,   // 26
-        FORM_FLIGHT_EPIC        = 0x04000000,   // 27
-        FORM_SHADOW             = 0x08000000,   // 28
-        FORM_FLIGHT             = 0x10000000,   // 29
-        FORM_STEALTH            = 0x20000000,   // 30
-        FORM_MOONKIN            = 0x40000000,   // 31
-        FORM_SPIRITOFREDEMPTION = 0x80000000,   // 32
+        FORM_ALL                        = 0xFFFFFFFFFFFFFFFF,
+        FORM_NONE                       = 0,
+        FORM_CAT_FORM                   = 1ul << 0,
+        FORM_TREE_OF_LIFE               = 1ul << 1,
+        FORM_TRAVEL_FORM                = 1ul << 2,
+        FORM_AQUATIC_FORM               = 1ul << 3,
+        FORM_BEAR_FORM                  = 1ul << 4,
+        FORM_AMBIENT                    = 1ul << 5,
+        FORM_GHOUL                      = 1ul << 6,
+        FORM_DIRE_BEAR_FORM             = 1ul << 7,
+        FORM_CRANE_STANCE               = 1ul << 8,
+        FORM_THARONJA_SKELETON          = 1ul << 9,
+        FORM_DARKMOON_TEST_OF_STRENGTH  = 1ul << 10,
+        FORM_BLB_PLAYER                 = 1ul << 11,
+        FORM_SHADOW_DANCE               = 1ul << 12,
+        FORM_CREATURE_BEAR              = 1ul << 13,
+        FORM_CREATURE_CAT               = 1ul << 14,
+        FORM_GHOST_WOLF                 = 1ul << 15,
+        FORM_BATTLE_STANCE              = 1ul << 16,
+        FORM_DEFENSIVE_STANCE           = 1ul << 17,
+        FORM_BERSERKER_STANCE           = 1ul << 18,
+        FORM_SERPENT_STANCE             = 1ul << 19,
+        FORM_ZOMBIE                     = 1ul << 20,
+        FORM_METAMORPHOSIS              = 1ul << 21,
+        FORM_OX_STANCE                  = 1ul << 22,
+        FORM_TIGER_STANCE               = 1ul << 23,
+        FORM_UNDEAD                     = 1ul << 24,
+        FORM_FRENZY                     = 1ul << 25,
+        FORM_FLIGHT_FORM_EPIC           = 1ul << 26,
+        FORM_SHADOWFORM                 = 1ul << 27,
+        FORM_FLIGHT_FORM                = 1ul << 28,
+        FORM_STEALTH                    = 1ul << 29,
+        FORM_MOONKIN_FORM               = 1ul << 30,
+        FORM_SPIRIT_OF_REDEMPTION       = 1ul << 31,
+        FORM_GLADIATOR_STANCE           = 1ul << 32,
+        FORM_METAMORPHOSIS_2            = 1ul << 33,
+        FORM_MOONKIN_FORM_RESTORATION   = 1ul << 34,
+        FORM_TREANT_FORM                = 1ul << 35,
+        FORM_SPIRIT_OWL_FORM            = 1ul << 36,
+        FORM_SPIRIT_OWL_FORM_2          = 1ul << 37,
+        FORM_WISP_FORM                  = 1ul << 38,
+        FORM_WISP_FORM_2                = 1ul << 39,
     };
 
     public enum DispelType
@@ -1300,7 +1295,7 @@ namespace SpellWork.Spell
     [Flags]
     public enum SpellCastTargetFlags
     {
-        TARGET_FLAG_SELF            = 0x00000000,
+        TARGET_FLAG_NONE            = 0x00000000,
         TARGET_FLAG_UNUSED_1        = 0x00000001,               // not used
         TARGET_FLAG_UNIT            = 0x00000002,               // pguid
         TARGET_FLAG_UNIT_RAID       = 0x00000004,               // not sent, used to validate target (if raid member)
@@ -1312,63 +1307,77 @@ namespace SpellWork.Spell
         TARGET_FLAG_UNIT_ALLY       = 0x00000100,               // not sent, used to validate target (if ally)
         TARGET_FLAG_CORPSE_ENEMY    = 0x00000200,               // pguid
         TARGET_FLAG_UNIT_DEAD       = 0x00000400,               // not sent, used to validate target (if dead creature)
-        TARGET_FLAG_GAMEOBJECT      = 0x00000800,               // pguid, used with TARGET_GAMEOBJECT
+        TARGET_FLAG_GAMEOBJECT      = 0x00000800,               // pguid, used with TARGET_GAMEOBJECT_TARGET
         TARGET_FLAG_TRADE_ITEM      = 0x00001000,               // pguid
         TARGET_FLAG_STRING          = 0x00002000,               // string
-        TARGET_FLAG_GAMEOBJECT_ITEM = 0x00004000,               // not sent, used with TARGET_GAMEOBJECT_ITEM
+        TARGET_FLAG_GAMEOBJECT_ITEM = 0x00004000,               // not sent, used with TARGET_GAMEOBJECT_ITEM_TARGET
         TARGET_FLAG_CORPSE_ALLY     = 0x00008000,               // pguid
         TARGET_FLAG_UNIT_MINIPET    = 0x00010000,               // pguid, used to validate target (if non combat pet)
         TARGET_FLAG_GLYPH_SLOT      = 0x00020000,               // used in glyph spells
-        TARGET_FLAG_UNK19           = 0x00040000,               // sometimes appears with DEST_TARGET spells (may appear or not for a given spell)
-        TARGET_FLAG_UNUSED20        = 0x00080000,               // public uint counter, loop { vec3 - screen position (?), guid }, not used so far
+        TARGET_FLAG_DEST_TARGET     = 0x00040000,               // sometimes appears with DEST_TARGET spells (may appear or not for a given spell)
+        TARGET_FLAG_EXTRA_TARGETS   = 0x00080000,               // uint32 counter, loop { vec3 - screen position (?), guid }, not used so far
         TARGET_FLAG_UNIT_PASSENGER  = 0x00100000,               // guessed, used to validate target (if vehicle passenger)
+        TARGET_FLAG_UNK400000       = 0x00400000,
+        TARGET_FLAG_UNK1000000      = 0x01000000,
+        TARGET_FLAG_UNK4000000      = 0x04000000,
+        TARGET_FLAG_UNK10000000     = 0x10000000,
+        TARGET_FLAG_UNK40000000     = 0x40000000,
     };
 
-    public enum Powers : uint
+    public enum Powers : sbyte
     {
-        POWER_MANA            = 0,
-        POWER_RAGE            = 1,
-        POWER_FOCUS           = 2,
-        POWER_ENERGY          = 3,
-        POWER_HAPPINESS       = 4,
-        POWER_RUNE            = 5,
-        POWER_RUNIC_POWER     = 6,
-        POWER_SOUL_SHARDS     = 7,
-        POWER_ECLIPSE         = 8,
-        POWER_HOLY_POWER      = 9,
-        POWER_ALTERNATE_POWER = 10,           // Used in some quests
-        POWER_HEALTH          = 0xFFFFFFFE,    // (-2 as signed value)
+        POWER_MANA                          = 0,
+        POWER_RAGE                          = 1,
+        POWER_FOCUS                         = 2,
+        POWER_ENERGY                        = 3,
+        POWER_COMBO_POINTS                  = 4,
+        POWER_RUNES                         = 5,
+        POWER_RUNIC_POWER                   = 6,
+        POWER_SOUL_SHARDS                   = 7,
+        POWER_LUNAR_POWER                   = 8,
+        POWER_HOLY_POWER                    = 9,
+        POWER_ALTERNATE_POWER               = 10,           // Used in some quests
+        POWER_MAELSTROM                     = 11,
+        POWER_CHI                           = 12,
+        POWER_INSANITY                      = 13,
+        POWER_BURNING_EMBERS                = 14,
+        POWER_DEMONIC_FURY                  = 15,
+        POWER_ARCANE_CHARGES                = 16,
+        POWER_FURY                          = 17,
+        POWER_PAIN                          = 18,
+        MAX_POWERS                          = 19,
+        POWER_ALL                           = 127,          // default for class?
+        POWER_HEALTH                        = -2            // (-2 as signed value)
     };
 
     public enum AuraState
     {   // (C) used in caster aura state     (T) used in target aura state
         // (c) used in caster aura state-not (t) used in target aura state-not
-        AURA_STATE_NONE                     = 0,
-        AURA_STATE_DEFENSE                  = 1,            // C   |
-        AURA_STATE_HEALTHLESS_20_PERCENT    = 2,            // CcT |
-        AURA_STATE_BERSERKING               = 3,            // C T |
-        AURA_STATE_FROZEN                   = 4,            //  c t| frozen target
-        AURA_STATE_JUDGEMENT                = 5,            // C   |
-        AURA_STATE_UNKNOWN6                 = 6,            //     | not used
-        AURA_STATE_HUNTER_PARRY             = 7,            // C   |
-        //AURA_STATE_ROGUE_ATTACK_FROM_STEALTH    = 7,      // C   | FIX ME: not implemented yet!
-        //AURA_STATE_UNKNOWN7                     = 7,      //  c  | random/focused bursts spells (?)
-        AURA_STATE_UNKNOWN8                 = 8,            //     | not used
-        AURA_STATE_UNKNOWN9                 = 9,            //     | not used
-        AURA_STATE_WARRIOR_VICTORY_RUSH     = 10,           // C   | warrior victory rush
-        AURA_STATE_UNKNOWN11                = 11,           //    t|
-        AURA_STATE_FAERIE_FIRE              = 12,           //  c t| prevent invisibility
-        AURA_STATE_HEALTHLESS_35_PERCENT    = 13,           // C T |
-        AURA_STATE_CONFLAGRATE              = 14,           //   T | per-caster
-        AURA_STATE_SWIFTMEND                = 15,           //   T |
-        AURA_STATE_DEADLY_POISON            = 16,           //   T |
-        AURA_STATE_ENRAGE                   = 17,           // C   |
-        AURA_STATE_BLEEDING                 = 18,           // C  t|
-        AURA_STATE_UNKNOWN19                = 19,           //     | not used
-        AURA_STATE_UNKNOWN20                = 20,           //  c  | only (45317 Suicide)
-        AURA_STATE_UNKNOWN21                = 21,           //     | not used
-        AURA_STATE_UNKNOWN22                = 22,           // C  t| not implemented yet (Requires Evasive Charges to use)
-        AURA_STATE_HEALTH_ABOVE_75_PERCENT  = 23            // C   |
+        AURA_STATE_NONE                         = 0,            // C   |
+        AURA_STATE_DEFENSE                      = 1,            // C   |
+        AURA_STATE_HEALTHLESS_20_PERCENT        = 2,            // CcT |
+        AURA_STATE_BERSERKING                   = 3,            // C T |
+        AURA_STATE_FROZEN                       = 4,            //  c t| frozen target
+        AURA_STATE_JUDGEMENT                    = 5,            // C   |
+        AURA_STATE_UNKNOWN6                     = 6,            //     | not used
+        AURA_STATE_HUNTER_PARRY                 = 7,            // C   |
+        AURA_STATE_UNKNOWN7                     = 7,            //  c  | creature cheap shot / focused bursts spells
+        AURA_STATE_UNKNOWN8                     = 8,            //    t| test spells
+        AURA_STATE_UNKNOWN9                     = 9,            //     |
+        AURA_STATE_WARRIOR_VICTORY_RUSH         = 10,           // C   | warrior victory rush
+        AURA_STATE_UNKNOWN11                    = 11,           // C  t| 60348 - Maelstrom Ready!, test spells
+        AURA_STATE_FAERIE_FIRE                  = 12,           //  c t|
+        AURA_STATE_HEALTHLESS_35_PERCENT        = 13,           // C T |
+        AURA_STATE_CONFLAGRATE                  = 14,           //   T |
+        AURA_STATE_SWIFTMEND                    = 15,           //   T |
+        AURA_STATE_DEADLY_POISON                = 16,           //   T |
+        AURA_STATE_ENRAGE                       = 17,           // C   |
+        AURA_STATE_BLEEDING                     = 18,           //    T|
+        AURA_STATE_UNKNOWN19                    = 19,           //     |
+        AURA_STATE_UNKNOWN20                    = 20,           //  c  | only (45317 Suicide)
+        AURA_STATE_UNKNOWN21                    = 21,           //     | not used
+        AURA_STATE_UNKNOWN22                    = 22,           // C  t| varius spells (63884, 50240)
+        AURA_STATE_HEALTH_ABOVE_75_PERCENT      = 23            // C   |
     };
 
     [Flags]
@@ -1408,23 +1417,25 @@ namespace SpellWork.Spell
 
     public enum ItemClass
     {
-        CONSUMABLE  = 0,
-        CONTAINER   = 1,
-        WEAPON      = 2,
-        GEM         = 3,
-        ARMOR       = 4,
-        REAGENT     = 5,
-        PROJECTILE  = 6,
-        TRADE_GOODS = 7,
-        GENERIC     = 8,
-        RECIPE      = 9,
-        MONEY       = 10,
-        QUIVER      = 11,
-        QUEST       = 12,
-        KEY         = 13,
-        PERMANENT   = 14,
-        MISC        = 15,
-        GLYPH       = 16,
+        CONSUMABLE                       = 0,
+        CONTAINER                        = 1,
+        WEAPON                           = 2,
+        GEM                              = 3,
+        ARMOR                            = 4,
+        REAGENT                          = 5,
+        PROJECTILE                       = 6,
+        TRADE_GOODS                      = 7,
+        ITEM_ENHANCEMENT                 = 8,
+        RECIPE                           = 9,
+        MONEY                            = 10, // OBSOLETE
+        QUIVER                           = 11,
+        QUEST                            = 12,
+        KEY                              = 13,
+        PERMANENT                        = 14, // OBSOLETE
+        MISCELLANEOUS                    = 15,
+        GLYPH                            = 16,
+        BATTLE_PETS                      = 17,
+        WOW_TOKEN                        = 18,
         MAX
     };
 
@@ -1432,21 +1443,21 @@ namespace SpellWork.Spell
     public enum ItemSubClassWeaponMask
     {
         ALL             = -1,
-        AXE             = 1 << 0,
-        AXE2            = 1 << 1,
+        AXE             = 1 << 0,  // One-Handed Axes
+        AXE2            = 1 << 1,  // Two-Handed Axes
         BOW             = 1 << 2,
         GUN             = 1 << 3,
-        MACE            = 1 << 4,
-        MACE2           = 1 << 5,
+        MACE            = 1 << 4,  // One-Handed Maces
+        MACE2           = 1 << 5,  // Two-Handed Maces
         POLEARM         = 1 << 6,
-        SWORD           = 1 << 7,
-        SWORD2          = 1 << 8,
-        OBSOLETE        = 1 << 9,
+        SWORD           = 1 << 7,  // One-Handed Swords
+        SWORD2          = 1 << 8,  // Two-Handed Swords
+        WARGLAIVES      = 1 << 9,
         STAFF           = 1 << 10,
-        EXOTIC          = 1 << 11,
-        EXOTIC2         = 1 << 12,
-        FIST            = 1 << 13,
-        MISC            = 1 << 14,
+        EXOTIC          = 1 << 11, // One-Handed Exotics
+        EXOTIC2         = 1 << 12, // Two-Handed Exotics
+        FIST_WEAPON     = 1 << 13,
+        MISCELLANEOUS   = 1 << 14,
         DAGGER          = 1 << 15,
         THROWN          = 1 << 16,
         SPEAR           = 1 << 17,
@@ -1458,30 +1469,31 @@ namespace SpellWork.Spell
     [Flags]
     public enum ItemSubClassArmorMask
     {
-        ALL     = -1,
-        MISC    = 1 << 0,
-        CLOTH   = 1 << 1,
-        LEATHER = 1 << 2,
-        MAIL    = 1 << 3,
-        PLATE   = 1 << 4,
-        BUCKLER = 1 << 5,
-        SHIELD  = 1 << 6,
-        LIBRAM  = 1 << 7,
-        IDOL    = 1 << 8,
-        TOTEM   = 1 << 9,
-        SIGIL   = 1 << 10
+        ALL             = -1,
+        MISCELLANEOUS   = 1 << 0,
+        CLOTH           = 1 << 1,
+        LEATHER         = 1 << 2,
+        MAIL            = 1 << 3,
+        PLATE           = 1 << 4,
+        COSMETIC        = 1 << 5,
+        SHIELD          = 1 << 6,
+        LIBRAM          = 1 << 7,
+        IDOL            = 1 << 8,
+        TOTEM           = 1 << 9,
+        SIGIL           = 1 << 10,
+        RELIC           = 1 << 11,
     };
 
     [Flags]
     public enum ItemSubClassMiscMask
     {
-        ALL     = -1,
-        JUNK    = 1 << 0,
-        REAGENT = 1 << 1,
-        PET     = 1 << 2,
-        HOLIDAY = 1 << 3,
-        OTHER   = 1 << 4,
-        MOUNT   = 1 << 5,
+        ALL             = -1,
+        JUNK            = 1 << 0,
+        REAGENT         = 1 << 1,
+        COMPANION_PET   = 1 << 2,
+        HOLIDAY         = 1 << 3,
+        OTHER           = 1 << 4,
+        MOUNT           = 1 << 5,
     }
 
     [Flags]
@@ -1501,7 +1513,9 @@ namespace SpellWork.Spell
         NOT_SPECIFIED   = 1 << 9,
         TOTEM           = 1 << 10,
         NON_COMBAT_PET  = 1 << 11,
-        GAS_CLOUD       = 1 << 12
+        GAS_CLOUD       = 1 << 12,
+        WILD_PET        = 1 << 13,
+        ABERRATION      = 1 << 14
     };
 
     [Flags]
@@ -1607,9 +1621,9 @@ namespace SpellWork.Spell
         SPELL_ATTR2_IS_ARCANE_CONCENTRATION          = 0x00800000, // 23 Only mage Arcane Concentration have this flag
         SPELL_ATTR2_UNK24                            = 0x01000000, // 24
         SPELL_ATTR2_UNK25                            = 0x02000000, // 25
-        SPELL_ATTR2_UNK26                            = 0x04000000, // 26 unaffected by school immunity
+        SPELL_ATTR2_UNAFFECTED_BY_AURA_SCHOOL_IMMUNE = 0x04000000, // 26 unaffected by school immunity
         SPELL_ATTR2_UNK27                            = 0x08000000, // 27
-        SPELL_ATTR2_UNK28                            = 0x10000000, // 28
+        SPELL_ATTR2_IGNORE_ITEM_CHECK                = 0x10000000, // 28 Spell is cast without checking item requirements (charges/reagents/totem)
         SPELL_ATTR2_CANT_CRIT                        = 0x20000000, // 29 Spell can't crit
         SPELL_ATTR2_TRIGGERED_CAN_TRIGGER_PROC       = 0x40000000, // 30 spell can trigger even if triggered
         SPELL_ATTR2_FOOD_BUFF                        = 0x80000000  // 31 Food or Drink Buff (like Well Fed)
@@ -1643,7 +1657,7 @@ namespace SpellWork.Spell
         SPELL_ATTR3_REQ_WAND                         = 0x00400000, // 22 Req wand
         SPELL_ATTR3_UNK23                            = 0x00800000, // 23
         SPELL_ATTR3_REQ_OFFHAND                      = 0x01000000, // 24 Req offhand weapon
-        SPELL_ATTR3_UNK25                            = 0x02000000, // 25 no cause spell pushback ?
+        SPELL_ATTR3_TREAT_AS_PERIODIC                = 0x02000000, // 25 Makes the spell appear as periodic in client combat logs - used by spells that trigger another spell on each tick
         SPELL_ATTR3_CAN_PROC_WITH_TRIGGERED          = 0x04000000, // 26 auras with this attribute can proc from triggered spell casts with SPELL_ATTR3_TRIGGERED_CAN_TRIGGER_PROC_2 (67736 + 52999)
         SPELL_ATTR3_DRAIN_SOUL                       = 0x08000000, // 27 only drain soul has this flag
         SPELL_ATTR3_UNK28                            = 0x10000000, // 28
@@ -1692,7 +1706,7 @@ namespace SpellWork.Spell
     [Flags]
     public enum SpellAtributeEx5 : uint
     {
-        SPELL_ATTR5_UNK0                             = 0x00000001, //  0
+        SPELL_ATTR5_CAN_CHANNEL_WHEN_MOVING          = 0x00000001, //  0 available casting channel spell when moving
         SPELL_ATTR5_NO_REAGENT_WHILE_PREP            = 0x00000002, //  1 not need reagents if UNIT_FLAG_PREPARATION
         SPELL_ATTR5_UNK2                             = 0x00000004, //  2
         SPELL_ATTR5_USABLE_WHILE_STUNNED             = 0x00000008, //  3 usable while stunned
@@ -1708,7 +1722,7 @@ namespace SpellWork.Spell
         SPELL_ATTR5_HASTE_AFFECT_DURATION            = 0x00002000, // 13 haste effects decrease duration of this
         SPELL_ATTR5_UNK14                            = 0x00004000, // 14
         SPELL_ATTR5_UNK15                            = 0x00008000, // 15 Inflits on multiple targets?
-        SPELL_ATTR5_SPECIAL_ITEM_CLASS_CHECK         = 0x00010000, // 16 this allows spells with EquippedItemClass to affect spells from other items if the required item is equipped
+        SPELL_ATTR5_UNK16                            = 0x00010000, // 16
         SPELL_ATTR5_USABLE_WHILE_FEARED              = 0x00020000, // 17 usable while feared
         SPELL_ATTR5_USABLE_WHILE_CONFUSED            = 0x00040000, // 18 usable while confused
         SPELL_ATTR5_DONT_TURN_DURING_CAST            = 0x00080000, // 19 Blocks caster's turning when casting (client does not automatically turn caster's model to face UNIT_FIELD_TARGET)
@@ -1754,7 +1768,7 @@ namespace SpellWork.Spell
         SPELL_ATTR6_UNK22                            = 0x00400000, // 22 only 72054
         SPELL_ATTR6_UNK23                            = 0x00800000, // 23
         SPELL_ATTR6_CAN_TARGET_UNTARGETABLE          = 0x01000000, // 24
-        SPELL_ATTR6_UNK25                            = 0x02000000, // 25 Exorcism, Flash of Light
+        SPELL_ATTR6_NOT_RESET_SWING_IF_INSTANT       = 0x02000000, // 25 Exorcism, Flash of Light
         SPELL_ATTR6_UNK26                            = 0x04000000, // 26 related to player castable positive buff
         SPELL_ATTR6_UNK27                            = 0x08000000, // 27
         SPELL_ATTR6_UNK28                            = 0x10000000, // 28 Death Grip
@@ -1840,8 +1854,6 @@ namespace SpellWork.Spell
     [Flags]
     public enum SpellAtributeEx9 : uint
     {
-        SPELL_ATTR9_ALL                              = 0xFFFFFFFF,
-        SPELL_ATTR9_NONE                             = 0x00000000,
         SPELL_ATTR9_UNK0                             = 0x00000001, //  0
         SPELL_ATTR9_UNK1                             = 0x00000002, //  1
         SPELL_ATTR9_RESTRICTED_FLIGHT_AREA           = 0x00000004, //  2 Dalaran and Wintergrasp flight area auras have it
@@ -1921,7 +1933,7 @@ namespace SpellWork.Spell
         SPELL_ATTR11_SCALES_WITH_ITEM_LEVEL          = 0x00000004, //  2
         SPELL_ATTR11_UNK3                            = 0x00000008, //  3
         SPELL_ATTR11_UNK4                            = 0x00000010, //  4
-        SPELL_ATTR11_UNK5                            = 0x00000020, //  5
+        SPELL_ATTR11_ABSORB_ENVIRONMENTAL_DAMAGE     = 0x00000020, //  5
         SPELL_ATTR11_UNK6                            = 0x00000040, //  6
         SPELL_ATTR11_RANK_IGNORES_CASTER_LEVEL       = 0x00000080, //  7 Spell_C_GetSpellRank returns SpellLevels->MaxLevel * 5 instead of std::min(SpellLevels->MaxLevel, caster->Level) * 5
         SPELL_ATTR11_UNK8                            = 0x00000100, //  8
@@ -2063,54 +2075,61 @@ namespace SpellWork.Spell
 
     public enum UnitMods
     {
-        UNIT_MOD_STAT_STRENGTH          = 0,                  // UNIT_MOD_STAT_STRENGTH..UNIT_MOD_STAT_SPIRIT must be in existed order, it's accessed by index values of Stats enum.
-        UNIT_MOD_STAT_AGILITY           = 1,
-        UNIT_MOD_STAT_STAMINA           = 2,
-        UNIT_MOD_STAT_INTELLECT         = 3,
-        UNIT_MOD_STAT_SPIRIT            = 4,
-        UNIT_MOD_HEALTH                 = 5,
-        UNIT_MOD_MANA                   = 6,                  // UNIT_MOD_MANA..UNIT_MOD_RUNIC_POWER must be in existed order, it's accessed by index values of Powers enum.
-        UNIT_MOD_RAGE                   = 7,
-        UNIT_MOD_FOCUS                  = 8,
-        UNIT_MOD_ENERGY                 = 9,
-        UNIT_MOD_HAPPINESS              = 10,
-        UNIT_MOD_RUNE                   = 11,
-        UNIT_MOD_RUNIC_POWER            = 12,
-        UNIT_MOD_SOUL_SHARDS            = 13,
-        UNIT_MOD_ECLIPSE                = 14,
-        UNIT_MOD_HOLY_POWER             = 15,
-        UNIT_MOD_ALTERNATIVE            = 16,
-        UNIT_MOD_ARMOR                  = 17,                 // UNIT_MOD_ARMOR..UNIT_MOD_RESISTANCE_ARCANE must be in existed order, it's accessed by index values of SpellSchools enum.
-        UNIT_MOD_RESISTANCE_HOLY        = 18,
-        UNIT_MOD_RESISTANCE_FIRE        = 19,
-        UNIT_MOD_RESISTANCE_NATURE      = 20,
-        UNIT_MOD_RESISTANCE_FROST       = 21,
-        UNIT_MOD_RESISTANCE_SHADOW      = 22,
-        UNIT_MOD_RESISTANCE_ARCANE      = 23,
-        UNIT_MOD_ATTACK_POWER           = 24,
-        UNIT_MOD_ATTACK_POWER_RANGED    = 25,
-        UNIT_MOD_DAMAGE_MAINHAND        = 26,
-        UNIT_MOD_DAMAGE_OFFHAND         = 27,
-        UNIT_MOD_DAMAGE_RANGED          = 28,
-        UNIT_MOD_END                    = 29,
+        UNIT_MOD_STAT_STRENGTH,                                 // UNIT_MOD_STAT_STRENGTH..UNIT_MOD_STAT_INTELLECT must be in existed order, it's accessed by index values of Stats enum.
+        UNIT_MOD_STAT_AGILITY,
+        UNIT_MOD_STAT_STAMINA,
+        UNIT_MOD_STAT_INTELLECT,
+        UNIT_MOD_HEALTH,
+        UNIT_MOD_MANA,                                          // UNIT_MOD_MANA..UNIT_MOD_PAIN must be listed in existing order, it is accessed by index values of Powers enum.
+        UNIT_MOD_RAGE,
+        UNIT_MOD_FOCUS,
+        UNIT_MOD_ENERGY,
+        UNIT_MOD_COMBO_POINTS,
+        UNIT_MOD_RUNES,
+        UNIT_MOD_RUNIC_POWER,
+        UNIT_MOD_SOUL_SHARDS,
+        UNIT_MOD_LUNAR_POWER,
+        UNIT_MOD_HOLY_POWER,
+        UNIT_MOD_ALTERNATE,
+        UNIT_MOD_MAELSTROM,
+        UNIT_MOD_CHI,
+        UNIT_MOD_INSANITY,
+        UNIT_MOD_BURNING_EMBERS,
+        UNIT_MOD_DEMONIC_FURY,
+        UNIT_MOD_ARCANE_CHARGES,
+        UNIT_MOD_FURY,
+        UNIT_MOD_PAIN,
+        UNIT_MOD_ARMOR,                                         // UNIT_MOD_ARMOR..UNIT_MOD_RESISTANCE_ARCANE must be in existed order, it's accessed by index values of SpellSchools enum.
+        UNIT_MOD_RESISTANCE_HOLY,
+        UNIT_MOD_RESISTANCE_FIRE,
+        UNIT_MOD_RESISTANCE_NATURE,
+        UNIT_MOD_RESISTANCE_FROST,
+        UNIT_MOD_RESISTANCE_SHADOW,
+        UNIT_MOD_RESISTANCE_ARCANE,
+        UNIT_MOD_ATTACK_POWER,
+        UNIT_MOD_ATTACK_POWER_RANGED,
+        UNIT_MOD_DAMAGE_MAINHAND,
+        UNIT_MOD_DAMAGE_OFFHAND,
+        UNIT_MOD_DAMAGE_RANGED,
+        UNIT_MOD_END,
         // synonyms
-        UNIT_MOD_STAT_START             = UNIT_MOD_STAT_STRENGTH,
-        UNIT_MOD_STAT_END               = UNIT_MOD_STAT_SPIRIT       + 1,
-        UNIT_MOD_RESISTANCE_START       = UNIT_MOD_ARMOR,
-        UNIT_MOD_RESISTANCE_END         = UNIT_MOD_RESISTANCE_ARCANE + 1,
-        UNIT_MOD_POWER_START            = UNIT_MOD_MANA,
-        UNIT_MOD_POWER_END              = UNIT_MOD_ALTERNATIVE       + 1,
+        UNIT_MOD_STAT_START = UNIT_MOD_STAT_STRENGTH,
+        UNIT_MOD_STAT_END = UNIT_MOD_STAT_INTELLECT + 1,
+        UNIT_MOD_RESISTANCE_START = UNIT_MOD_ARMOR,
+        UNIT_MOD_RESISTANCE_END = UNIT_MOD_RESISTANCE_ARCANE + 1,
+        UNIT_MOD_POWER_START = UNIT_MOD_MANA,
+        UNIT_MOD_POWER_END = UNIT_MOD_PAIN + 1
     };
 
     [Flags]
     enum SpellInterruptFlags
     {
-        SPELL_INTERRUPT_FLAG_MOVEMENT       = 0x01, // why need this for instant?
-        SPELL_INTERRUPT_FLAG_PUSH_BACK      = 0x02, // push back
-        SPELL_INTERRUPT_FLAG_UNK3           = 0x04, // any info?
-        SPELL_INTERRUPT_FLAG_INTERRUPT      = 0x08, // interrupt
-        SPELL_INTERRUPT_FLAG_ABORT_ON_DMG   = 0x10, // _complete_ interrupt on direct damage
-        SPELL_INTERRUPT_UNK                 = 0x20  // unk, 564 of 727 spells having this spell start with "Glyph"
+        SPELL_INTERRUPT_FLAG_MOVEMENT     = 0x01, // why need this for instant?
+        SPELL_INTERRUPT_FLAG_PUSH_BACK    = 0x02, // push back
+        SPELL_INTERRUPT_FLAG_UNK3         = 0x04, // any info?
+        SPELL_INTERRUPT_FLAG_INTERRUPT    = 0x08, // interrupt
+        SPELL_INTERRUPT_FLAG_ABORT_ON_DMG = 0x10,  // _complete_ interrupt on direct damage
+        SPELL_INTERRUPT_UNK               = 0x20  // unk, 564 of 727 spells having this spell start with "Glyph"
     };
 
     [Flags]
@@ -2121,37 +2140,69 @@ namespace SpellWork.Spell
     };
 
     [Flags]
-    enum SpellAuraInterruptFlags
+    enum SpellAuraInterruptFlags : uint
     {
-        AURA_INTERRUPT_FLAG_HITBYSPELL                  = 0x00000001,   // 0    removed when getting hit by a negative spell?
-        AURA_INTERRUPT_FLAG_TAKE_DAMAGE                 = 0x00000002,   // 1    removed by any damage
-        AURA_INTERRUPT_FLAG_CAST                        = 0x00000004,   // 2    cast any spells
-        AURA_INTERRUPT_FLAG_MOVE                        = 0x00000008,   // 3    removed by any movement
-        AURA_INTERRUPT_FLAG_TURNING                     = 0x00000010,   // 4    removed by any turning
-        AURA_INTERRUPT_FLAG_JUMP                        = 0x00000020,   // 5    removed by entering combat
-        AURA_INTERRUPT_FLAG_NOT_MOUNTED                 = 0x00000040,   // 6    removed by dismounting
-        AURA_INTERRUPT_FLAG_NOT_ABOVEWATER              = 0x00000080,   // 7    removed by entering water
-        AURA_INTERRUPT_FLAG_NOT_UNDERWATER              = 0x00000100,   // 8    removed by leaving water
-        AURA_INTERRUPT_FLAG_NOT_SHEATHED                = 0x00000200,   // 9    removed by unsheathing
-        AURA_INTERRUPT_FLAG_TALK                        = 0x00000400,   // 10   talk to npc / loot? action on creature
-        AURA_INTERRUPT_FLAG_USE                         = 0x00000800,   // 11   mine/use/open action on gameobject
-        AURA_INTERRUPT_FLAG_MELEE_ATTACK                = 0x00001000,   // 12   removed by attacking
-        AURA_INTERRUPT_FLAG_SPELL_ATTACK                = 0x00002000,   // 13   ???
-        AURA_INTERRUPT_FLAG_UNK14                       = 0x00004000,   // 14
-        AURA_INTERRUPT_FLAG_TRANSFORM                   = 0x00008000,   // 15   removed by transform?
-        AURA_INTERRUPT_FLAG_UNK16                       = 0x00010000,   // 16
-        AURA_INTERRUPT_FLAG_MOUNT                       = 0x00020000,   // 17   misdirect, aspect, swim speed
-        AURA_INTERRUPT_FLAG_NOT_SEATED                  = 0x00040000,   // 18   removed by standing up (used by food and drink mostly and sleep/Fake Death like)
-        AURA_INTERRUPT_FLAG_CHANGE_MAP                  = 0x00080000,   // 19   leaving map/getting teleported
+        AURA_INTERRUPT_FLAG_HITBYSPELL          = 0x00000001,   // 0    removed when getting hit by a negative spell?
+        AURA_INTERRUPT_FLAG_TAKE_DAMAGE         = 0x00000002,   // 1    removed by any damage
+        AURA_INTERRUPT_FLAG_CAST                = 0x00000004,   // 2    cast any spells
+        AURA_INTERRUPT_FLAG_MOVE                = 0x00000008,   // 3    removed by any movement
+        AURA_INTERRUPT_FLAG_TURNING             = 0x00000010,   // 4    removed by any turning
+        AURA_INTERRUPT_FLAG_JUMP                = 0x00000020,   // 5    removed by jumping
+        AURA_INTERRUPT_FLAG_NOT_MOUNTED         = 0x00000040,   // 6    removed by dismounting
+        AURA_INTERRUPT_FLAG_NOT_ABOVEWATER      = 0x00000080,   // 7    removed by entering water
+        AURA_INTERRUPT_FLAG_NOT_UNDERWATER      = 0x00000100,   // 8    removed by leaving water
+        AURA_INTERRUPT_FLAG_NOT_SHEATHED        = 0x00000200,   // 9    removed by unsheathing
+        AURA_INTERRUPT_FLAG_TALK                = 0x00000400,   // 10   talk to npc / loot? action on creature
+        AURA_INTERRUPT_FLAG_USE                 = 0x00000800,   // 11   mine/use/open action on gameobject
+        AURA_INTERRUPT_FLAG_MELEE_ATTACK        = 0x00001000,   // 12   removed by attacking
+        AURA_INTERRUPT_FLAG_SPELL_ATTACK        = 0x00002000,   // 13   ???
+        AURA_INTERRUPT_FLAG_UNK14               = 0x00004000,   // 14
+        AURA_INTERRUPT_FLAG_TRANSFORM           = 0x00008000,   // 15   removed by transform?
+        AURA_INTERRUPT_FLAG_UNK16               = 0x00010000,   // 16
+        AURA_INTERRUPT_FLAG_MOUNT               = 0x00020000,   // 17   misdirect, aspect, swim speed
+        AURA_INTERRUPT_FLAG_NOT_SEATED          = 0x00040000,   // 18   removed by standing up (used by food and drink mostly and sleep/Fake Death like)
+        AURA_INTERRUPT_FLAG_CHANGE_MAP          = 0x00080000,   // 19   leaving map/getting teleported
         AURA_INTERRUPT_FLAG_IMMUNE_OR_LOST_SELECTION    = 0x00100000,   // 20   removed by auras that make you invulnerable, or make other to lose selection on you
-        AURA_INTERRUPT_FLAG_UNK21                       = 0x00200000,   // 21
-        AURA_INTERRUPT_FLAG_TELEPORTED                  = 0x00400000,   // 22
-        AURA_INTERRUPT_FLAG_ENTER_PVP_COMBAT            = 0x00800000,   // 23   removed by entering pvp combat
-        AURA_INTERRUPT_FLAG_DIRECT_DAMAGE               = 0x01000000,   // 24   removed by any direct damage
-        AURA_INTERRUPT_FLAG_LANDING                     = 0x02000000,   // 25   removed by hitting the ground
+        AURA_INTERRUPT_FLAG_UNK21               = 0x00200000,   // 21
+        AURA_INTERRUPT_FLAG_TELEPORTED          = 0x00400000,   // 22
+        AURA_INTERRUPT_FLAG_ENTER_PVP_COMBAT    = 0x00800000,   // 23   removed by entering pvp combat
+        AURA_INTERRUPT_FLAG_DIRECT_DAMAGE       = 0x01000000,   // 24   removed by any direct damage
+        AURA_INTERRUPT_FLAG_LANDING             = 0x02000000,   // 25   removed by hitting the ground
+        AURA_INTERRUPT_FLAG_LEAVE_COMBAT        = 0x80000000,   // 31   removed by leaving combat
 
         AURA_INTERRUPT_FLAG_NOT_VICTIM = (AURA_INTERRUPT_FLAG_HITBYSPELL | AURA_INTERRUPT_FLAG_TAKE_DAMAGE | AURA_INTERRUPT_FLAG_DIRECT_DAMAGE)
     };
+
+    public enum Classes
+    {
+        CLASS_NONE          = 0,
+        CLASS_WARRIOR       = 1,
+        CLASS_PALADIN       = 2,
+        CLASS_HUNTER        = 3,
+        CLASS_ROGUE         = 4,
+        CLASS_PRIEST        = 5,
+        CLASS_DEATH_KNIGHT  = 6,
+        CLASS_SHAMAN        = 7,
+        CLASS_MAGE          = 8,
+        CLASS_WARLOCK       = 9,
+        CLASS_MONK          = 10,
+        CLASS_DRUID         = 11,
+        CLASS_DEMON_HUNTER  = 12
+    }
+
+    public enum ExpectedStatType
+    {
+        CreatureHealth          = 0,
+        PlayerHealth            = 1,
+        CreatureAutoAttackDps   = 2,
+        CreatureArmor           = 3,
+        PlayerMana              = 4,
+        PlayerPrimaryStat       = 5,
+        PlayerSecondaryStat     = 6,
+        ArmorConstant           = 7,
+        None                    = 8,
+        CreatureSpellDamage     = 9
+    }
 
 // ReSharper restore InconsistentNaming
 
@@ -2223,13 +2274,45 @@ namespace SpellWork.Spell
 
             //24 0x01000000
             "24 On death",
-            "25",
+            "25 Jumped",
             "26",
-            "27",
-            "28",
+            "27 Entered combat",
+            "28 Encounter started",
             "29",
             "30",
-            "31"
+            "31",
+            "32",
+            "33",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60",
+            "61",
+            "62",
+            "63"
         };
         #endregion
     }

@@ -1,18 +1,23 @@
-﻿namespace SpellWork.DBC.Structures
+﻿using DBFileReaderLib.Attributes;
+
+namespace SpellWork.DBC.Structures
 {
     public sealed class ScreenEffectEntry
     {
+        [Index(true)]
+        public uint ID;
         public string Name;
-        public int[] field04;
-        public ushort field14;
-        public ushort field16;
-        public ushort field18;
-        public ushort field1A;
-        public byte field1C;
-        public byte field1D;
-        public byte field1E;
-        public int field1F;
-        public int field23;
-        public int field27;
+        [Cardinality(4)]
+        public int[] Param = new int[4];
+        public sbyte Effect;
+        public uint FullScreenEffectID;
+        public ushort LightParamsID;
+        public ushort LightParamsFadeIn;
+        public ushort LightParamsFadeOut;
+        public uint SoundAmbienceID;
+        public uint ZoneMusicID;
+        public short TimeOfDayOverride;
+        public sbyte EffectMask;
+        public byte LightFlags;
     }
 }

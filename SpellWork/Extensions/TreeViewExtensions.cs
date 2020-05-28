@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using SpellWork.Spell;
+using System.Linq;
 using System.Windows.Forms;
-using SpellWork.Spell;
 
 namespace SpellWork.Extensions
 {

@@ -1,29 +1,35 @@
-﻿namespace SpellWork.DBC.Structures
+﻿using DBFileReaderLib.Attributes;
+
+namespace SpellWork.DBC.Structures
 {
     public sealed class AreaTableEntry
     {
-        public uint[] Flags;
+        [Index(true)]
+        public uint ID;
         public string ZoneName;
-        public float AmbientMultiplier;
         public string AreaName;
-        public ushort MapID;
+        public ushort ContinentID;
         public ushort ParentAreaID;
         public short AreaBit;
-        public ushort AmbienceID;
-        public ushort ZoneMusic;
-        public ushort IntroSound;
-        public ushort[] LiquidTypeID;
-        public ushort UWZoneMusic;
-        public ushort UWAmbience;
-        public ushort PvPCombatWorldStateID;
         public byte SoundProviderPref;
         public byte SoundProviderPrefUnderwater;
-        public byte ExplorationLevel;
+        public ushort AmbienceID;
+        public ushort UwAmbience;
+        public ushort ZoneMusic;
+        public ushort UwZoneMusic;
+        public sbyte ExplorationLevel;
+        public ushort IntroSound;
+        public uint UwIntroSound;
         public byte FactionGroupMask;
+        public float AmbientMultiplier;
         public byte MountFlags;
+        public short PvpCombatWorldStateID;
         public byte WildBattlePetLevelMin;
         public byte WildBattlePetLevelMax;
         public byte WindSettingsID;
-        public uint UWIntroSound;
+        [Cardinality(2)]
+        public int[] Flags = new int[2];
+        [Cardinality(4)]
+        public ushort[] LiquidTypeID = new ushort[4];
     }
 }

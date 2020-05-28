@@ -1,15 +1,19 @@
-﻿namespace SpellWork.DBC.Structures
+﻿using DBFileReaderLib.Attributes;
+
+namespace SpellWork.DBC.Structures
 {
     public class SpellCategoriesEntry
     {
-        public int SpellID;
-        public ushort Category;
-        public ushort StartRecoveryCategory;
-        public ushort ChargeCategory;
+        [Index(true)]
+        public uint ID;
         public byte DifficultyID;
-        public byte DefenseType;
-        public byte DispelType;
-        public byte Mechanic;
-        public byte PreventionType;
+        public short Category;
+        public sbyte DefenseType;
+        public sbyte DispelType;
+        public sbyte Mechanic;
+        public sbyte PreventionType;
+        public short StartRecoveryCategory;
+        public short ChargeCategory;
+        public int SpellID;
     }
 }

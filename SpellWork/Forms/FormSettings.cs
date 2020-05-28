@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
-using SpellWork.Database;
+﻿using SpellWork.Database;
 using SpellWork.Properties;
+using System;
+using System.Windows.Forms;
 
 namespace SpellWork.Forms
 {

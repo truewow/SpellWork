@@ -35,7 +35,7 @@ namespace SpellWork.GameTables
 
                     var record = new T();
                     var fieldIndex = 0;
-                    foreach (var field in typeof (T).GetFields(BindingFlags.Public | BindingFlags.Instance))
+                    foreach (var field in typeof(T).GetFields(BindingFlags.Public | BindingFlags.Instance))
                     {
                         // ReSharper disable once SwitchStatementMissingSomeCases
                         switch (Type.GetTypeCode(field.FieldType))
