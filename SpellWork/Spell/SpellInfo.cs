@@ -413,7 +413,7 @@ namespace SpellWork.Spell
                         case ItemClass.ARMOR:
                             rtb.AppendFormatLine("    SubClass mask 0x{0:X8} ({1})", EquippedItemSubclass, (ItemSubClassArmorMask)EquippedItemSubclass);
                             break;
-                        case ItemClass.MISC:
+                        case ItemClass.MISCELLANEOUS:
                             rtb.AppendFormatLine("    SubClass mask 0x{0:X8} ({1})", EquippedItemSubclass, (ItemSubClassMiscMask)EquippedItemSubclass);
                             break;
                     }
