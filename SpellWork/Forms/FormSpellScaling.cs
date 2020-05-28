@@ -38,15 +38,15 @@ namespace SpellWork.Forms
                 return;
             }
 
-            var val = int.Parse(tb.Text);
-            if (val > 110)
-                tb.Text = "110";
+            var val = uint.Parse(tb.Text);
+            if (val > DBC.DBC.MaxLevel)
+                tb.Text = DBC.DBC.MaxLevel.ToString();
             else if (val <= 0)
                 tb.Text = "1";
 
-            val = int.Parse(tb.Text);
-            _tbLevel.Value = val;
-            SelectedLevel = (uint)val;
+            val = uint.Parse(tb.Text);
+            _tbLevel.Value = (int)val;
+            SelectedLevel = val;
         }
 
         private void ItemLevelTextChanged(object sender, EventArgs e)
@@ -59,15 +59,15 @@ namespace SpellWork.Forms
                 return;
             }
 
-            var val = int.Parse(tb.Text);
-            if (val > 1300)
-                tb.Text = "1300";
+            var val = uint.Parse(tb.Text);
+            if (val > DBC.DBC.MaxItemLevel)
+                tb.Text = DBC.DBC.MaxItemLevel.ToString();
             else if (val <= 0)
                 tb.Text = "1";
 
-            val = int.Parse(tb.Text);
-            _tbItemLevel.Value = val;
-            SelectedItemLevel = (uint)val;
+            val = uint.Parse(tb.Text);
+            _tbItemLevel.Value = (int)val;
+            SelectedItemLevel = val;
         }
 
         public uint SelectedLevel;

@@ -2274,9 +2274,12 @@ namespace SpellWork.Spell
 
             //24 0x01000000
             "24 On death",
+            //25 0x02000000
             "25 Jumped",
             "26",
+            //27 0x08000000
             "27 Entered combat",
+            //28 0x10000000
             "28 Encounter started",
             "29",
             "30",
