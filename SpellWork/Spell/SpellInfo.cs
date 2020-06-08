@@ -645,11 +645,15 @@ namespace SpellWork.Spell
                     if ((Attributes & (uint)SpellAtribute.SPELL_ATTR0_LEVEL_DAMAGE_CALCULATION) != 0)
                         stat = ExpectedStatType.CreatureAutoAttackDps;
 
+                    var contentTuningId = Misc.ContentTuningID;
+                    if (DBC.DBC.SelectedMapDifficulty != null)
+                        contentTuningId = DBC.DBC.SelectedMapDifficulty.ContentTuningID;
+
                     var expansion = -2;
-                    if (DBC.DBC.ContentTuning.TryGetValue(Misc.ContentTuningID, out var contentTuning))
+                    if (DBC.DBC.ContentTuning.TryGetValue(contentTuningId, out var contentTuning))
                         expansion = contentTuning.ExpansionID;
 
-                    value = ExpectedStat.Evaluate(stat, DBC.DBC.SelectedLevel, expansion, 0, Classes.CLASS_NONE) * value / 100.0f;
+                    value = ExpectedStat.Evaluate(stat, DBC.DBC.SelectedLevel, expansion, contentTuningId, 0, Classes.CLASS_NONE) * value / 100.0f;
                 }
 
                 return (float)Math.Round(value);
@@ -674,6 +678,7 @@ namespace SpellWork.Spell
                 rtb.AppendFormat("BasePoints = {0:F}", baseValue);
 
             var valuePerResource = 0.0f;
+            var usesExpectedStat = false;
             if (Math.Abs(effect.Coefficient) > 1.0E-5f)
             {
                 if (Math.Abs(effect.ResourceCoefficient) > 1.0E-5f)
@@ -686,6 +691,8 @@ namespace SpellWork.Spell
                 if (Math.Abs(effect.EffectRealPointsPerLevel) > 1.0E-5f)
                     rtb.AppendFormat(" + Level * {0:F}", effect.EffectRealPointsPerLevel);
             }
+            else
+                usesExpectedStat = true;
 
             rtb.AppendFormatIfNotNull(" + resource * {0:F}", valuePerResource);
 
@@ -699,6 +706,15 @@ namespace SpellWork.Spell
             //     rtb.AppendFormat(" x {0:F}", effect.DamageMultiplier);
 
             // rtb.AppendFormatIfNotNull("  Multiple = {0:F}", effect.ValueMultiplier);
+
+            if (usesExpectedStat && DBC.DBC.SelectedMapDifficulty != null)
+            {
+                rtb.SelectionColor = Color.MediumPurple;
+                rtb.AppendFormat(" ({2} - {0}: {1})", DBC.DBC.Map[(int)DBC.DBC.SelectedMapDifficulty.MapID].MapName,
+                    DBC.DBC.Difficulty[DBC.DBC.SelectedMapDifficulty.DifficultyID].Name,
+                    DBC.DBC.SelectedMapDifficulty.MapID);
+            }
+
             rtb.AppendLine();
 
             rtb.AppendFormatLine("Targets ({0}, {1}) ({2}, {3})",

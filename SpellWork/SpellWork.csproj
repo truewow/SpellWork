@@ -93,11 +93,14 @@
     <Compile Include="DBC\Structures\AreaTableEntry.cs" />
     <Compile Include="DBC\Structures\ContentTuningEntry.cs" />
     <Compile Include="DBC\Structures\ContentTuningXExpectedEntry.cs" />
+    <Compile Include="DBC\Structures\DifficultyEntry.cs" />
     <Compile Include="DBC\Structures\ExpectedStatEntry.cs" />
     <Compile Include="DBC\Structures\ExpectedStatModEntry.cs" />
     <Compile Include="DBC\Structures\ItemEffectEntry.cs" />
     <Compile Include="DBC\Structures\ItemEntry.cs" />
     <Compile Include="DBC\Structures\ItemSparseEntry.cs" />
+    <Compile Include="DBC\Structures\MapDifficultyEntry.cs" />
+    <Compile Include="DBC\Structures\MapEntry.cs" />
     <Compile Include="DBC\Structures\OverrideSpellDataEntry.cs" />
     <Compile Include="DBC\Structures\RandPropPointsEntry.cs" />
     <Compile Include="DBC\Structures\ScreenEffectEntry.cs" />

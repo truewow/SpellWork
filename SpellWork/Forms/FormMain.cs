@@ -136,6 +136,7 @@ namespace SpellWork.Forms
             {
                 DBC.DBC.SelectedLevel = scalingForm.SelectedLevel;
                 DBC.DBC.SelectedItemLevel = scalingForm.SelectedItemLevel;
+                DBC.DBC.SelectedMapDifficulty = scalingForm.SelectedMapDifficulty;
                 switch (tabControl1.SelectedIndex)
                 {
                     case 0:

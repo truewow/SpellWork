@@ -6,7 +6,7 @@ namespace SpellWork.Spell
 {
     public static class ExpectedStat
     {
-        public static float Evaluate(ExpectedStatType stat, uint level, int expansion, int contentTuningId, Classes unitClass)
+        public static float Evaluate(ExpectedStatType stat, uint level, int expansion, int contentTuningId, int mythicPlusSeasonId, Classes unitClass)
         {
             var expectedStat = DBC.DBC.ExpectedStat.Values
                 .Where(es => es.Lvl == level && (es.ExpansionID == expansion || es.ExpansionID == -2))
@@ -36,7 +36,7 @@ namespace SpellWork.Spell
             }
 
             var contentTuningMods = DBC.DBC.ContentTuningXExpected.Values
-                .Where(ctxe => ctxe.ContentTuningID == contentTuningId)
+                .Where(ctxe => ctxe.ContentTuningID == contentTuningId && ctxe.MythicPlusSeasonID == mythicPlusSeasonId)
                 .Where(ctxe => DBC.DBC.ExpectedStatMod.ContainsKey(ctxe.ExpectedStatModID))
                 .Select(ctxe => DBC.DBC.ExpectedStatMod[ctxe.ExpectedStatModID]);
 
