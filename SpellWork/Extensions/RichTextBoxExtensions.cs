@@ -34,44 +34,54 @@ namespace SpellWork.Extensions
             textbox.AppendText(text.ToString());
         }
 
-        public static void AppendFormatLineIfNotNull(this RichTextBox builder, string format, uint arg)
+        private static bool IsValueConsideredNullForFormatting<T>(T arg)
         {
-            if (arg != 0)
+            switch (Type.GetTypeCode(typeof(T)))
             {
-                builder.AppendFormatLine(format, arg);
+                case TypeCode.Empty:
+                case TypeCode.DBNull:
+                    return true;
+                case TypeCode.Object:
+                    return arg == null;
+                case TypeCode.Boolean:
+                    return false; // always print a boolean
+                case TypeCode.Char:
+                    return Convert.ToChar(arg) == '\0';
+                case TypeCode.SByte:
+                case TypeCode.Byte:
+                case TypeCode.Int16:
+                case TypeCode.UInt16:
+                case TypeCode.Int32:
+                case TypeCode.UInt32:
+                case TypeCode.Int64:
+                    return Convert.ToInt64(arg) == 0L;
+                case TypeCode.UInt64:
+                    return Convert.ToUInt64(arg) == 0uL;
+                case TypeCode.Single:
+                case TypeCode.Double:
+                case TypeCode.Decimal:
+                    return Math.Abs(Convert.ToDecimal(arg)) <= 1.0E-5M;
+                case TypeCode.DateTime:
+                    return false;
+                case TypeCode.String:
+                    return string.IsNullOrEmpty(Convert.ToString(arg));
+                default:
+                    break;
             }
+
+            return true;
         }
 
-        public static void AppendFormatLineIfNotNull(this RichTextBox builder, string format, float arg)
+        public static void AppendFormatLineIfNotNull<T>(this RichTextBox builder, string format, T arg)
         {
-            if (Math.Abs(arg) > 1.0E-5f)
-            {
+            if (!IsValueConsideredNullForFormatting(arg))
                 builder.AppendFormatLine(format, arg);
-            }
         }
 
-        public static void AppendFormatLineIfNotNull(this RichTextBox builder, string format, string arg)
+        public static void AppendFormatIfNotNull<T>(this RichTextBox builder, string format, T arg)
         {
-            if (!string.IsNullOrEmpty(arg))
-            {
-                builder.AppendFormatLine(format, arg);
-            }
-        }
-
-        public static void AppendFormatIfNotNull(this RichTextBox builder, string format, uint arg)
-        {
-            if (arg != 0)
-            {
+            if (!IsValueConsideredNullForFormatting(arg))
                 builder.AppendFormat(format, arg);
-            }
-        }
-
-        public static void AppendFormatIfNotNull(this RichTextBox builder, string format, float arg)
-        {
-            if (Math.Abs(arg) > 1.0E-5f)
-            {
-                builder.AppendFormat(format, arg);
-            }
         }
 
         public static void SetStyle(this RichTextBox textbox, Color color, FontStyle style)
