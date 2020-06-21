@@ -327,8 +327,9 @@ namespace SpellWork.Spell
                         rtb.AppendFormatLine("Creature Type Mask = 0x{0:X8} ({1})",
                             targetRestriction.TargetCreatureType, (CreatureTypeMask)targetRestriction.TargetCreatureType);
 
-                    if (targetRestriction.MaxTargets != 0)
-                        rtb.AppendFormatLine("MaxTargets: {0}", targetRestriction.MaxTargets);
+                    rtb.AppendFormatLineIfNotNull("MaxTargets: {0}", targetRestriction.MaxTargets);
+                    rtb.AppendFormatLineIfNotNull("ConeDegrees: {0}", targetRestriction.ConeDegrees);
+                    rtb.AppendFormatLineIfNotNull("Width (line): {0}", targetRestriction.Width);
                 }
             }
 
