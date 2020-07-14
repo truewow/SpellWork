@@ -475,7 +475,19 @@ namespace SpellWork.Spell
 
             if (_spell.EffectApplyAuraName[index] == 0)
             {
-                _rtb.AppendFormatLineIfNotNull("EffectMiscValueA = {0}", _spell.EffectMiscValue[index]);
+                if (_spell.EffectMiscValue[index] != 0)
+                {
+                    _rtb.AppendFormat("EffectMiscValueA = {0}", _spell.EffectMiscValue[index]);
+                    switch ((SpellEffects)_spell.Effect[index])
+                    {
+                        case SpellEffects.SPELL_EFFECT_ACTIVATE_OBJECT:
+                            _rtb.AppendFormat(" ({0})", (GameObjectActions)_spell.EffectMiscValue[index]);
+                            break;
+                        default:
+                            break;
+                    }
+                    _rtb.AppendLine();
+                }
                 _rtb.AppendFormatLineIfNotNull("EffectMiscValueB = {0}", _spell.EffectMiscValueB[index]);
                 _rtb.AppendFormatLineIfNotNull("EffectAmplitude = {0}",  _spell.EffectAmplitude[index]);
 
