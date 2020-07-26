@@ -351,6 +351,19 @@ namespace SpellWork.DBC
                 }
             }), Task.Run(() =>
             {
+                foreach (var spellPower in SpellPower.Values)
+                {
+                    if (!SpellInfoStore.ContainsKey(spellPower.SpellID))
+                    {
+                        Console.WriteLine(
+                            $"SpellPower: Unknown spell {spellPower.SpellID} referenced, ignoring!");
+                        continue;
+                    }
+
+                    SpellInfoStore[spellPower.SpellID].Powers.Add(spellPower);
+                }
+            }), Task.Run(() =>
+            {
                 foreach (var spellReagents in SpellReagents.Values)
                 {
                     if (!SpellInfoStore.ContainsKey(spellReagents.SpellID))

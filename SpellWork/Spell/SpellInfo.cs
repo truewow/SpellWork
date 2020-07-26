@@ -27,6 +27,7 @@ namespace SpellWork.Spell
         public SpellInterruptsEntry Interrupts { get; set; }
         public SpellLevelsEntry Levels { get; set; }
         public SpellMiscEntry Misc { get; set; }
+        public List<SpellPowerEntry> Powers { get; } = new List<SpellPowerEntry>();
         public SpellReagentsEntry Reagents { get; set; }
         public List<SpellReagentsCurrencyEntry> ReagentsCurrency { get; } = new List<SpellReagentsCurrencyEntry>();
         public SpellScalingEntry Scaling { get; set; }
@@ -476,6 +477,18 @@ namespace SpellWork.Spell
 
             if (DurationEntry != null)
                 rtb.AppendFormatLine("Duration {0}, {1}, {2}", Duration, DurationPerLevel, MaxDuration);
+
+            foreach (var spellPower in Powers.OrderBy(p => p.OrderIndex))
+            {
+                rtb.AppendFormat("Power {0}", (Powers)spellPower.PowerType);
+                rtb.AppendFormatIfNotNull(", Base {0}", spellPower.ManaCost);
+                rtb.AppendFormatIfNotNull(", {0}%", spellPower.PowerCostPct);
+                rtb.AppendFormatIfNotNull(" + lvl * {0}", spellPower.ManaCostPerLevel);
+                rtb.AppendFormatIfNotNull(" + {0} Per Second", spellPower.ManaPerSecond);
+                rtb.AppendFormatIfNotNull(" + {0}% Per Second", spellPower.PowerPctPerSecond);
+                rtb.AppendFormatIfNotNull(" + Optional {0}", spellPower.OptionalCost);
+                rtb.AppendLine();
+            }
 
             if (Interrupts != null)
             {
