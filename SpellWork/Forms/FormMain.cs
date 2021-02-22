@@ -213,6 +213,8 @@ namespace SpellWork.Forms
             _lvSpellList.VirtualListSize = _spellList.Count;
             if (_lvSpellList.SelectedIndices.Count > 0)
                 _lvSpellList.Items[_lvSpellList.SelectedIndices[0]].Selected = false;
+
+            _lvSpellList.Invalidate();
         }
 
         private void AdvancedFilter()
@@ -281,6 +283,8 @@ namespace SpellWork.Forms
             _lvSpellList.VirtualListSize = _spellList.Count;
             if (_lvSpellList.SelectedIndices.Count > 0)
                 _lvSpellList.Items[_lvSpellList.SelectedIndices[0]].Selected = false;
+
+            _lvSpellList.Invalidate();
         }
 
         #endregion
