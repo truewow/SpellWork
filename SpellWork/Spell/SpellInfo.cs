@@ -79,6 +79,7 @@ namespace SpellWork.Spell
         public int SpellIconFileDataID => Misc?.SpellIconFileDataID ?? 0;
         public int RangeIndex => Misc?.RangeIndex ?? 0;
         public uint SchoolMask => (Misc?.SchoolMask ?? 0);
+        public int ContentTuningID => (Misc?.ContentTuningID ?? 0);
         #endregion
 
         #region SpellClassOptions
@@ -661,7 +662,7 @@ namespace SpellWork.Spell
                     if ((Attributes & (uint)SpellAtribute.SPELL_ATTR0_LEVEL_DAMAGE_CALCULATION) != 0)
                         stat = ExpectedStatType.CreatureAutoAttackDps;
 
-                    var contentTuningId = Misc.ContentTuningID;
+                    var contentTuningId = ContentTuningID;
                     if (DBC.DBC.SelectedMapDifficulty != null)
                         contentTuningId = DBC.DBC.SelectedMapDifficulty.ContentTuningID;
 
