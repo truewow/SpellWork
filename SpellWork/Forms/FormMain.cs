@@ -1,6 +1,7 @@
 ﻿using SpellWork.Database;
 using SpellWork.DBC.Structures;
 using SpellWork.Extensions;
+using SpellWork.Filtering;
 using SpellWork.Spell;
 using System;
 using System.Collections.Generic;
@@ -203,7 +204,7 @@ namespace SpellWork.Forms
                                 (spellInfo.AttributesEx6 & at) != 0 || (spellInfo.AttributesEx7 & at) != 0 ||
                                 (spellInfo.AttributesEx8 & at) != 0 || (spellInfo.AttributesEx9 & at) != 0 ||
                                 (spellInfo.AttributesEx10 & at) != 0 || (spellInfo.AttributesEx11 & at) != 0 ||
-                                (spellInfo.AttributesEx12 & at) != 0 || (spellInfo.AttributesEx13 & at) != 0 || 
+                                (spellInfo.AttributesEx12 & at) != 0 || (spellInfo.AttributesEx13 & at) != 0 ||
                                 (spellInfo.AttributesEx14 & at) != 0)) && ((id != 0 || ic != 0 && at != 0) ||
                                 spellInfo.Name.ContainsText(name))
                           orderby spellInfo.ID
@@ -244,6 +245,9 @@ namespace SpellWork.Forms
             var fieldEffect1Ct = (CompareType)_cbAdvancedEffectFilter1CompareType.SelectedIndex;
             var fieldEffect2Ct = (CompareType)_cbAdvancedEffectFilter2CompareType.SelectedIndex;
 
+            var filterValEffectFn1 = FilterFactory.CreateFilterFunc<SpellEffectInfo>(fieldEffect1, advEffectVal1, fieldEffect1Ct);
+            var filterValEffectFn2 = FilterFactory.CreateFilterFunc<SpellEffectInfo>(fieldEffect2, advEffectVal2, fieldEffect2Ct);
+
             // additional filters
             var advVal1 = _tbAdvancedFilter1Val.Text;
             var advVal2 = _tbAdvancedFilter2Val.Text;
@@ -257,17 +261,20 @@ namespace SpellWork.Forms
             var field1Ct = (CompareType)_cbAdvancedFilter1CompareType.SelectedIndex;
             var field2Ct = (CompareType)_cbAdvancedFilter2CompareType.SelectedIndex;
 
+            var filterValFn1 = FilterFactory.CreateFilterFunc<SpellInfo>(field1, advVal1, field1Ct);
+            var filterValFn2 = FilterFactory.CreateFilterFunc<SpellInfo>(field2, advVal2, field2Ct);
+
             _spellList = DBC.DBC.SpellInfoStore.Values.Where(
                 spell => (!bFamilyNames || spell.SpellFamilyName == fFamilyNames) &&
                          (!bSpellEffect || spell.HasEffect((SpellEffects)fSpellEffect)) &&
                          (!bSpellAura || spell.HasAura((AuraType)fSpellAura)) &&
                          (!bTarget1 || spell.HasTargetA((Targets)fTarget1)) &&
                          (!bTarget2 || spell.HasTargetB((Targets)fTarget2)) &&
-                         (!use1Val || spell.CreateFilter(field1, advVal1, field1Ct)) &&
-                         (!use2Val || spell.CreateFilter(field2, advVal2, field2Ct)) &&
-                         (spell.SpellEffectInfoStore.Any(effect =>
-                         (!use1EffectVal || effect.Value.CreateFilter(fieldEffect1, advEffectVal1, fieldEffect1Ct)) &&
-                         (!use2EffectVal || effect.Value.CreateFilter(fieldEffect2, advEffectVal2, fieldEffect2Ct)))))
+                         (!use1Val || filterValFn1(spell)) &&
+                         (!use2Val || filterValFn2(spell)) &&
+                         ((!use1EffectVal && !use2EffectVal) || spell.SpellEffectInfoStore.Any(effect =>
+                         (!use1EffectVal || filterValEffectFn1(effect.Value)) &&
+                         (!use2EffectVal || filterValEffectFn2(effect.Value)))))
                 .OrderBy(spell => spell.ID)
                 .ToList();
 

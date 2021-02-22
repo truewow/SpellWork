@@ -81,7 +81,20 @@ namespace SpellWork.Extensions
                 ulong.TryParse(valStr.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out num);
             else
                 ulong.TryParse(valStr, out num);
-            ulong.TryParse(val.ToString(), out num);
+            return num;
+        }
+
+        public static long ToLong(this object val)
+        {
+            if (val == null)
+                return 0;
+            var valStr = val.ToString();
+
+            long num;
+            if (valStr.StartsWith("0x"))
+                long.TryParse(valStr.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out num);
+            else
+                long.TryParse(valStr, out num);
             return num;
         }
 
