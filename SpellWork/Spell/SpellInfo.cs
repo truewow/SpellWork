@@ -15,39 +15,60 @@ namespace SpellWork.Spell
 {
     public class SpellInfo
     {
+        [IgnoreAutopopulatedFilterValue]
         public SpellEntry Spell { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellNameEntry SpellName { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellAuraOptionsEntry AuraOptions { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellAuraRestrictionsEntry AuraRestrictions { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellCastingRequirementsEntry CastingRequirements { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellCategoriesEntry Categories { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellClassOptionsEntry ClassOptions { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellCooldownsEntry Cooldowns { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellEquippedItemsEntry EquippedItems { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellInterruptsEntry Interrupts { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellLevelsEntry Levels { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellMiscEntry Misc { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public List<SpellPowerEntry> Powers { get; } = new List<SpellPowerEntry>();
+        [IgnoreAutopopulatedFilterValue]
         public SpellReagentsEntry Reagents { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public List<SpellReagentsCurrencyEntry> ReagentsCurrency { get; } = new List<SpellReagentsCurrencyEntry>();
+        [IgnoreAutopopulatedFilterValue]
         public SpellScalingEntry Scaling { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellShapeshiftEntry Shapeshift { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public List<SpellTargetRestrictionsEntry> TargetRestrictions { get; } = new List<SpellTargetRestrictionsEntry>();
+        [IgnoreAutopopulatedFilterValue]
         public SpellTotemsEntry Totems { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellXSpellVisualEntry SpellXSpellVisual { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public List<SpellEffectEntry> Effects { get; } = new List<SpellEffectEntry>(32);
+        [IgnoreAutopopulatedFilterValue]
         public SpellProcsPerMinuteEntry ProcsPerMinute { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellDescriptionVariablesEntry DescriptionVariables { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellDurationEntry DurationEntry { get; set; }
+        [IgnoreAutopopulatedFilterValue]
         public SpellRangeEntry Range { get; set; }
 
         // Helper
+        [IgnoreAutopopulatedFilterValue]
         public readonly IDictionary<int, SpellEffectInfo> SpellEffectInfoStore = new ConcurrentDictionary<int, SpellEffectInfo>();
-
-        #region SpellDuration
-        public int Duration => DurationEntry?.Duration ?? 0;
-        public int MaxDuration => DurationEntry?.MaxDuration ?? 0;
-        #endregion
 
         #region Spell
         public int ID => (int)SpellName.ID;
@@ -131,6 +152,11 @@ namespace SpellWork.Spell
         public uint ProcFlagsEx => (uint)(AuraOptions?.ProcTypeMask[1] ?? 0);
         public uint CumulativeAura => AuraOptions?.CumulativeAura ?? 0;
         public int ProcCooldown => AuraOptions?.ProcCategoryRecovery ?? 0;
+        #endregion
+
+        #region SpellDuration
+        public int Duration => DurationEntry?.Duration ?? 0;
+        public int MaxDuration => DurationEntry?.MaxDuration ?? 0;
         #endregion
 
         #region SpellLevels
@@ -993,13 +1019,14 @@ namespace SpellWork.Spell
 
     public class SpellEffectInfo
     {
+        [IgnoreAutopopulatedFilterValue]
         public SpellEffectEntry SpellEffect { get; set; }
 
+        [IgnoreAutopopulatedFilterValue("Not useful")]
         public uint ID => SpellEffect.ID;
 
+        [IgnoreAutopopulatedFilterValue("Filter using ID field on SpellInfo level instead")]
         public int SpellID => SpellEffect.SpellID;
-
-        public int DifficultyID => SpellEffect.DifficultyID;
 
         public int Effect => SpellEffect.Effect;
         public int EffectIndex => SpellEffect.EffectIndex;
@@ -1038,6 +1065,8 @@ namespace SpellWork.Spell
 
         public float EffectPosFacing => SpellEffect.EffectPosFacing;
         public float BonusCoefficientFromAP => SpellEffect.BonusCoefficientFromAP;
+
+        public int DifficultyID => SpellEffect.DifficultyID;
 
         public SpellEffectInfo(SpellEffectEntry spellEffectEntry)
         {

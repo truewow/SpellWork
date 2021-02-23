@@ -202,6 +202,9 @@ namespace SpellWork.Extensions
                 if (!(str is FieldInfo) && !(str is PropertyInfo))
                     continue;
 
+                if (str.GetCustomAttribute<IgnoreAutopopulatedFilterValueAttribute>() != null)
+                    continue;
+
                 var dr = dt.NewRow();
                 dr["ID"] = str;
                 dr["NAME"] = $"({i:000}) {str.Name}";
@@ -267,13 +270,24 @@ namespace SpellWork.Extensions
     }
 
     [AttributeUsage(AttributeTargets.Field)]
-    public class FullNameAttribute : Attribute
+    public sealed class FullNameAttribute : Attribute
     {
         public string FullName { get; }
 
         public FullNameAttribute(string fullName)
         {
             FullName = fullName;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public sealed class IgnoreAutopopulatedFilterValueAttribute : Attribute
+    {
+        public string Reason { get; }
+
+        public IgnoreAutopopulatedFilterValueAttribute(string reason = "")
+        {
+            Reason = reason;
         }
     }
 }
