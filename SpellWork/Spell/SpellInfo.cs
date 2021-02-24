@@ -1025,7 +1025,7 @@ namespace SpellWork.Spell
         [IgnoreAutopopulatedFilterValue("Not useful")]
         public uint ID => SpellEffect.ID;
 
-        [IgnoreAutopopulatedFilterValue("Filter using ID field on SpellInfo level instead")]
+        [IgnoreAutopopulatedFilterValue("Filter using ID field on SpellInfo instead")]
         public int SpellID => SpellEffect.SpellID;
 
         public int Effect => SpellEffect.Effect;
