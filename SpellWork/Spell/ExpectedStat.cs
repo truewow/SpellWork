@@ -121,7 +121,7 @@ namespace SpellWork.Spell
                 case SpellEffects.SPELL_EFFECT_APPLY_AREA_AURA_ENEMY:
                 case SpellEffects.SPELL_EFFECT_APPLY_AREA_AURA_OWNER:
                 case SpellEffects.SPELL_EFFECT_APPLY_AURA_ON_PET:
-                case SpellEffects.SPELL_EFFECT_202:
+                case SpellEffects.SPELL_EFFECT_APPLY_AREA_AURA_SUMMONS:
                 case SpellEffects.SPELL_EFFECT_APPLY_AREA_AURA_PARTY_NONRANDOM:
                     switch ((AuraType)effect.EffectAura)
                     {
