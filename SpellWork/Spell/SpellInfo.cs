@@ -215,11 +215,12 @@ namespace SpellWork.Spell
                     ++i;
                     proc >>= 1;
                 }
+                i = 32;
                 proc = ProcFlagsEx;
                 while (proc != 0)
                 {
                     if ((proc & 1) != 0)
-                        sb.AppendFormatLine("  {0}", SpellEnums.ProcFlagDesc[i + 32]);
+                        sb.AppendFormatLine("  {0}", SpellEnums.ProcFlagDesc[i]);
                     ++i;
                     proc >>= 1;
                 }
@@ -603,11 +604,11 @@ namespace SpellWork.Spell
                 rtb.SetDefaultStyle();
             }
 
-            if (ProcFlags != 0)
+            if (ProcFlags != 0 || ProcFlagsEx != 0)
             {
                 rtb.SetBold();
-                rtb.AppendFormatLine("Proc flag 0x{0:X8}, chance: {1}%, charges: {2}, cooldown: {3}",
-                    ProcFlags, ProcChance, ProcCharges, ProcCooldown);
+                rtb.AppendFormatLine("Proc flag 0x{0:X8}, flagEx 0x{4:X8}, chance: {1}%, charges: {2}, cooldown: {3}",
+                    ProcFlags, ProcChance, ProcCharges, ProcCooldown, ProcFlagsEx);
                 rtb.SetDefaultStyle();
                 rtb.AppendFormatLine(Separator);
                 rtb.AppendText(ProcInfo);
