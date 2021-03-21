@@ -61,9 +61,9 @@ namespace SpellWork.Spell
                 var name = new StringBuilder();
                 var toolTip = new StringBuilder();
 
-                name.AppendFormat("{0} - {1} ", spell.ID, spell.Name);
+                name.AppendFormat("{0} - {1} ", spell.ID, spell.NameAndSubname);
 
-                toolTip.AppendFormatLine("Spell Name: {0}",  spell.Name);
+                toolTip.AppendFormatLine("Spell Name: {0}",  spell.NameAndSubname);
                 toolTip.AppendFormatLine("Description: {0}", spell.Description);
                 toolTip.AppendFormatLine("ToolTip: {0}",     spell.Tooltip);
 

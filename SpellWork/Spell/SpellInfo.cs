@@ -73,8 +73,11 @@ namespace SpellWork.Spell
         #region Spell
         public int ID => (int)SpellName.ID;
         public string Name => SpellName.Name;
+        public string NameSubtext => Spell?.NameSubtext ?? string.Empty;
         public string Description => Spell?.Description ?? string.Empty;
         public string Tooltip => Spell?.AuraDescription ?? string.Empty;
+
+        public string NameAndSubname => NameSubtext.Length == 0 ? Name : string.Format("{0} ({1})", Name, NameSubtext);
         #endregion
 
         #region SpellMisc
@@ -243,7 +246,7 @@ namespace SpellWork.Spell
 
             rtb.SetBold();
             rtb.AppendFormatLine("ID - {0} {1}{2}",
-                ID, Name, Scaling != null ? $" (Level {DBC.DBC.SelectedLevel})" : string.Empty);
+                ID, NameAndSubname, Scaling != null ? $" (Level {DBC.DBC.SelectedLevel})" : string.Empty);
             rtb.SetDefaultStyle();
 
             rtb.AppendFormatLine(Separator);
@@ -780,7 +783,7 @@ namespace SpellWork.Spell
                             select new
                             {
                                 SpellID = spell.ID,
-                                SpellName = spell.Name,
+                                SpellName = spell.NameAndSubname,
                                 SkillId = skill.SkillLine
                             };
 

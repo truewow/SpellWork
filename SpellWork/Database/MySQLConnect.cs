@@ -32,7 +32,7 @@ namespace SpellWork.Database
         private static string GetSpellName(uint id)
         {
             if (DBC.DBC.SpellInfoStore.ContainsKey((int)id))
-                return DBC.DBC.SpellInfoStore[(int)id].Name;
+                return DBC.DBC.SpellInfoStore[(int)id].NameAndSubname;
 
             Dropped.Add($"DELETE FROM `spell_proc_event` WHERE `entry` IN ({id.ToUInt32()});\r\n");
             return string.Empty;

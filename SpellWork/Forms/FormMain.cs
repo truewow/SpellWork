@@ -377,7 +377,7 @@ namespace SpellWork.Forms
         {
             var SpellFamilyFlags = _tvFamilyTree.GetMask();
             var statusproc =
-                $"Spell ({spell.ID}) {spell.Name}. Proc Event ==> SchoolMask 0x{_clbSchools.GetFlagsValue():X2}, SpellFamily {_cbProcFitstSpellFamily.SelectedValue}, 0x{SpellFamilyFlags[0]:X8} {SpellFamilyFlags[1]:X8} {SpellFamilyFlags[2]:X8} {SpellFamilyFlags[3]:X8}, procFlag 0x{_clbProcFlags.GetFlagsValue():X8}, procEx 0x{_clbProcFlagEx.GetFlagsValue():X8}, PPMRate {_tbPPM.Text.ToFloat()}";
+                $"Spell ({spell.ID}) {spell.NameAndSubname}. Proc Event ==> SchoolMask 0x{_clbSchools.GetFlagsValue():X2}, SpellFamily {_cbProcFitstSpellFamily.SelectedValue}, 0x{SpellFamilyFlags[0]:X8} {SpellFamilyFlags[1]:X8} {SpellFamilyFlags[2]:X8} {SpellFamilyFlags[3]:X8}, procFlag 0x{_clbProcFlags.GetFlagsValue():X8}, procEx 0x{_clbProcFlagEx.GetFlagsValue():X8}, PPMRate {_tbPPM.Text.ToFloat()}";
 
             _gSpellProcEvent.Text = "Spell Proc Event    " + statusproc;
         }
@@ -452,7 +452,7 @@ namespace SpellWork.Forms
                             new
                             {
                                 SpellID = spell.ID,
-                                SpellName = spell.Name + " " + spell.Description,
+                                SpellName = spell.NameAndSubname + " " + spell.Description,
                                 skill.SkillLine
                             };
 
@@ -608,7 +608,7 @@ namespace SpellWork.Forms
         {
             var spellFamilyFlags = _tvFamilyTree.GetMask();
             // spell comment
-            var comment = $"-- ({ProcInfo.SpellProc.ID}) {ProcInfo.SpellProc.Name}";
+            var comment = $"-- ({ProcInfo.SpellProc.ID}) {ProcInfo.SpellProc.NameAndSubname}";
             // drop query
             var drop = $"DELETE FROM `spell_proc_event` WHERE `entry` IN ({ProcInfo.SpellProc.ID});";
             // insert query
@@ -659,13 +659,13 @@ namespace SpellWork.Forms
         private void LvSpellListRetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
             e.Item =
-                new ListViewItem(new[] { _spellList[e.ItemIndex].ID.ToString(), _spellList[e.ItemIndex].Name, (_spellList[e.ItemIndex].Misc?.ID ?? 0).ToString() });
+                new ListViewItem(new[] { _spellList[e.ItemIndex].ID.ToString(), _spellList[e.ItemIndex].NameAndSubname, (_spellList[e.ItemIndex].Misc?.ID ?? 0).ToString() });
         }
 
         private void LvProcSpellListRetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
             e.Item =
-                new ListViewItem(new[] { _spellProcList[e.ItemIndex].ID.ToString(), _spellProcList[e.ItemIndex].Name });
+                new ListViewItem(new[] { _spellProcList[e.ItemIndex].ID.ToString(), _spellProcList[e.ItemIndex].NameAndSubname });
         }
 
         private void LvSqlDataRetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)

@@ -115,7 +115,7 @@ namespace SpellWork.Forms
 
         private void SpellListRetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
-            e.Item = new ListViewItem(new[] { _spellList[e.ItemIndex].ID.ToString(), _spellList[e.ItemIndex].Name, (_spellList[e.ItemIndex].Misc?.ID ?? 0).ToString() });
+            e.Item = new ListViewItem(new[] { _spellList[e.ItemIndex].ID.ToString(), _spellList[e.ItemIndex].NameAndSubname, (_spellList[e.ItemIndex].Misc?.ID ?? 0).ToString() });
         }
 
         private void ButtonSearch_Click(object sender, EventArgs e)
