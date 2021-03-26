@@ -49,6 +49,7 @@ namespace SpellWork.DBC
         public static Storage<SpellMiscEntry>                   SpellMisc { get; set; }
         public static Storage<SpellEquippedItemsEntry>          SpellEquippedItems { get; set; }
         public static Storage<SpellInterruptsEntry>             SpellInterrupts { get; set; }
+        public static Storage<SpellLabelEntry>                  SpellLabel { get; set; }
         public static Storage<SpellLevelsEntry>                 SpellLevels { get; set; }
         public static Storage<SpellPowerEntry>                  SpellPower { get; set; }
         public static Storage<SpellRadiusEntry>                 SpellRadius { get; set; }
@@ -333,6 +334,18 @@ namespace SpellWork.DBC
                     }
 
                     SpellInfoStore[spellEquippedItems.SpellID].EquippedItems = spellEquippedItems;
+                }
+            }), Task.Run(() =>
+            {
+                foreach (var spellLabel in SpellLabel.Values)
+                {
+                    if (!SpellInfoStore.ContainsKey(spellLabel.SpellID))
+                    {
+                        Console.WriteLine($"SpellLabel: Unknown spell {spellLabel.SpellID} referenced, ignoring!");
+                        continue;
+                    }
+
+                    SpellInfoStore[spellLabel.SpellID].Labels.Add(spellLabel.LabelID);
                 }
             }), Task.Run(() =>
             {

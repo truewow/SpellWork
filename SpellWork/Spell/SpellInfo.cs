@@ -36,6 +36,8 @@ namespace SpellWork.Spell
         [IgnoreAutopopulatedFilterValue]
         public SpellInterruptsEntry Interrupts { get; set; }
         [IgnoreAutopopulatedFilterValue]
+        public ISet<uint> Labels { get; } = new HashSet<uint>();
+        [IgnoreAutopopulatedFilterValue]
         public SpellLevelsEntry Levels { get; set; }
         [IgnoreAutopopulatedFilterValue]
         public SpellMiscEntry Misc { get; set; }
@@ -771,13 +773,19 @@ namespace SpellWork.Spell
             AuraModTypeName(rtb, effect);
 
             var classMask = Array.ConvertAll(effect.EffectSpellClassMask, i => (uint)i);
+            var label = GetSpellLabelAffectingOtherSpells(effect);
 
-            if (classMask[0] != 0 || classMask[1] != 0 || classMask[2] != 0 || classMask[3] != 0)
+            if (classMask[0] != 0 || classMask[1] != 0 || classMask[2] != 0 || classMask[3] != 0 || label != null)
             {
-                rtb.AppendFormatLine("SpellClassMask = {0:X8} {1:X8} {2:X8} {3:X8}", classMask[0], classMask[1], classMask[2], classMask[3]);
+                if (classMask[0] != 0 || classMask[1] != 0 || classMask[2] != 0 || classMask[3] != 0)
+                    rtb.AppendFormatLine("SpellClassMask = {0:X8} {1:X8} {2:X8} {3:X8}", classMask[0], classMask[1], classMask[2], classMask[3]);
+
+                if (label != null)
+                    rtb.AppendFormatLine("SpellLabel = {0}", label.Value);
 
                 var query = from spell in DBC.DBC.SpellInfoStore.Values
-                            where spell.SpellFamilyName == SpellFamilyName && spell.SpellClassMask.ContainsElement(classMask)
+                            where (spell.SpellFamilyName == SpellFamilyName && spell.SpellClassMask.ContainsElement(classMask))
+                                || (label != null && spell.Labels.Contains(label.Value))
                             join sk in DBC.DBC.SkillLineAbility.Values on spell.ID equals sk.Spell into temp
                             from skill in temp.DefaultIfEmpty(new SkillLineAbilityEntry())
                             select new
@@ -1020,6 +1028,22 @@ namespace SpellWork.Spell
         public bool HasTargetB(Targets target)
         {
             return Effects.Any(eff => eff != null && eff.ImplicitTarget[1] == (uint)target);
+        }
+
+        private uint? GetSpellLabelAffectingOtherSpells(SpellEffectEntry effect)
+        {
+            switch ((AuraType)effect.EffectAura)
+            {
+                case AuraType.SPELL_AURA_MOD_RECOVERY_RATE_BY_SPELL_LABEL:
+                case AuraType.SPELL_AURA_SUPPRESS_ITEM_PASSIVE_EFFECT_BY_SPELL_LABEL:
+                case AuraType.SPELL_AURA_CAST_WHILE_WALKING_BY_SPELL_LABEL:
+                case AuraType.SPELL_AURA_MOD_AURA_TIME_RATE_BY_SPELL_LABEL:
+                    return (uint)effect.EffectMiscValue[0];
+                case AuraType.SPELL_AURA_ADD_PCT_MODIFIER_BY_SPELL_LABEL:
+                case AuraType.SPELL_AURA_ADD_FLAT_MODIFIER_BY_SPELL_LABEL:
+                    return (uint)effect.EffectMiscValue[1];
+            }
+            return null;
         }
     }
 
