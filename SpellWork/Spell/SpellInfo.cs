@@ -667,9 +667,9 @@ namespace SpellWork.Spell
                             randPropPoints = DBC.DBC.RandPropPoints.Last().Value;
 
                         if (Scaling.Class == -8 || Scaling.Class == -9)
-                            value = Scaling.Class == -8 ? randPropPoints.DamageReplaceStat : randPropPoints.DamageSecondary;
+                            value = Scaling.Class == -8 ? randPropPoints.DamageReplaceStatF : randPropPoints.DamageSecondaryF;
                         else
-                            value = randPropPoints.Superior[0];
+                            value = randPropPoints.SuperiorF[0];
                     }
                     else
                     {
