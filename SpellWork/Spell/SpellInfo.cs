@@ -124,6 +124,11 @@ namespace SpellWork.Spell
         public int Mechanic => Categories?.Mechanic ?? 0;
         #endregion
 
+        #region
+        public int ChargeRecoveryTime => DBC.DBC.SpellCategory.TryGetValue(ChargeCategory, out var category) ? category.ChargeRecoveryTime : 0;
+        public sbyte MaxCharges => DBC.DBC.SpellCategory.TryGetValue(ChargeCategory, out var category) ? category.MaxCharges : (sbyte)0;
+        #endregion
+
         #region SpellShapeshift
         // SpellShapeshift
         public long Stances => ((Shapeshift?.ShapeshiftMask[0] ?? 0) << 32) | (Shapeshift?.ShapeshiftMask[1] ?? 0);
@@ -136,6 +141,7 @@ namespace SpellWork.Spell
         public int RecoveryTime => Cooldowns?.RecoveryTime ?? 0;
         public int StartRecoveryTime => Cooldowns?.StartRecoveryTime ?? 0;
         public int StartRecoveryCategory => Categories?.StartRecoveryCategory ?? 0;
+        public int ChargeCategory => Categories?.ChargeCategory ?? 0;
         #endregion
 
         #region SpellAuraRestrictions
@@ -504,10 +510,11 @@ namespace SpellWork.Spell
                 rtb.AppendFormatLine("Cast Time: (ID {0}): {1}", CastingTimeIndex, castTime);
             }
 
-            if (RecoveryTime != 0 || CategoryRecoveryTime != 0 || StartRecoveryCategory != 0)
+            if (RecoveryTime != 0 || CategoryRecoveryTime != 0 || StartRecoveryCategory != 0 || ChargeCategory != 0)
             {
                 rtb.AppendFormatLine("RecoveryTime: {0} ms, CategoryRecoveryTime: {1} ms", RecoveryTime, CategoryRecoveryTime);
                 rtb.AppendFormatLine("StartRecoveryCategory = {0}, StartRecoveryTime = {1:F} ms", StartRecoveryCategory, StartRecoveryTime);
+                rtb.AppendFormatLine("ChargeCategory = {0}, ChargeRecoveryTime = {1:F} ms, MaxCharges = {2}", ChargeCategory, ChargeRecoveryTime, MaxCharges);
             }
 
             if (DurationEntry != null)

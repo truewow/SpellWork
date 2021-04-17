@@ -108,6 +108,7 @@
     <Compile Include="DBC\Structures\SpellCastingRequirementsEntry.cs" />
     <Compile Include="DBC\Structures\SpellCastTimesEntry.cs" />
     <Compile Include="DBC\Structures\SpellCategoriesEntry.cs" />
+    <Compile Include="DBC\Structures\SpellCategoryEntry.cs" />
     <Compile Include="DBC\Structures\SpellClassOptionsEntry.cs" />
     <Compile Include="DBC\Structures\SpellCooldownsEntry.cs" />
     <Compile Include="DBC\Structures\SpellLabelEntry.cs" />

@@ -41,6 +41,7 @@ namespace SpellWork.DBC
         public static Storage<SpellCastingRequirementsEntry>    SpellCastingRequirements { get; set; }
         public static Storage<SpellCastTimesEntry>              SpellCastTimes { get; set; }
         public static Storage<SpellCategoriesEntry>             SpellCategories { get; set; }
+        public static Storage<SpellCategoryEntry>               SpellCategory { get; set; }
         public static Storage<SpellClassOptionsEntry>           SpellClassOptions { get; set; }
         public static Storage<SpellCooldownsEntry>              SpellCooldowns { get; set; }
         public static Storage<SpellDescriptionVariablesEntry>   SpellDescriptionVariables { get; set; }
