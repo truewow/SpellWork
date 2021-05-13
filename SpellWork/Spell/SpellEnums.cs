@@ -2103,10 +2103,27 @@ namespace SpellWork.Spell
     public enum SpellEffectAttributes : uint
     {
         None                                    = 0,
-        UnaffectedByInvulnerability             = 0x000001, // not cancelled by immunities
-        NoScaleWithStack                        = 0x000040,
-        StackAuraAmountOnRecast                 = 0x008000, // refreshing periodic auras with this attribute will add remaining damage to new aura
-        AllowAnyExplicitTarget                  = 0x100000,
+        NoImmunity                              = 0x000001,
+        PositionIsFacingRelative                = 0x000002,
+        JumpChargeUnitMeleeRange                = 0x000004,
+        JumpChargeUnitStrictPathCheck           = 0x000008,
+        ExcludeOwnParty                         = 0x000010,
+        AlwaysAoeLineOfSight                    = 0x000020,
+        SuppressPointsStacking                  = 0x000040,
+        ChainFromInitialTarget                  = 0x000080,
+        UncontrolledNoBackwards                 = 0x000100,
+        AuraPointsStack                         = 0x000200,
+        NoCopyDamageInterruptsOrProcs           = 0x000400,
+        AddTargetCombatReachToAOE               = 0x000800,
+        IsHarmful                               = 0x001000,
+        ForceScaleToOverrideCameraMinHeight     = 0x002000,
+        PlayersOnly                             = 0x004000,
+        ComputePointsOnlyAtCastTime             = 0x008000,
+        EnforceLineOfSightToChainTargets        = 0x010000,
+        AreaEffectsUseTargetRadius              = 0x020000,
+        TeleportWithVehicle                     = 0x040000,
+        ScalePointsByChallengeModeDamageScaler  = 0x080000,
+        DontFailSpellOnTargetingFailure         = 0x100000,
         IgnoreDuringCooldownTimeRateCalculation = 0x800000
     };
 
