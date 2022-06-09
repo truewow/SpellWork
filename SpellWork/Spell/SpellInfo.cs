@@ -175,18 +175,35 @@ namespace SpellWork.Spell
                 _rtb.AppendLine();
             }
 
+            _rtb.AppendLine();
+
             if (_spell.InterruptFlags != 0)
-                _rtb.AppendFormatLine("Casting interrupt flags: 0x{0:X8} ({1})", _spell.InterruptFlags, (SpellInterruptFlags)_spell.InterruptFlags);
+            {
+                if ((_spell.InterruptFlags & (uint)SpellInterruptFlags.SPELL_INTERRUPT_FLAG_ALL) != 0 || _spell.InterruptFlags > (uint)SpellInterruptFlags.SPELL_INTERRUPT_FLAG_ALL)
+                    _rtb.AppendFormatLine("Casting interrupt flags: 0x{0:X8} ({1})", _spell.InterruptFlags, (SpellInterruptFlags)_spell.InterruptFlags);
+                else
+                    _rtb.AppendFormatLine("Casting interrupt flags: 0x{0:X8} ({1})", _spell.InterruptFlags, (SpellAuraInterruptFlags)_spell.InterruptFlags);
+            }
             else
                 _rtb.AppendFormatLine("Casting interrupt Flags: 0");
+            _rtb.AppendLine();
 
             if (_spell.AuraInterruptFlags != 0)
                 _rtb.AppendFormatLine("Aura interrupt flags: 0x{0:X8} ({1})", _spell.AuraInterruptFlags, (SpellAuraInterruptFlags)_spell.AuraInterruptFlags);
             else
                 _rtb.AppendFormatLine("Aura interrupt Flags: 0");
 
+            _rtb.AppendLine();
+
             if (_spell.ChannelInterruptFlags != 0)
-                _rtb.AppendFormatLine("Channel interrupt flags: 0x{0:X8} ({1})", _spell.ChannelInterruptFlags, (SpellChannelInterruptFlags)_spell.ChannelInterruptFlags);
+            {
+                var interruptFlag = _spell.ChannelInterruptFlags;
+                if (((interruptFlag & (uint)SpellChannelInterruptFlags.CHANNEL_INTERRUPT_FLAG_INTERRUPT) != 0 || (interruptFlag & (uint)SpellChannelInterruptFlags.CHANNEL_FLAG_DELAY) != 0) 
+                    && (interruptFlag &~ (uint)SpellChannelInterruptFlags.CHANNEL_INTERRUPT_FLAG_ALL) == 0)
+                    _rtb.AppendFormatLine("Channel interrupt flags: 0x{0:X8} ({1})", _spell.ChannelInterruptFlags, (SpellChannelInterruptFlags)_spell.ChannelInterruptFlags);
+                else
+                    _rtb.AppendFormatLine("Channel interrupt flags: 0x{0:X8} ({1})", _spell.ChannelInterruptFlags, (SpellAuraInterruptFlags)_spell.ChannelInterruptFlags);
+            }
             else
                 _rtb.AppendFormatLine("Channel interrupt Flags: 0");
 
