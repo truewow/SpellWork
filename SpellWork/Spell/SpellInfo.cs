@@ -198,11 +198,10 @@ namespace SpellWork.Spell
             if (_spell.ChannelInterruptFlags != 0)
             {
                 var interruptFlag = _spell.ChannelInterruptFlags;
-                if (((interruptFlag & (uint)SpellChannelInterruptFlags.CHANNEL_INTERRUPT_FLAG_INTERRUPT) != 0 || (interruptFlag & (uint)SpellChannelInterruptFlags.CHANNEL_FLAG_DELAY) != 0) 
-                    && (interruptFlag &~ (uint)SpellChannelInterruptFlags.CHANNEL_INTERRUPT_FLAG_ALL) == 0)
-                    _rtb.AppendFormatLine("Channel interrupt flags: 0x{0:X8} ({1})", _spell.ChannelInterruptFlags, (SpellChannelInterruptFlags)_spell.ChannelInterruptFlags);
+                if ((interruptFlag &~ (uint)SpellChannelInterruptFlags.CHANNEL_INTERRUPT_FLAG_ALL) == 0)
+                    _rtb.AppendFormatLine("Channel interrupt flags: 0x{0:X8} ({1})", interruptFlag, (SpellChannelInterruptFlags)interruptFlag);
                 else
-                    _rtb.AppendFormatLine("Channel interrupt flags: 0x{0:X8} ({1})", _spell.ChannelInterruptFlags, (SpellAuraInterruptFlags)_spell.ChannelInterruptFlags);
+                    _rtb.AppendFormatLine("Channel interrupt flags: 0x{0:X8} ({1})", interruptFlag, (SpellAuraInterruptFlags)interruptFlag);
             }
             else
                 _rtb.AppendFormatLine("Channel interrupt Flags: 0");
