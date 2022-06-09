@@ -1505,6 +1505,13 @@ namespace SpellWork.Spell
         SPELL_ATTR0_CU_DEPRECATED_LIQUID_AURA        = 0x00400000, // DO NOT REUSE
         SPELL_ATTR0_CU_IS_TALENT                     = 0x00800000,
         SPELL_ATTR0_CU_AURA_CANNOT_BE_SAVED          = 0x01000000,
+        SPELL_ATTR0_CU_UNK1                          = 0x02000000,
+        SPELL_ATTR0_CU_UNK2                          = 0x04000000,
+        SPELL_ATTR0_CU_UNK3                          = 0x08000000,
+        SPELL_ATTR0_CU_UNK4                          = 0x10000000,
+        SPELL_ATTR0_CU_UNK5                          = 0x20000000,
+        SPELL_ATTR0_CU_UNK6                          = 0x40000000,
+        SPELL_ATTR0_CU_UNK7                          = 0x80000000,
     };
 
     [Flags]
