@@ -175,8 +175,20 @@ namespace SpellWork.Spell
                 _rtb.AppendLine();
             }
 
-            _rtb.AppendFormatLine("Interrupt Flags: 0x{0:X8}, AuraIF 0x{1:X8}, ChannelIF 0x{2:X8}",
-                _spell.InterruptFlags, _spell.AuraInterruptFlags, _spell.ChannelInterruptFlags);
+            if (_spell.InterruptFlags != 0)
+                _rtb.AppendFormatLine("Casting interrupt flags: 0x{0:X8} ({1})", _spell.InterruptFlags, (SpellInterruptFlags)_spell.InterruptFlags);
+            else
+                _rtb.AppendFormatLine("Casting interrupt Flags: 0");
+
+            if (_spell.AuraInterruptFlags != 0)
+                _rtb.AppendFormatLine("Aura interrupt flags: 0x{0:X8} ({1})", _spell.AuraInterruptFlags, (SpellAuraInterruptFlags)_spell.AuraInterruptFlags);
+            else
+                _rtb.AppendFormatLine("Aura interrupt Flags: 0");
+
+            if (_spell.ChannelInterruptFlags != 0)
+                _rtb.AppendFormatLine("Channel interrupt flags: 0x{0:X8} ({1})", _spell.ChannelInterruptFlags, (SpellChannelInterruptFlags)_spell.ChannelInterruptFlags);
+            else
+                _rtb.AppendFormatLine("Channel interrupt Flags: 0");
 
             if (_spell.CasterAuraState != 0)
                 _rtb.AppendFormatLine("CasterAuraState = {0} ({1})", _spell.CasterAuraState, (AuraState)_spell.CasterAuraState);
