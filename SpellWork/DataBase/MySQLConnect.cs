@@ -256,7 +256,6 @@ namespace SpellWork.Database
         {
             using (_conn = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString))
             {
-                // SpellDifficulty
                 var query = @"SELECT id, spellid0, spellid1, spellid2, spellid3 FROM spelldifficulty_dbc ORDER BY id ASC";
                 DBC.DBC.SpellDifficulty.Clear();
                 _command = new MySqlCommand(query, _conn);
@@ -308,6 +307,33 @@ namespace SpellWork.Database
                     DBC.DBC.SpellDifficulty.Add(pair.Key, pair.Value);
 
                 _conn.Close();
+            }
+        }
+
+        public static void LoadCustomSpellAttributes()
+        {
+            using (_conn = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString))
+            {
+                var query = @"SELECT entry, attributes FROM spell_custom_attr ORDER BY entry ASC";
+                DBC.DBC._spellCustomAttributes.Clear();
+                _command = new MySqlCommand(query, _conn);
+                _conn.Open();
+
+                using (var reader = _command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        uint spellId = reader.GetUInt32(0);
+                        if (!DBC.DBC.Spell.ContainsKey(spellId))
+                            continue;
+
+                        uint attributes = reader.GetUInt32(1);
+                        if (attributes == 0)
+                            continue;
+
+                        DBC.DBC._spellCustomAttributes.Add(spellId, attributes);
+                    }
+                }
             }
         }
 

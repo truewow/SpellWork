@@ -71,6 +71,9 @@ namespace SpellWork.Spell
             if (_spell.AttributesEx7 != 0)
                 _rtb.AppendFormatLine("AttributesEx7: 0x{0:X8} ({1})", _spell.AttributesEx7, (SpellAtributeEx7)_spell.AttributesEx7);
 
+            if (DBC.DBC._spellCustomAttributes.ContainsKey(_spell.ID))
+                _rtb.AppendFormatLine("AttributesCu: 0x{0:X8} ({1})", DBC.DBC._spellCustomAttributes[_spell.ID], (SpellCustomAttributes)(DBC.DBC._spellCustomAttributes[_spell.ID]));
+
             _rtb.AppendLine(_line);
 
             if (_spell.Targets != 0)

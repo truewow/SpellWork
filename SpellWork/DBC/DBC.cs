@@ -40,6 +40,7 @@ namespace SpellWork.DBC
 
         // DB
         public static List<Item> ItemTemplate = new List<Item>();
+        public static Dictionary<uint /*spellId*/, uint/*Attributes*/>  _spellCustomAttributes = new Dictionary<uint, uint>();
 
         // Locale
         public static LocalesDBC Locale { get; set; }
