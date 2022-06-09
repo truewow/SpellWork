@@ -104,6 +104,7 @@ namespace SpellWork.Forms
                 // read db data
                 DBC.DBC.ItemTemplate = MySqlConnection.SelectItems();
                 MySqlConnection.LoadSpellsDBCFromDB();
+                MySqlConnection.LoadSpellDifficultyFromDB();
             }
             else
             {
