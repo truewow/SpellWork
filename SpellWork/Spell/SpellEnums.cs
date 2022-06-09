@@ -1643,7 +1643,7 @@ namespace SpellWork.Spell
     };
 
     [Flags]
-    enum SpellAuraInterruptFlags : uint
+    public enum SpellAuraInterruptFlags : uint
     {
         AURA_INTERRUPT_FLAG_HITBYSPELL          = 0x00000001,   // 0    removed when getting hit by a negative spell?
         AURA_INTERRUPT_FLAG_TAKE_DAMAGE         = 0x00000002,   // 1    removed by any damage
