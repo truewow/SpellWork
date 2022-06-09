@@ -470,8 +470,10 @@ namespace SpellWork.Spell
 
         private void AuraModTypeName(int index)
         {
-            var aura    = (AuraType)_spell.EffectApplyAuraName[index];
-            var misc          = _spell.EffectMiscValue[index];
+            var applyAuraName       = (AuraType)_spell.EffectApplyAuraName[index];
+            var miscValueA          = _spell.EffectMiscValue[index];
+            var miscValueB          = _spell.EffectMiscValueB[index];
+            var effectAplitude      = _spell.EffectAmplitude[index];
 
             if (_spell.EffectApplyAuraName[index] == 0)
             {
@@ -481,58 +483,67 @@ namespace SpellWork.Spell
                     switch ((SpellEffects)_spell.Effect[index])
                     {
                         case SpellEffects.SPELL_EFFECT_ACTIVATE_OBJECT:
-                            _rtb.AppendFormat(" ({0})", (GameObjectActions)_spell.EffectMiscValue[index]);
+                            _rtb.AppendFormat(" ({0})", (GameObjectActions)miscValueA);
+                            break;
+                        case SpellEffects.SPELL_EFFECT_SUMMON:
+                            _rtb.AppendFormat(" (Object entry: {0})", miscValueA);
                             break;
                         default:
                             break;
                     }
                     _rtb.AppendLine();
                 }
-                _rtb.AppendFormatLineIfNotNull("EffectMiscValueB = {0}", _spell.EffectMiscValueB[index]);
-                _rtb.AppendFormatLineIfNotNull("EffectAmplitude = {0}",  _spell.EffectAmplitude[index]);
+                _rtb.AppendFormat("EffectMiscValueB = {0}", miscValueB);
+                if ((SpellEffects)_spell.Effect[index] == SpellEffects.SPELL_EFFECT_SUMMON && DBC.DBC.SummonProperties.ContainsKey((uint)miscValueB))
+                {
+                    _rtb.AppendFormat(", summon property type: ({0})", (SummonCategory)DBC.DBC.SummonProperties[(uint)miscValueB].Type);
+                }
+
+                _rtb.AppendLine();
+                _rtb.AppendFormatLineIfNotNull("EffectAmplitude = {0}", effectAplitude);
 
                 return;
             }
 
-            _rtb.AppendFormat("Aura Id {0:D} ({0})", aura);
+            _rtb.AppendFormat("Aura Id {0:D} ({0})", applyAuraName);
             _rtb.AppendFormat(", value = {0}", _spell.EffectBasePoints[index] + 1);
-            _rtb.AppendFormat(", misc = {0} (", misc);
+            _rtb.AppendFormat(", misc = {0} (", miscValueA);
 
-            switch (aura)
+            switch (applyAuraName)
             {
                 case AuraType.SPELL_AURA_MOD_STAT:
-                    _rtb.Append((UnitMods)misc);
+                    _rtb.Append((UnitMods)miscValueA);
                     break;
                 case AuraType.SPELL_AURA_MOD_RATING:
-                    _rtb.Append((CombatRating)misc);
+                    _rtb.Append((CombatRating)miscValueA);
                     break;
                 case AuraType.SPELL_AURA_ADD_FLAT_MODIFIER:
                 case AuraType.SPELL_AURA_ADD_PCT_MODIFIER:
-                    _rtb.Append((SpellModOp)misc);
+                    _rtb.Append((SpellModOp)miscValueA);
                     break;
                 // todo: more case
                 default:
-                    _rtb.Append(misc);
+                    _rtb.Append(miscValueA);
                     break;
             }
 
-            _rtb.AppendFormat("), miscB = {0}", _spell.EffectMiscValueB[index]);
+            _rtb.AppendFormat("), miscB = {0}", miscValueB);
             _rtb.AppendFormatLine(", periodic = {0}", _spell.EffectAmplitude[index]);
 
-            switch (aura)
+            switch (applyAuraName)
             {
                 case AuraType.SPELL_AURA_OVERRIDE_SPELLS:
-                    if (!DBC.DBC.OverrideSpellData.ContainsKey((uint)misc))
+                    if (!DBC.DBC.OverrideSpellData.ContainsKey((uint)miscValueA))
                     {
                         _rtb.SetStyle(Color.Red, FontStyle.Bold);
-                        _rtb.AppendFormatLine("Cannot find key {0} in OverrideSpellData.dbc", (uint)misc);
+                        _rtb.AppendFormatLine("Cannot find key {0} in OverrideSpellData.dbc", (uint)miscValueA);
                     }
                     else
                     {
                         _rtb.AppendLine();
                         _rtb.SetStyle(Color.DarkRed, FontStyle.Bold);
                         _rtb.AppendLine("Overriding Spells:");
-                        var @override = DBC.DBC.OverrideSpellData[(uint)misc];
+                        var @override = DBC.DBC.OverrideSpellData[(uint)miscValueA];
                         for (var i = 0; i < 10; ++i)
                         {
                             if (@override.Spells[i] == 0)
@@ -548,7 +559,7 @@ namespace SpellWork.Spell
                 case AuraType.SPELL_AURA_SCREEN_EFFECT:
                     _rtb.SetStyle(Color.DarkBlue, FontStyle.Bold);
                     _rtb.AppendFormatLine("ScreenEffect: {0}",
-                        DBC.DBC.ScreenEffect.ContainsKey((uint)misc) ? DBC.DBC.ScreenEffect[(uint)misc].Name : "?????");
+                        DBC.DBC.ScreenEffect.ContainsKey((uint)miscValueA) ? DBC.DBC.ScreenEffect[(uint)miscValueA].Name : "?????");
                     break;
                 default:
                     break;

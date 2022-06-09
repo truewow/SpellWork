@@ -594,4 +594,14 @@ namespace SpellWork.DBC
         public string   LocalesDescription;
         public int[]   SpellId;
     };
+
+    public struct SummonPropertiesEntry
+    {
+        public uint Id;                                             // 0
+        public uint Category;                                       // 1, 0 - can't be controlled?, 1 - something guardian?, 2 - pet?, 3 - something controllable?, 4 - taxi/mount?
+        public uint Faction;                                        // 2, 14 rows > 0
+        public uint Type;                                           // 3, see enum
+        public uint Slot;                                           // 4, 0-6
+        public uint Flags;                                          // 5
+    };
 }

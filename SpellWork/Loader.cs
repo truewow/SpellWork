@@ -23,6 +23,7 @@ namespace SpellWork
             DBC.DBC.SpellMissile = DBCReader.ReadDBC<SpellMissileEntry>(null);
             DBC.DBC.SpellMissileMotion = DBCReader.ReadDBC<SpellMissileMotionEntry>(DBC.DBC.SpellMissileMotionStrings);
             DBC.DBC.SpellVisual = DBCReader.ReadDBC<SpellVisualEntry>(null);
+            DBC.DBC.SummonProperties = DBCReader.ReadDBC<SummonPropertiesEntry>(null);
 
             DBC.DBC.Locale = DetectedLocale;
         }

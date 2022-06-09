@@ -28,6 +28,7 @@ namespace SpellWork.DBC
         public static Dictionary<uint, SpellDurationEntry>          SpellDuration;
         public static Dictionary<uint, SpellRadiusEntry>            SpellRadius;
         public static Dictionary<uint, SpellRangeEntry>             SpellRange;
+        public static Dictionary<uint, SummonPropertiesEntry>       SummonProperties;
 
         public static Dictionary<uint, string> AreaStrings             = new Dictionary<uint, string>();
         public static Dictionary<uint, string> SpellStrings            = new Dictionary<uint, string>();
