@@ -398,7 +398,7 @@ namespace SpellWork.DBC
     {
         public uint  Id;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public int[] SpellId;
+        public uint[] SpellId;
     };
 
     public struct ScreenEffectEntry

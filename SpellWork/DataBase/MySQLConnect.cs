@@ -267,29 +267,35 @@ namespace SpellWork.Database
                     {
                         uint spellId = reader.GetUInt32(0);
 
-                        if (!DBC.DBC.Spell.ContainsKey(spellId))
+                        if (!DBC.DBC.Spell.ContainsKey(spellId) || DBC.DBC.Spell[spellId].SpellDifficultyId != 0)
                             continue;
 
                         if (DBC.DBC.SpellDifficulty.ContainsKey(spellId))
                             continue;
 
-                        if (DBC.DBC.Spell[spellId].SpellDifficultyId != 0)
-                            continue;
+                        uint[] diffSpellIds = new uint[4] { 0, 0, 0, 0 };
+                        diffSpellIds[0] = spellId;
 
-                        SpellEntry entry = DBC.DBC.Spell[spellId];
-                        entry.SpellDifficultyId = spellId;
-                        DBC.DBC.Spell.Remove(spellId);
-                        DBC.DBC.Spell.Add(spellId, entry);
+                        for (int i = 0; i < 4; ++i)
+                        {
+                            diffSpellIds[i] = reader.GetUInt32(i + 1);
+
+                            if (!DBC.DBC.Spell.ContainsKey(diffSpellIds[i]))
+                                continue;
+
+                            // Set spell difficulty entry to related spells
+                            SpellEntry entry = DBC.DBC.Spell[diffSpellIds[i]];
+                            entry.SpellDifficultyId = spellId;
+
+                            DBC.DBC.Spell.Remove(diffSpellIds[i]);
+                            DBC.DBC.Spell.Add(diffSpellIds[i], entry);
+                        }
+
+                        // Insert difficulty data
                         DBC.DBC.SpellDifficulty.Add(spellId, new SpellDifficultyEntry
                         {
                             Id = spellId,
-                            SpellId = new[]
-                            {
-                                reader.GetInt32(1),
-                                reader.GetInt32(2),
-                                reader.GetInt32(3),
-                                reader.GetInt32(4),
-                            },
+                            SpellId = diffSpellIds
                         });
                     }
                 }
