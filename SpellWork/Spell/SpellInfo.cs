@@ -527,7 +527,7 @@ namespace SpellWork.Spell
                 _rtb.AppendFormat("EffectMiscValueB = {0}", miscValueB);
                 if ((SpellEffects)_spell.Effect[index] == SpellEffects.SPELL_EFFECT_SUMMON && DBC.DBC.SummonProperties.ContainsKey((uint)miscValueB))
                 {
-                    _rtb.AppendFormat(", summon property type: {0}", (SummonCategory)DBC.DBC.SummonProperties[(uint)miscValueB].Type);
+                    _rtb.AppendFormat(", summon property category - {0}, type - {1}", (SummonCategory)DBC.DBC.SummonProperties[(uint)miscValueB].Category, (SummonType)DBC.DBC.SummonProperties[(uint)miscValueB].Type);
                 }
 
                 _rtb.AppendLine();
