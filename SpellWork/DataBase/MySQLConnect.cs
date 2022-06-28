@@ -257,7 +257,6 @@ namespace SpellWork.Database
             using (_conn = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString))
             {
                 var query = @"SELECT id, spellid0, spellid1, spellid2, spellid3 FROM spelldifficulty_dbc ORDER BY id ASC";
-                DBC.DBC.SpellDifficulty.Clear();
                 _command = new MySqlCommand(query, _conn);
                 _conn.Open();
 
@@ -273,44 +272,25 @@ namespace SpellWork.Database
                         if (DBC.DBC.SpellDifficulty.ContainsKey(spellId))
                             continue;
 
-                        uint[] diffSpellIds = new uint[4] { 0, 0, 0, 0 };
-                        diffSpellIds[0] = spellId;
+                        SpellDifficultyEntry diffData = new SpellDifficultyEntry { Id = spellId, SpellId = new uint[4] };
 
                         for (int i = 0; i < 4; ++i)
                         {
-                            diffSpellIds[i] = reader.GetUInt32(i + 1);
-
-                            if (!DBC.DBC.Spell.ContainsKey(diffSpellIds[i]))
-                                continue;
+                            diffData.SpellId[i] = reader.GetUInt32(i + 1);
 
                             // Set spell difficulty entry to related spells
-                            SpellEntry entry = DBC.DBC.Spell[diffSpellIds[i]];
-                            entry.SpellDifficultyId = spellId;
+                            if (!DBC.DBC.Spell.ContainsKey(diffData.SpellId[i]))
+                                continue;
 
-                            DBC.DBC.Spell.Remove(diffSpellIds[i]);
-                            DBC.DBC.Spell.Add(diffSpellIds[i], entry);
+                            SpellEntry entry = DBC.DBC.Spell[diffData.SpellId[i]];
+                            entry.SpellDifficultyId = spellId;
+                            DBC.DBC.Spell[diffData.SpellId[i]] = entry;
                         }
 
                         // Insert difficulty data
-                        DBC.DBC.SpellDifficulty.Add(spellId, new SpellDifficultyEntry
-                        {
-                            Id = spellId,
-                            SpellId = diffSpellIds
-                        });
+                        DBC.DBC.SpellDifficulty.Add(spellId, diffData);
                     }
                 }
-
-                var sortedList = new List<KeyValuePair<uint, SpellDifficultyEntry>>(DBC.DBC.SpellDifficulty);
-                sortedList.Sort(
-                    delegate (KeyValuePair<uint, SpellDifficultyEntry> firstPair,
-                    KeyValuePair<uint, SpellDifficultyEntry> nextPair)
-                    {
-                        return firstPair.Key.CompareTo(nextPair.Key);
-                    });
-
-                DBC.DBC.SpellDifficulty.Clear();
-                foreach (KeyValuePair<uint, SpellDifficultyEntry> pair in sortedList)
-                    DBC.DBC.SpellDifficulty.Add(pair.Key, pair.Value);
 
                 _conn.Close();
             }
