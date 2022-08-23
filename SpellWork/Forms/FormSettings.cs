@@ -28,10 +28,10 @@ namespace SpellWork.Forms
             Settings.Default.UseDbConnect = _cbUseDBConnect.Checked;
             Settings.Default.DbcPath = _tbPath.Text;
 
-            MySqlConnection.TestConnect();
+            SqlConnection.TestConnect();
 
             if (((Button)sender).Text != @"Save")
-                if (MySqlConnection.Connected)
+                if (SqlConnection.Connected)
                     MessageBox.Show(@"Connection successful!", @"MySQL Connections!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             if (((Button)sender).Text != @"Save")

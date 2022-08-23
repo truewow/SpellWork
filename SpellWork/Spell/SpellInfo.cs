@@ -671,7 +671,7 @@ namespace SpellWork.Spell
 
         private void AppendItemInfo()
         {
-            if (!MySqlConnection.Connected)
+            if (!SqlConnection.Connected)
                 return;
 
             var items = from item in DBC.DBC.ItemTemplate

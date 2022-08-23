@@ -8,9 +8,9 @@ using SpellWork.Properties;
 
 namespace SpellWork.Database
 {
-    public static class MySqlConnection
+    public static class SqlConnection
     {
-        private static MySql.Data.MySqlClient.MySqlConnection _conn;
+        private static MySqlConnection _conn;
         private static MySqlCommand _command;
 
         public static bool Connected { get; private set; }
@@ -41,7 +41,7 @@ namespace SpellWork.Database
 
         public static void LoadSpellsDBCFromDB()
         {
-            using (_conn = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString))
+            using (_conn = new MySqlConnection(ConnectionString))
             {
                 string query = @"SELECT Id,Dispel,Mechanic,Attributes,AttributesEx,AttributesEx2,AttributesEx3,AttributesEx4,AttributesEx5,AttributesEx6,AttributesEx7,Stances,StancesNot,Targets,CastingTimeIndex,AuraInterruptFlags,ProcFlags,ProcChance,ProcCharges,MaxLevel,
                     BaseLevel,SpellLevel,DurationIndex,RangeIndex,StackAmount,EquippedItemClass,EquippedItemSubClassMask,EquippedItemInventoryTypeMask,Effect1,Effect2,Effect3,EffectDieSides1,EffectDieSides2,EffectDieSides3,EffectRealPointsPerLevel1,
@@ -254,7 +254,7 @@ namespace SpellWork.Database
 
         public static void LoadSpellDifficultyFromDB()
         {
-            using (_conn = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString))
+            using (_conn = new MySqlConnection(ConnectionString))
             {
                 var query = @"SELECT id, spellid0, spellid1, spellid2, spellid3 FROM spelldifficulty_dbc ORDER BY id ASC";
                 _command = new MySqlCommand(query, _conn);
@@ -298,7 +298,7 @@ namespace SpellWork.Database
 
         public static void LoadCustomSpellAttributes()
         {
-            using (_conn = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString))
+            using (_conn = new MySqlConnection(ConnectionString))
             {
                 var query = @"SELECT entry, attributes FROM spell_custom_attr ORDER BY entry ASC";
                 DBC.DBC._spellCustomAttributes.Clear();
@@ -325,7 +325,7 @@ namespace SpellWork.Database
 
         public static void SelectProc(string query)
         {
-            using (_conn = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString))
+            using (_conn = new MySqlConnection(ConnectionString))
             {
                 _command = new MySqlCommand(query, _conn);
                 _conn.Open();
@@ -361,7 +361,7 @@ namespace SpellWork.Database
 
         public static void Insert(string query)
         {
-            _conn    = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString);
+            _conn    = new MySqlConnection(ConnectionString);
             _command = new MySqlCommand(query, _conn);
             _conn.Open();
             _command.ExecuteNonQuery();
@@ -393,7 +393,7 @@ namespace SpellWork.Database
                     (t.spellid_1 > 0 || t.spellid_2 > 0 || t.spellid_3 > 0 || t.spellid_4 > 0 || t.spellid_5 > 0);",
                 Enum.GetName(typeof(Spell.LocalesDBC), DBC.DBC.Locale));
 
-            using (_conn = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString))
+            using (_conn = new MySqlConnection(ConnectionString))
             {
                 _command = new MySqlCommand(query, _conn);
                 _conn.Open();
@@ -434,7 +434,7 @@ namespace SpellWork.Database
 
             try
             {
-                _conn = new MySql.Data.MySqlClient.MySqlConnection(ConnectionString);
+                _conn = new MySqlConnection(ConnectionString);
                 _conn.Open();
                 _conn.Close();
                 Connected = true;

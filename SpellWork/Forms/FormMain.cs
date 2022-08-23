@@ -6,10 +6,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using SpellWork.Database;
 using SpellWork.DBC;
 using SpellWork.Extensions;
 using SpellWork.Spell;
+using SpellWork.Database;
 
 namespace SpellWork.Forms
 {
@@ -95,17 +95,17 @@ namespace SpellWork.Forms
 
         private void ConnStatus()
         {
-            MySqlConnection.TestConnect();
+            SqlConnection.TestConnect();
 
-            if (MySqlConnection.Connected)
+            if (SqlConnection.Connected)
             {
                 _dbConnect.Text = @"Connection successful.";
                 _dbConnect.ForeColor = Color.Green;
                 // read db data
-                DBC.DBC.ItemTemplate = MySqlConnection.SelectItems();
-                MySqlConnection.LoadSpellsDBCFromDB();
-                MySqlConnection.LoadSpellDifficultyFromDB();
-                MySqlConnection.LoadCustomSpellAttributes();
+                DBC.DBC.ItemTemplate = SqlConnection.SelectItems();
+                SqlConnection.LoadSpellsDBCFromDB();
+                SqlConnection.LoadSpellDifficultyFromDB();
+                SqlConnection.LoadCustomSpellAttributes();
             }
             else
             {
@@ -116,9 +116,9 @@ namespace SpellWork.Forms
 
         private void ConnectedClick(object sender, EventArgs e)
         {
-            MySqlConnection.TestConnect();
+            SqlConnection.TestConnect();
 
-            if (MySqlConnection.Connected)
+            if (SqlConnection.Connected)
                 MessageBox.Show(@"Connection is successful!", @"MySQL Connections!", MessageBoxButtons.OK,
                                 MessageBoxIcon.Information);
             else
@@ -461,8 +461,8 @@ namespace SpellWork.Forms
 
         private void SqlToBaseClick(object sender, EventArgs e)
         {
-            if (MySqlConnection.Connected)
-                MySqlConnection.Insert(_rtbSqlLog.Text);
+            if (SqlConnection.Connected)
+                SqlConnection.Insert(_rtbSqlLog.Text);
             else
                 MessageBox.Show(@"Can't connect to database!", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
@@ -514,7 +514,7 @@ namespace SpellWork.Forms
 
         private void SelectClick(object sender, EventArgs e)
         {
-            if (!MySqlConnection.Connected)
+            if (!SqlConnection.Connected)
             {
                 MessageBox.Show(@"Can't connect to database!", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -534,14 +534,14 @@ namespace SpellWork.Forms
             subquery = subquery == "WHERE" ? string.Empty : subquery;
 
             var query = String.Format("SELECT * FROM `spell_proc_event` {0} ORDER BY entry", subquery);
-            MySqlConnection.SelectProc(query);
+            SqlConnection.SelectProc(query);
 
-            _lvDataList.VirtualListSize = MySqlConnection.SpellProcEvent.Count;
+            _lvDataList.VirtualListSize = SqlConnection.SpellProcEvent.Count;
             if (_lvDataList.SelectedIndices.Count > 0)
                 _lvDataList.Items[_lvDataList.SelectedIndices[0]].Selected = false;
 
             // check bad spell and drop
-            foreach (var str in MySqlConnection.Dropped)
+            foreach (var str in SqlConnection.Dropped)
                 _rtbSqlLog.AppendText(str);
         }
 
@@ -563,15 +563,15 @@ namespace SpellWork.Forms
 
             _rtbSqlLog.AppendText(comment + "\r\n" + drop + "\r\n" + insert + "\r\n\r\n");
             _rtbSqlLog.ColorizeCode();
-            if (MySqlConnection.Connected)
-                MySqlConnection.Insert(drop + insert);
+            if (SqlConnection.Connected)
+                SqlConnection.Insert(drop + insert);
 
             ((Button)sender).Enabled = false;
         }
 
         private void ProcParse(object sender)
         {
-            var proc = MySqlConnection.SpellProcEvent[((ListView)sender).SelectedIndices[0]];
+            var proc = SqlConnection.SpellProcEvent[((ListView)sender).SelectedIndices[0]];
             var spell = DBC.DBC.Spell[proc.Id];
             ProcInfo.SpellProc = spell;
 
@@ -616,7 +616,7 @@ namespace SpellWork.Forms
 
         private static void LvSqlDataRetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
-            e.Item = new ListViewItem(MySqlConnection.SpellProcEvent[e.ItemIndex].ToArray());
+            e.Item = new ListViewItem(SqlConnection.SpellProcEvent[e.ItemIndex].ToArray());
         }
 
         #endregion
