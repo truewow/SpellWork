@@ -8,24 +8,24 @@ namespace SpellWork
     {
         public Loader()
         {
-            DBC.DBC.AreaGroup = DBCReader.ReadDBC<AreaGroupEntry>(null);
-            DBC.DBC.AreaTable = DBCReader.ReadDBC<AreaTableEntry>(DBC.DBC.AreaStrings);
-            DBC.DBC.OverrideSpellData = DBCReader.ReadDBC<OverrideSpellDataEntry>(null);
-            DBC.DBC.ScreenEffect = DBCReader.ReadDBC<ScreenEffectEntry>(DBC.DBC.ScreenEffectStrings);
-            DBC.DBC.SkillLine = DBCReader.ReadDBC<SkillLineEntry>(DBC.DBC.SkillLineStrings);
-            DBC.DBC.SkillLineAbility = DBCReader.ReadDBC<SkillLineAbilityEntry>(null);
-            DBC.DBC.Spell = DBCReader.ReadDBC<SpellEntry>(DBC.DBC.SpellStrings);
-            DBC.DBC.SpellCastTimes = DBCReader.ReadDBC<SpellCastTimesEntry>(null);
-            DBC.DBC.SpellDifficulty = DBCReader.ReadDBC<SpellDifficultyEntry>(null);
-            DBC.DBC.SpellDuration = DBCReader.ReadDBC<SpellDurationEntry>(null);
-            DBC.DBC.SpellRadius = DBCReader.ReadDBC<SpellRadiusEntry>(null);
-            DBC.DBC.SpellRange = DBCReader.ReadDBC<SpellRangeEntry>(DBC.DBC.SpellRangeStrings);
-            DBC.DBC.SpellMissile = DBCReader.ReadDBC<SpellMissileEntry>(null);
-            DBC.DBC.SpellMissileMotion = DBCReader.ReadDBC<SpellMissileMotionEntry>(DBC.DBC.SpellMissileMotionStrings);
-            DBC.DBC.SpellVisual = DBCReader.ReadDBC<SpellVisualEntry>(null);
-            DBC.DBC.SummonProperties = DBCReader.ReadDBC<SummonPropertiesEntry>(null);
+            DBC.DBCStore.AreaGroup = DBCReader.ReadDBC<AreaGroupEntry>(null);
+            DBC.DBCStore.AreaTable = DBCReader.ReadDBC<AreaTableEntry>(DBC.DBCStore.AreaStrings);
+            DBC.DBCStore.OverrideSpellData = DBCReader.ReadDBC<OverrideSpellDataEntry>(null);
+            DBC.DBCStore.ScreenEffect = DBCReader.ReadDBC<ScreenEffectEntry>(DBC.DBCStore.ScreenEffectStrings);
+            DBC.DBCStore.SkillLine = DBCReader.ReadDBC<SkillLineEntry>(DBC.DBCStore.SkillLineStrings);
+            DBC.DBCStore.SkillLineAbility = DBCReader.ReadDBC<SkillLineAbilityEntry>(null);
+            DBC.DBCStore.Spell = DBCReader.ReadDBC<SpellEntry>(DBC.DBCStore.SpellStrings);
+            DBC.DBCStore.SpellCastTimes = DBCReader.ReadDBC<SpellCastTimesEntry>(null);
+            DBC.DBCStore.SpellDifficulty = DBCReader.ReadDBC<SpellDifficultyEntry>(null);
+            DBC.DBCStore.SpellDuration = DBCReader.ReadDBC<SpellDurationEntry>(null);
+            DBC.DBCStore.SpellRadius = DBCReader.ReadDBC<SpellRadiusEntry>(null);
+            DBC.DBCStore.SpellRange = DBCReader.ReadDBC<SpellRangeEntry>(DBC.DBCStore.SpellRangeStrings);
+            DBC.DBCStore.SpellMissile = DBCReader.ReadDBC<SpellMissileEntry>(null);
+            DBC.DBCStore.SpellMissileMotion = DBCReader.ReadDBC<SpellMissileMotionEntry>(DBC.DBCStore.SpellMissileMotionStrings);
+            DBC.DBCStore.SpellVisual = DBCReader.ReadDBC<SpellVisualEntry>(null);
+            DBC.DBCStore.SummonProperties = DBCReader.ReadDBC<SummonPropertiesEntry>(null);
 
-            DBC.DBC.Locale = DetectedLocale;
+            DBC.DBCStore.Locale = DetectedLocale;
         }
 
         /// <exception cref="Exception"><c>Exception</c>.</exception>
@@ -34,11 +34,11 @@ namespace SpellWork
             get
             {
                 byte locale = 0;
-                while (DBC.DBC.Spell[DBC.DBC.SpellEntryForDetectLocale].GetName(locale) == String.Empty)
+                while (DBC.DBCStore.Spell[DBC.DBCStore.SpellEntryForDetectLocale].GetName(locale) == String.Empty)
                 {
                     ++locale;
 
-                    if (locale >= DBC.DBC.MaxDbcLocale)
+                    if (locale >= DBC.DBCStore.MaxDbcLocale)
                         throw new Exception("Detected unknown locale index " + locale);
                 }
                 return (LocalesDBC)locale;

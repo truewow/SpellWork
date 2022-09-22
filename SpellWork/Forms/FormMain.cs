@@ -20,7 +20,7 @@ namespace SpellWork.Forms
             InitializeComponent();
             splitContainer3.SplitterDistance = 128;
 
-            Text = DBC.DBC.Version;
+            Text = DBC.DBCStore.Version;
 
             _cbSpellFamilyName.SetEnumValues<SpellFamilyNames>("SpellFamilyName");
             _cbSpellAura.SetEnumValues<AuraType>("Aura");
@@ -43,7 +43,7 @@ namespace SpellWork.Forms
 
             _cbSqlSpellFamily.SetEnumValues<SpellFamilyNames>("SpellFamilyName");
 
-            _status.Text = String.Format("DBC Locale: {0}", DBC.DBC.Locale);
+            _status.Text = String.Format("DBCStore Locale: {0}", DBC.DBCStore.Locale);
 
             _cbAdvancedFilter1.SetStructFields<SpellEntry>();
             _cbAdvancedFilter2.SetStructFields<SpellEntry>();
@@ -102,7 +102,7 @@ namespace SpellWork.Forms
                 _dbConnect.Text = @"Connection successful.";
                 _dbConnect.ForeColor = Color.Green;
                 // read db data
-                DBC.DBC.ItemTemplate = SqlConnection.SelectItems();
+                DBC.DBCStore.ItemTemplate = SqlConnection.SelectItems();
                 SqlConnection.LoadSpellsDBCFromDB();
                 SqlConnection.LoadSpellDifficultyFromDB();
                 SqlConnection.LoadCustomSpellAttributes();
@@ -173,7 +173,7 @@ namespace SpellWork.Forms
             var ic = _tbSearchIcon.Text.ToUInt32();
             var at = _tbSearchAttributes.Text.ToUInt32();
 
-            _spellList = (from spell in DBC.DBC.Spell.Values
+            _spellList = (from spell in DBC.DBCStore.Spell.Values
                           where
                               ((id == 0 || spell.ID == id) && (ic == 0 || spell.SpellIconID == ic) &&
                                (at == 0 || (spell.Attributes & at) != 0 || (spell.AttributesEx & at) != 0 ||
@@ -218,7 +218,7 @@ namespace SpellWork.Forms
             var field1Ct = (CompareType)_cbAdvancedFilter1CompareType.SelectedIndex;
             var field2Ct = (CompareType)_cbAdvancedFilter2CompareType.SelectedIndex;
 
-            _spellList = (from spell in DBC.DBC.Spell.Values
+            _spellList = (from spell in DBC.DBCStore.Spell.Values
                           where
                               (!bFamilyNames || spell.SpellFamilyName == fFamilyNames) &&
                               (!bSpellEffect || spell.Effect.ContainsElement((uint)fSpellEffect)) &&
@@ -252,7 +252,7 @@ namespace SpellWork.Forms
         private void TvFamilyTreeAfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Level > 0)
-                SetProcAtribute(DBC.DBC.Spell[e.Node.Name.ToUInt32()]);
+                SetProcAtribute(DBC.DBCStore.Spell[e.Node.Name.ToUInt32()]);
         }
 
         private void LvProcSpellListSelectedIndexChanged(object sender, EventArgs e)
@@ -267,7 +267,7 @@ namespace SpellWork.Forms
         private void LvProcAdditionalInfoSelectedIndexChanged(object sender, EventArgs e)
         {
             if (_lvProcAdditionalInfo.SelectedIndices.Count > 0)
-                SetProcAtribute(DBC.DBC.Spell[_lvProcAdditionalInfo.SelectedItems[0].SubItems[0].Text.ToUInt32()]);
+                SetProcAtribute(DBC.DBCStore.Spell[_lvProcAdditionalInfo.SelectedItems[0].SubItems[0].Text.ToUInt32()]);
         }
 
         private void ClbSchoolsSelectedIndexChanged(object sender, EventArgs e)
@@ -337,7 +337,7 @@ namespace SpellWork.Forms
         {
             var id = _tbProcSeach.Text.ToUInt32();
 
-            _spellProcList = (from spell in DBC.DBC.Spell.Values
+            _spellProcList = (from spell in DBC.DBCStore.Spell.Values
                               where
                                   (id == 0 || spell.ID == id) &&
                                   (id != 0 || spell.SpellName.ContainsText(_tbProcSeach.Text))
@@ -365,7 +365,7 @@ namespace SpellWork.Forms
             var bTarget2 = _cbProcTarget2.SelectedIndex != 0;
             var fTarget2 = _cbProcTarget2.SelectedValue.ToInt32();
 
-            _spellProcList = (from spell in DBC.DBC.Spell.Values
+            _spellProcList = (from spell in DBC.DBCStore.Spell.Values
                               where
                                   (!bFamilyNames || spell.SpellFamilyName == fFamilyNames) &&
                                   (!bSpellEffect || spell.Effect.ContainsElement((uint)fSpellEffect)) &&
@@ -389,13 +389,13 @@ namespace SpellWork.Forms
 
             var mask = ((TreeView)sender).GetMask();
 
-            var query = from spell in DBC.DBC.Spell.Values
+            var query = from spell in DBC.DBCStore.Spell.Values
                         where
                             spell.SpellFamilyName == ProcInfo.SpellProc.SpellFamilyName &&
                             spell.SpellFamilyFlags.ContainsElement(mask)
-                        join sk in DBC.DBC.SkillLineAbility on spell.ID equals sk.Value.SpellId into temp1
+                        join sk in DBC.DBCStore.SkillLineAbility on spell.ID equals sk.Value.SpellId into temp1
                         from skill in temp1.DefaultIfEmpty()
-                        //join skl in DBC.SkillLine on Skill.Value.SkillId equals skl.Value.ID into temp2
+                        //join skl in DBCStore.SkillLine on Skill.Value.SkillId equals skl.Value.ID into temp2
                         //from SkillLine in temp2.DefaultIfEmpty()
                         orderby skill.Key descending
                         select
@@ -422,8 +422,8 @@ namespace SpellWork.Forms
             var spell1 = _tbCompareFilterSpell1.Text.ToUInt32();
             var spell2 = _tbCompareFilterSpell2.Text.ToUInt32();
 
-            if (DBC.DBC.Spell.ContainsKey(spell1) && DBC.DBC.Spell.ContainsKey(spell2))
-                new SpellCompare(_rtbCompareSpell1, _rtbCompareSpell2, DBC.DBC.Spell[spell1], DBC.DBC.Spell[spell2]);
+            if (DBC.DBCStore.Spell.ContainsKey(spell1) && DBC.DBCStore.Spell.ContainsKey(spell2))
+                new SpellCompare(_rtbCompareSpell1, _rtbCompareSpell2, DBC.DBCStore.Spell[spell1], DBC.DBCStore.Spell[spell2]);
         }
 
         private void CompareSearch1Click(object sender, EventArgs e)
@@ -572,7 +572,7 @@ namespace SpellWork.Forms
         private void ProcParse(object sender)
         {
             var proc = SqlConnection.SpellProcEvent[((ListView)sender).SelectedIndices[0]];
-            var spell = DBC.DBC.Spell[proc.Id];
+            var spell = DBC.DBCStore.Spell[proc.Id];
             ProcInfo.SpellProc = spell;
 
             new SpellInfo(_rtbProcSpellInfo, spell);

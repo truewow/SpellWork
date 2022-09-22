@@ -3,7 +3,7 @@ using SpellWork.Spell;
 
 namespace SpellWork.DBC
 {
-    public static class DBC
+    public static class DBCStore
     {
         public const string Version = "SpellWork 3.3.5a (12340)";
         public const string DbcPath = @"dbc";

@@ -32,8 +32,8 @@ namespace SpellWork.Database
 
         private static String GetSpellName(uint id)
         {
-            if (DBC.DBC.Spell.ContainsKey(id))
-                return DBC.DBC.Spell[id].SpellNameRank;
+            if (DBC.DBCStore.Spell.ContainsKey(id))
+                return DBC.DBCStore.Spell[id].SpellNameRank;
 
             Dropped.Add(String.Format("DELETE FROM `spell_proc_event` WHERE `entry` IN ({0});\r\n", id.ToUInt32()));
             return String.Empty;
@@ -51,7 +51,7 @@ namespace SpellWork.Database
                     EffectTriggerSpell1,EffectTriggerSpell2,EffectTriggerSpell3,EffectSpellClassMaskA1,EffectSpellClassMaskA2,EffectSpellClassMaskA3,EffectSpellClassMaskB1,EffectSpellClassMaskB2,EffectSpellClassMaskB3,
                     EffectSpellClassMaskC1,EffectSpellClassMaskC2,EffectSpellClassMaskC3,MaxTargetLevel,SpellFamilyName,SpellFamilyFlags1,SpellFamilyFlags2,SpellFamilyFlags3,MaxAffectedTargets,DmgClass,PreventionType,DmgMultiplier1,DmgMultiplier2,DmgMultiplier3,
                     AreaGroupId,SchoolMask,SpellName FROM `spell_dbc` ORDER BY Id ASC;";
-                DBC.DBC.SpellStringsFromDB.Clear();
+                DBC.DBCStore.SpellStringsFromDB.Clear();
 
                 _command = new MySqlCommand(query, _conn);
                 _conn.Open();
@@ -62,10 +62,10 @@ namespace SpellWork.Database
                     {
                         int index = 0;
                         uint spellId = reader.GetUInt32(index++);
-                        if (DBC.DBC.Spell.ContainsKey(spellId))
+                        if (DBC.DBCStore.Spell.ContainsKey(spellId))
                             continue;
 
-                        DBC.DBC.Spell.Add(spellId, new SpellEntry
+                        DBC.DBCStore.Spell.Add(spellId, new SpellEntry
                         {
                             ID = spellId,
                             Dispel = reader.GetUInt32(index++),
@@ -223,20 +223,20 @@ namespace SpellWork.Database
                             AreaGroupId = reader.GetInt32(index++),
                             SchoolMask = reader.GetUInt32(index++),
                             SpellVisual = new uint[2],
-                            Reagent = new int[DBC.DBC.MaxReagentCount],
-                            ReagentCount = new uint[DBC.DBC.MaxReagentCount],
-                            EffectPointsPerComboPoint = new float[DBC.DBC.MaxEffectIndex],
-                            EffectChainTarget = new uint[DBC.DBC.MaxEffectIndex],
-                            DamageCoeficient = new float[DBC.DBC.MaxEffectIndex]
+                            Reagent = new int[DBC.DBCStore.MaxReagentCount],
+                            ReagentCount = new uint[DBC.DBCStore.MaxReagentCount],
+                            EffectPointsPerComboPoint = new float[DBC.DBCStore.MaxEffectIndex],
+                            EffectChainTarget = new uint[DBC.DBCStore.MaxEffectIndex],
+                            DamageCoeficient = new float[DBC.DBCStore.MaxEffectIndex]
                         });
 
                         string DBName = reader.GetString(index);
                         DBName += " (SERVERSIDE)";
-                        DBC.DBC.SpellStringsFromDB.Add(spellId, DBName);
+                        DBC.DBCStore.SpellStringsFromDB.Add(spellId, DBName);
                     }
                 }
 
-                var sortedList = new List<KeyValuePair<uint, SpellEntry>>(DBC.DBC.Spell);
+                var sortedList = new List<KeyValuePair<uint, SpellEntry>>(DBC.DBCStore.Spell);
                 sortedList.Sort(
                     delegate (KeyValuePair<uint, SpellEntry> firstPair,
                     KeyValuePair<uint, SpellEntry> nextPair)
@@ -244,9 +244,9 @@ namespace SpellWork.Database
                         return firstPair.Key.CompareTo(nextPair.Key);
                     });
 
-                DBC.DBC.Spell.Clear();
+                DBC.DBCStore.Spell.Clear();
                 foreach (KeyValuePair<uint, SpellEntry> pair in sortedList)
-                    DBC.DBC.Spell.Add(pair.Key, pair.Value);
+                    DBC.DBCStore.Spell.Add(pair.Key, pair.Value);
 
                 _conn.Close();
             }
@@ -266,10 +266,10 @@ namespace SpellWork.Database
                     {
                         uint spellId = reader.GetUInt32(0);
 
-                        if (!DBC.DBC.Spell.ContainsKey(spellId) || DBC.DBC.Spell[spellId].SpellDifficultyId != 0)
+                        if (!DBC.DBCStore.Spell.ContainsKey(spellId) || DBC.DBCStore.Spell[spellId].SpellDifficultyId != 0)
                             continue;
 
-                        if (DBC.DBC.SpellDifficulty.ContainsKey(spellId))
+                        if (DBC.DBCStore.SpellDifficulty.ContainsKey(spellId))
                             continue;
 
                         SpellDifficultyEntry diffData = new SpellDifficultyEntry { Id = spellId, SpellId = new uint[4] };
@@ -279,16 +279,16 @@ namespace SpellWork.Database
                             diffData.SpellId[i] = reader.GetUInt32(i + 1);
 
                             // Set spell difficulty entry to related spells
-                            if (!DBC.DBC.Spell.ContainsKey(diffData.SpellId[i]))
+                            if (!DBC.DBCStore.Spell.ContainsKey(diffData.SpellId[i]))
                                 continue;
 
-                            SpellEntry entry = DBC.DBC.Spell[diffData.SpellId[i]];
+                            SpellEntry entry = DBC.DBCStore.Spell[diffData.SpellId[i]];
                             entry.SpellDifficultyId = spellId;
-                            DBC.DBC.Spell[diffData.SpellId[i]] = entry;
+                            DBC.DBCStore.Spell[diffData.SpellId[i]] = entry;
                         }
 
                         // Insert difficulty data
-                        DBC.DBC.SpellDifficulty.Add(spellId, diffData);
+                        DBC.DBCStore.SpellDifficulty.Add(spellId, diffData);
                     }
                 }
 
@@ -301,7 +301,7 @@ namespace SpellWork.Database
             using (_conn = new MySqlConnection(ConnectionString))
             {
                 var query = @"SELECT entry, attributes FROM spell_custom_attr ORDER BY entry ASC";
-                DBC.DBC._spellCustomAttributes.Clear();
+                DBC.DBCStore._spellCustomAttributes.Clear();
                 _command = new MySqlCommand(query, _conn);
                 _conn.Open();
 
@@ -310,14 +310,14 @@ namespace SpellWork.Database
                     while (reader.Read())
                     {
                         uint spellId = reader.GetUInt32(0);
-                        if (!DBC.DBC.Spell.ContainsKey(spellId))
+                        if (!DBC.DBCStore.Spell.ContainsKey(spellId))
                             continue;
 
                         uint attributes = reader.GetUInt32(1);
                         if (attributes == 0)
                             continue;
 
-                        DBC.DBC._spellCustomAttributes.Add(spellId, attributes);
+                        DBC.DBCStore._spellCustomAttributes.Add(spellId, attributes);
                     }
                 }
             }
@@ -370,7 +370,7 @@ namespace SpellWork.Database
 
         public static List<Item> SelectItems()
         {
-            var items = DBC.DBC.ItemTemplate;
+            var items = DBC.DBCStore.ItemTemplate;
             // In order to reduce the search time, we make the first selection of all items that have spellid
             var query = String.Format(
                 @"SELECT    t.entry,
@@ -391,7 +391,7 @@ namespace SpellWork.Database
                     t.entry = l.ID && (l.locale = '{0}' || l.locale IS NULL)
                 WHERE
                     (t.spellid_1 > 0 || t.spellid_2 > 0 || t.spellid_3 > 0 || t.spellid_4 > 0 || t.spellid_5 > 0);",
-                Enum.GetName(typeof(Spell.LocalesDBC), DBC.DBC.Locale));
+                Enum.GetName(typeof(Spell.LocalesDBC), DBC.DBCStore.Locale));
 
             using (_conn = new MySqlConnection(ConnectionString))
             {

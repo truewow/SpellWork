@@ -166,7 +166,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(54, 13);
             this.label6.TabIndex = 5;
-            this.label6.Text = "DBC Path";
+            this.label6.Text = "DBCStore Path";
             //
             // _cbUseDBConnect
             // 

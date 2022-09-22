@@ -14,7 +14,7 @@ namespace SpellWork.DBC
         public static Dictionary<uint, T> ReadDBC<T>(Dictionary<uint, string> strDict) where T : struct
         {
             var dict = new Dictionary<uint, T>();
-            var fileName = Path.Combine(DBC.DbcPath, typeof(T).Name + ".dbc").Replace("Entry", String.Empty);
+            var fileName = Path.Combine(DBCStore.DbcPath, typeof(T).Name + ".dbc").Replace("Entry", String.Empty);
 
             using (var reader = new BinaryReader(new FileStream(fileName, FileMode.Open, FileAccess.Read), Encoding.UTF8))
             {
@@ -25,10 +25,10 @@ namespace SpellWork.DBC
                 var size = Marshal.SizeOf(typeof(T));
 
                 if (!header.IsDBC)
-                    throw new Exception(fileName + " is not DBC files!");
+                    throw new Exception(fileName + " is not DBCStore files!");
 
                 if (header.RecordSize != size)
-                    throw new Exception(string.Format("Size of row in DBC file ({0}) != size of DBC struct ({1}) in DBC: {2}", header.RecordSize, size, fileName));
+                    throw new Exception(string.Format("Size of row in DBCStore file ({0}) != size of DBCStore struct ({1}) in DBCStore: {2}", header.RecordSize, size, fileName));
 
                 // read dbc data
                 for (var r = 0; r < header.RecordsCount; ++r)

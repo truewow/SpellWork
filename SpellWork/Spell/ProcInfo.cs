@@ -17,11 +17,11 @@ namespace SpellWork.Spell
         {
             familyTree.Nodes.Clear();
 
-            var spells = from spell in DBC.DBC.Spell
+            var spells = from spell in DBC.DBCStore.Spell
                          where spell.Value.SpellFamilyName == (uint)spellfamily
-                         join sk in DBC.DBC.SkillLineAbility on spell.Key equals sk.Value.SpellId into temp1
+                         join sk in DBC.DBCStore.SkillLineAbility on spell.Key equals sk.Value.SpellId into temp1
                          from skill in temp1.DefaultIfEmpty()
-                         join skl in DBC.DBC.SkillLine on skill.Value.SkillId equals skl.Key into temp2
+                         join skl in DBC.DBCStore.SkillLine on skill.Value.SkillId equals skl.Key into temp2
                          from skillLine in temp2.DefaultIfEmpty()
                          select new
                          {
