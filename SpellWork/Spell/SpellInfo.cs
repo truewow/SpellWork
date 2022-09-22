@@ -519,6 +519,9 @@ namespace SpellWork.Spell
                         case SpellEffects.SPELL_EFFECT_SUMMON:
                             _spellInfoLog.AppendFormat(" (Object entry: {0})", miscValueA);
                             break;
+                        case SpellEffects.SPELL_EFFECT_RESURRECT_NEW:
+                            _spellInfoLog.AppendFormat(" (Health {0}, Mana {1})", miscValueA, miscValueB);
+                            break;
                         default:
                             break;
                     }
