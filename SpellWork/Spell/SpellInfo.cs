@@ -478,8 +478,6 @@ namespace SpellWork.Spell
                 if ((Mechanics)m_spellInfo.EffectMechanic[effectIndex] != Mechanics.MECHANIC_NONE)
                     m_spellInfoLog.AppendFormatLine("Effect Mechanic = {0} ({1})", m_spellInfo.EffectMechanic[effectIndex], (Mechanics)m_spellInfo.EffectMechanic[effectIndex]);
 
-                m_spellInfoLog.AppendLine();
-                m_spellInfoLog.AppendLine("spell_target_position DB data:");
                 if (m_spellInfo.EffectImplicitTargetA[effectIndex] == (uint)Targets.TARGET_DEST_DB || m_spellInfo.EffectImplicitTargetB[effectIndex] == (uint)Targets.TARGET_DEST_DB)
                 {
                     uint mapId = 0;
@@ -488,6 +486,8 @@ namespace SpellWork.Spell
                     float z = 0;
                     float o = 0;
 
+                    m_spellInfoLog.AppendLine();
+                    m_spellInfoLog.AppendLine("spell_target_position DB data:");
                     if (SqlConnection.GetDBSpellPosition(m_spellInfo.ID, (uint)effectIndex, ref mapId, ref x, ref y, ref z, ref o))
                         m_spellInfoLog.AppendFormatLine("mapId: {0}, x: {1:F}, y {2:F}, z {3:F}, o: {4:F}", mapId, x, y, z, o);
                     else
