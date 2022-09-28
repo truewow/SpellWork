@@ -253,6 +253,5 @@
         private System.Windows.Forms.TextBox _tbPath;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
