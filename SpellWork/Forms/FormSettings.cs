@@ -66,10 +66,5 @@ namespace SpellWork.Forms
                 Settings.Default.Save();
             }
         }
-
-        private void _tbPathMouseHover(object sender, EventArgs e)
-        {
-            toolTip1.Show("Click to select folder path of dbcs", _tbPath);
-        }
     }
 }

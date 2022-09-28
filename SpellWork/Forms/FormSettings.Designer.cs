@@ -177,7 +177,6 @@
             this._tbPath.Size = new System.Drawing.Size(175, 20);
             this._tbPath.TabIndex = 6;
             this._tbPath.Click += new System.EventHandler(this._tbPathClick);
-            this._tbPath.MouseHover += new System.EventHandler(this._tbPathMouseHover);
             // 
             // label6
             // 
