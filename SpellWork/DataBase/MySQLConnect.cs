@@ -424,6 +424,30 @@ namespace SpellWork.Database
             return items;
         }
 
+        public static bool GetDBSpellPosition(uint spellId, uint effectIndex, ref uint mapId, ref float x, ref float y, ref float z, ref float o)
+        {
+            using (_conn = new MySqlConnection(ConnectionString))
+            {
+                // By primary keys this query should never return duplicate rows but just in case lets add limit
+                _command = new MySqlCommand(String.Format("SELECT MapId, PositionX, PositionY, PositionZ, Orientation FROM spell_target_position WHERE ID = {0} AND EffectIndex = {1} LIMIT 1", spellId, effectIndex), _conn);
+                _conn.Open();
+
+                using (var reader = _command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        mapId = reader.GetUInt32(0);
+                        x = reader.GetFloat(1);
+                        y = reader.GetFloat(2);
+                        z = reader.GetFloat(3);
+                        o = reader.GetFloat(4);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public static void TestConnect()
         {
             if (!Settings.Default.UseDbConnect)
