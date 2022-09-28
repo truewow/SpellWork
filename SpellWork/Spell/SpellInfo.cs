@@ -479,7 +479,7 @@ namespace SpellWork.Spell
                     m_spellInfoLog.AppendFormatLine("Effect Mechanic = {0} ({1})", m_spellInfo.EffectMechanic[effectIndex], (Mechanics)m_spellInfo.EffectMechanic[effectIndex]);
 
                 m_spellInfoLog.AppendLine();
-                m_spellInfoLog.AppendLine("spell_target_position position:");
+                m_spellInfoLog.AppendLine("spell_target_position DB data:");
                 if (m_spellInfo.EffectImplicitTargetA[effectIndex] == (uint)Targets.TARGET_DEST_DB || m_spellInfo.EffectImplicitTargetB[effectIndex] == (uint)Targets.TARGET_DEST_DB)
                 {
                     uint mapId = 0;
