@@ -2,6 +2,12 @@
 
 namespace SpellWork.Spell
 {
+    public static class StaticConstants
+    {
+        //public const int MAX_SPELL_SCHOOLS = 7;
+        public const int MAX_IMMUNITY_MASKS = 32;
+    }
+
     // ReSharper disable InconsistentNaming
     public enum LocalesDBC
     {
@@ -796,38 +802,38 @@ namespace SpellWork.Spell
 
     public enum Mechanics
     {
-        MECHANIC_NONE               = 0,
-        MECHANIC_CHARM              = 1,
-        MECHANIC_DISORIENTED        = 2,
-        MECHANIC_DISARM             = 3,
-        MECHANIC_DISTRACT           = 4,
-        MECHANIC_FEAR               = 5,
-        MECHANIC_GRIP               = 6,
-        MECHANIC_ROOT               = 7,
-        MECHANIC_SLOW_ATTACK        = 8,
-        MECHANIC_SILENCE            = 9,
-        MECHANIC_SLEEP              = 10,
-        MECHANIC_SNARE              = 11,
-        MECHANIC_STUN               = 12,
-        MECHANIC_FREEZE             = 13,
-        MECHANIC_KNOCKOUT           = 14,
-        MECHANIC_BLEED              = 15,
-        MECHANIC_BANDAGE            = 16,
-        MECHANIC_POLYMORPH          = 17,
-        MECHANIC_BANISH             = 18,
-        MECHANIC_SHIELD             = 19,
-        MECHANIC_SHACKLE            = 20,
-        MECHANIC_MOUNT              = 21,
-        MECHANIC_INFECTED           = 22,
-        MECHANIC_TURN               = 23,
-        MECHANIC_HORROR             = 24,
-        MECHANIC_INVULNERABILITY    = 25,
-        MECHANIC_INTERRUPT          = 26,
-        MECHANIC_DAZE               = 27,
-        MECHANIC_DISCOVERY          = 28,
-        MECHANIC_IMMUNE_SHIELD      = 29,  // Divine (Blessing) Shield/Protection and Ice Block
-        MECHANIC_SAPPED             = 30,
-        MECHANIC_ENRAGED            = 31
+        MECHANIC_NONE               = 0,        // skip for shift
+        MECHANIC_CHARM              = 1,        // 1
+        MECHANIC_DISORIENTED        = 2,        // 2
+        MECHANIC_DISARM             = 3,        // 4
+        MECHANIC_DISTRACT           = 4,        // 8
+        MECHANIC_FEAR               = 5,        // 16
+        MECHANIC_GRIP               = 6,        // 32
+        MECHANIC_ROOT               = 7,        // 64
+        MECHANIC_SLOW_ATTACK        = 8,        // 128
+        MECHANIC_SILENCE            = 9,        // 254
+        MECHANIC_SLEEP              = 10,       // 512
+        MECHANIC_SNARE              = 11,       // 1024
+        MECHANIC_STUN               = 12,       // 2048
+        MECHANIC_FREEZE             = 13,       // 4096
+        MECHANIC_KNOCKOUT           = 14,       // 8192
+        MECHANIC_BLEED              = 15,       // 16384
+        MECHANIC_BANDAGE            = 16,       // 32768
+        MECHANIC_POLYMORPH          = 17,       // 65536
+        MECHANIC_BANISH             = 18,       // 131072
+        MECHANIC_SHIELD             = 19,       // 262144
+        MECHANIC_SHACKLE            = 20,       // 524288
+        MECHANIC_MOUNT              = 21,       // 1048576
+        MECHANIC_INFECTED           = 22,       // 2097152
+        MECHANIC_TURN               = 23,       // 4194304
+        MECHANIC_HORROR             = 24,       // 8388608
+        MECHANIC_INVULNERABILITY    = 25,       // 16777216
+        MECHANIC_INTERRUPT          = 26,       // 33554432
+        MECHANIC_DAZE               = 27,       // 67108864
+        MECHANIC_DISCOVERY          = 28,       // 134217728
+        MECHANIC_IMMUNE_SHIELD      = 29,       // 268435456 Divine (Blessing) Shield/Protection and Ice Block
+        MECHANIC_SAPPED             = 30,       // 536870912
+        MECHANIC_ENRAGED            = 31        // 1073741824
     };
 
     public enum SpellMissInfo

@@ -631,6 +631,24 @@ namespace SpellWork.Spell
                     m_spellInfoLog.AppendFormatLine("ScreenEffect: {0}",
                         DBC.DBCStore.ScreenEffect.ContainsKey((uint)miscValueA) ? DBC.DBCStore.ScreenEffect[(uint)miscValueA].Name : "?????");
                     break;
+                case AuraType.SPELL_AURA_MECHANIC_IMMUNITY_MASK:
+                    m_spellInfoLog.AppendFormat("Applied mechanic immunities ({0}): ", miscValueA);
+                    m_spellInfoLog.SetStyle(Color.Chocolate, FontStyle.Bold);
+                    bool isFirst = true;
+                    for (int x = (int)Mechanics.MECHANIC_CHARM; x < StaticConstants.MAX_IMMUNITY_MASKS; ++x)
+                    {
+                        if ((miscValueA & (1 << (x - 1))) != 0)
+                        {
+                            if (!isFirst)
+                                m_spellInfoLog.Append(", ");
+                            else
+                                isFirst = false;
+
+                            m_spellInfoLog.AppendFormat("{0}", (Mechanics)x);
+                        }
+                    }
+                    m_spellInfoLog.AppendLine();
+                    break;
                 default:
                     break;
             }
