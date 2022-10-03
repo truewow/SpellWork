@@ -569,13 +569,6 @@ namespace SpellWork.Spell
                     m_spellInfoLog.AppendLine();
                 }
 
-                // Append info next to MiscValueB
-                m_spellInfoLog.AppendFormat("EffectMiscValueB = {0}", miscValueB);
-                if ((SpellEffects)m_spellInfo.Effect[index] == SpellEffects.SPELL_EFFECT_SUMMON && DBC.DBCStore.SummonProperties.ContainsKey((uint)miscValueB))
-                {
-                    m_spellInfoLog.AppendFormat(", summon property category - {0}, type - {1}", (SummonCategory)DBC.DBCStore.SummonProperties[(uint)miscValueB].Category, (SummonType)DBC.DBCStore.SummonProperties[(uint)miscValueB].Type);
-                }
-
                 m_spellInfoLog.AppendLine();
                 m_spellInfoLog.AppendFormatLineIfNotNull("EffectAmplitude = {0}", effectAplitude);
 
@@ -609,6 +602,10 @@ namespace SpellWork.Spell
                                 }
                             }
                         }
+                        break;
+                    case SpellEffects.SPELL_EFFECT_SUMMON:
+                        if (DBC.DBCStore.SummonProperties.ContainsKey((uint)miscValueB))
+                            m_spellInfoLog.AppendFormat("Summon property category - {0}, type - {1}", (SummonCategory)DBC.DBCStore.SummonProperties[(uint)miscValueB].Category, (SummonType)DBC.DBCStore.SummonProperties[(uint)miscValueB].Type);
                         break;
                     default:
                         break;
