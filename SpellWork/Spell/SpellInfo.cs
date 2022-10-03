@@ -585,7 +585,6 @@ namespace SpellWork.Spell
                     case SpellEffects.SPELL_EFFECT_DISPEL:
                         if (miscValueA != 0)
                         {
-                            m_spellInfoLog.AppendLine();
                             m_spellInfoLog.Append("Effected dispel types: ");
                             bool isFirst = true;
                             m_spellInfoLog.SetStyle(Color.Chocolate, FontStyle.Bold);
@@ -607,7 +606,7 @@ namespace SpellWork.Spell
                     default:
                         break;
                 }
-
+                m_spellInfoLog.AppendLine();
                 return;
             }
 
@@ -672,7 +671,7 @@ namespace SpellWork.Spell
                         DBC.DBCStore.ScreenEffect.ContainsKey((uint)miscValueA) ? DBC.DBCStore.ScreenEffect[(uint)miscValueA].Name : "?????");
                     break;
                 case AuraType.SPELL_AURA_MECHANIC_IMMUNITY_MASK:
-                    m_spellInfoLog.AppendFormat("Applied mechanic immunities ({0}): ", miscValueA);
+                    m_spellInfoLog.Append("Effected mechanic immunities: ");
                     m_spellInfoLog.SetStyle(Color.Chocolate, FontStyle.Bold);
                     bool isFirst = true;
                     for (int x = (int)Mechanics.MECHANIC_CHARM; x < StaticConstants.MAX_IMMUNITY_TYPES; ++x)
