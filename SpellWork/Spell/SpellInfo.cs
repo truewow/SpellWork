@@ -347,7 +347,7 @@ namespace SpellWork.Spell
         {
             m_spellInfoLog.AppendLine(_line);
 
-            for (var effectIndex = 0; effectIndex < DBC.DBCStore.MaxEffectIndex; effectIndex++)
+            for (var effectIndex = 0; effectIndex < DBC.DBCStore.MaxEffectIndex; ++effectIndex)
             {
                 m_spellInfoLog.SetBold();
 
@@ -396,7 +396,7 @@ namespace SpellWork.Spell
                     (Targets)m_spellInfo.EffectImplicitTargetB[effectIndex]
                 );
 
-                FillAuraModTypeNameInfo(effectIndex);
+                FillExtraEffectInfo(effectIndex);
 
                 var classMask = new uint[3];
 
@@ -534,18 +534,23 @@ namespace SpellWork.Spell
             // ReSharper enable InvertIf
         }
 
-        private void FillAuraModTypeNameInfo(int index)
+        private void FillExtraEffectInfo(int index)
         {
             var applyAuraName       = (AuraType)m_spellInfo.EffectApplyAuraName[index];
             var miscValueA          = m_spellInfo.EffectMiscValue[index];
             var miscValueB          = m_spellInfo.EffectMiscValueB[index];
             var effectAplitude      = m_spellInfo.EffectAmplitude[index];
 
-            if (m_spellInfo.EffectApplyAuraName[index] == 0)
+            // ////////////////////////
+            // Spell effects
+            // ////////////////////////
+
+            if (applyAuraName == AuraType.SPELL_AURA_NONE)
             {
-                if (m_spellInfo.EffectMiscValue[index] != 0)
+                // Append value next to MiscValueA
+                if (miscValueA != 0)
                 {
-                    m_spellInfoLog.AppendFormat("EffectMiscValueA = {0}", m_spellInfo.EffectMiscValue[index]);
+                    m_spellInfoLog.AppendFormat("EffectMiscValueA = {0}", miscValueA);
                     switch ((SpellEffects)m_spellInfo.Effect[index])
                     {
                         case SpellEffects.SPELL_EFFECT_ACTIVATE_OBJECT:
@@ -556,13 +561,15 @@ namespace SpellWork.Spell
                             break;
                         case SpellEffects.SPELL_EFFECT_RESURRECT_NEW:
                             m_spellInfoLog.AppendFormat(" (Health {0}, Mana {1})", miscValueA, miscValueB);
-                            break;
+                            break;;
                         default:
                             break;
                     }
+
                     m_spellInfoLog.AppendLine();
                 }
 
+                // Append info next to MiscValueB
                 m_spellInfoLog.AppendFormat("EffectMiscValueB = {0}", miscValueB);
                 if ((SpellEffects)m_spellInfo.Effect[index] == SpellEffects.SPELL_EFFECT_SUMMON && DBC.DBCStore.SummonProperties.ContainsKey((uint)miscValueB))
                 {
@@ -572,8 +579,41 @@ namespace SpellWork.Spell
                 m_spellInfoLog.AppendLine();
                 m_spellInfoLog.AppendFormatLineIfNotNull("EffectAmplitude = {0}", effectAplitude);
 
+                // Append extra info after all effects data
+                switch ((SpellEffects)m_spellInfo.Effect[index])
+                {
+                    case SpellEffects.SPELL_EFFECT_DISPEL:
+                        if (miscValueA != 0)
+                        {
+                            m_spellInfoLog.AppendLine();
+                            m_spellInfoLog.Append("Effected dispel types: ");
+                            bool isFirst = true;
+                            m_spellInfoLog.SetStyle(Color.Chocolate, FontStyle.Bold);
+                            //DispelType
+                            for (int x = (int)DispelType.DISPEL_MAGIC; x < StaticConstants.MAX_DISPEL_TYPES; ++x)
+                            {
+                                if ((miscValueA & (1 << (x - 1))) != 0)
+                                {
+                                    if (!isFirst)
+                                        m_spellInfoLog.Append(", ");
+                                    else
+                                        isFirst = false;
+
+                                    m_spellInfoLog.AppendFormat("{0}", (DispelType)x);
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
                 return;
             }
+
+            // ////////////////////////
+            // Aura effects
+            // ////////////////////////
 
             m_spellInfoLog.AppendFormat("Aura Id {0:D} ({0})", applyAuraName);
             m_spellInfoLog.AppendFormat(", value = {0}", m_spellInfo.EffectBasePoints[index] + 1);
@@ -635,7 +675,7 @@ namespace SpellWork.Spell
                     m_spellInfoLog.AppendFormat("Applied mechanic immunities ({0}): ", miscValueA);
                     m_spellInfoLog.SetStyle(Color.Chocolate, FontStyle.Bold);
                     bool isFirst = true;
-                    for (int x = (int)Mechanics.MECHANIC_CHARM; x < StaticConstants.MAX_IMMUNITY_MASKS; ++x)
+                    for (int x = (int)Mechanics.MECHANIC_CHARM; x < StaticConstants.MAX_IMMUNITY_TYPES; ++x)
                     {
                         if ((miscValueA & (1 << (x - 1))) != 0)
                         {

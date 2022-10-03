@@ -497,7 +497,7 @@ namespace SpellWork.DBC
     public struct OverrideSpellDataEntry
     {
         public uint Id;
-        // Value 10 also used in SpellInfo.FillAuraModTypeNameInfo
+        // Value 10 also used in SpellInfo.FillExtraEffectInfo
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
         public uint[] Spells;
         public uint Unk;
