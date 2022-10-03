@@ -610,12 +610,6 @@ namespace SpellWork.Spell
                             }
                         }
                         break;
-                    case SpellEffects.SPELL_EFFECT_STEAL_BENEFICIAL_BUFF:
-                        if (miscValueA != 0)
-                        {
-                            m_spellInfoLog.AppendFormat("Effected dispel type: {0}", miscValueA);
-                        }
-                        break;
                     default:
                         break;
                 }
