@@ -583,24 +583,10 @@ namespace SpellWork.Spell
                 switch ((SpellEffects)m_spellInfo.Effect[index])
                 {
                     case SpellEffects.SPELL_EFFECT_DISPEL:
+                    case SpellEffects.SPELL_EFFECT_STEAL_BENEFICIAL_BUFF:
                         if (miscValueA != 0)
                         {
-                            m_spellInfoLog.Append("Effected dispel types: ");
-                            bool isFirst = true;
-                            m_spellInfoLog.SetStyle(Color.Chocolate, FontStyle.Bold);
-                            //DispelType
-                            for (int x = (int)DispelType.DISPEL_MAGIC; x < StaticConstants.MAX_DISPEL_TYPES; ++x)
-                            {
-                                if ((miscValueA & (1 << (x - 1))) != 0)
-                                {
-                                    if (!isFirst)
-                                        m_spellInfoLog.Append(", ");
-                                    else
-                                        isFirst = false;
-
-                                    m_spellInfoLog.AppendFormat("{0}", (DispelType)x);
-                                }
-                            }
+                            m_spellInfoLog.AppendFormat("Effected dispel type: {0}", miscValueA);
                         }
                         break;
                     case SpellEffects.SPELL_EFFECT_DISPEL_MECHANIC:
@@ -622,6 +608,12 @@ namespace SpellWork.Spell
                                     m_spellInfoLog.AppendFormat("{0}", (Mechanics)x);
                                 }
                             }
+                        }
+                        break;
+                    case SpellEffects.SPELL_EFFECT_STEAL_BENEFICIAL_BUFF:
+                        if (miscValueA != 0)
+                        {
+                            m_spellInfoLog.AppendFormat("Effected dispel type: {0}", miscValueA);
                         }
                         break;
                     default:
