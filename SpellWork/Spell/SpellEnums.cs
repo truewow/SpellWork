@@ -5,7 +5,7 @@ namespace SpellWork.Spell
     public static class StaticConstants
     {
         //public const int MAX_SPELL_SCHOOLS = 7;
-        public const int MAX_IMMUNITY_TYPES = 32;
+        public const int MAX_MECHANIC_TYPES = 32;
         public const int MAX_DISPEL_TYPES = 12;
     };
 

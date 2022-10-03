@@ -603,6 +603,27 @@ namespace SpellWork.Spell
                             }
                         }
                         break;
+                    case SpellEffects.SPELL_EFFECT_DISPEL_MECHANIC:
+                        if (miscValueA != 0)
+                        {
+                            m_spellInfoLog.Append("Effected mechanic types: ");
+                            bool isFirst = true;
+                            m_spellInfoLog.SetStyle(Color.Chocolate, FontStyle.Bold);
+                            //DispelType
+                            for (int x = (int)Mechanics.MECHANIC_CHARM; x < StaticConstants.MAX_MECHANIC_TYPES; ++x)
+                            {
+                                if ((miscValueA & (1 << (x - 1))) != 0)
+                                {
+                                    if (!isFirst)
+                                        m_spellInfoLog.Append(", ");
+                                    else
+                                        isFirst = false;
+
+                                    m_spellInfoLog.AppendFormat("{0}", (Mechanics)x);
+                                }
+                            }
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -674,7 +695,7 @@ namespace SpellWork.Spell
                     m_spellInfoLog.Append("Effected mechanic immunities: ");
                     m_spellInfoLog.SetStyle(Color.Chocolate, FontStyle.Bold);
                     bool isFirst = true;
-                    for (int x = (int)Mechanics.MECHANIC_CHARM; x < StaticConstants.MAX_IMMUNITY_TYPES; ++x)
+                    for (int x = (int)Mechanics.MECHANIC_CHARM; x < StaticConstants.MAX_MECHANIC_TYPES; ++x)
                     {
                         if ((miscValueA & (1 << (x - 1))) != 0)
                         {
