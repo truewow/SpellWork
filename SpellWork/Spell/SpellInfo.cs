@@ -561,7 +561,7 @@ namespace SpellWork.Spell
                             break;
                         case SpellEffects.SPELL_EFFECT_RESURRECT_NEW:
                             m_spellInfoLog.AppendFormat(" (Health {0}, Mana {1})", miscValueA, miscValueB);
-                            break;;
+                            break;
                         default:
                             break;
                     }
