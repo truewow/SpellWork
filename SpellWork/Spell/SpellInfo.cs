@@ -220,16 +220,16 @@ namespace SpellWork.Spell
                 m_spellInfoLog.AppendFormatLine("Channel interrupt Flags: 0");
 
             if (m_spellInfo.CasterAuraState != 0)
-                m_spellInfoLog.AppendFormatLine("CasterAuraState = {0} ({1})", m_spellInfo.CasterAuraState, (AuraState)m_spellInfo.CasterAuraState);
+                m_spellInfoLog.AppendFormatLine("Requires caster CasterAuraState state = {0} ({1})", m_spellInfo.CasterAuraState, (AuraState)m_spellInfo.CasterAuraState);
 
             if (m_spellInfo.TargetAuraState != 0)
-                m_spellInfoLog.AppendFormatLine("TargetAuraState = {0} ({1})", m_spellInfo.TargetAuraState, (AuraState)m_spellInfo.TargetAuraState);
+                m_spellInfoLog.AppendFormatLine("Requires target TargetAuraState state = {0} ({1})", m_spellInfo.TargetAuraState, (AuraState)m_spellInfo.TargetAuraState);
 
             if (m_spellInfo.CasterAuraStateNot != 0)
-                m_spellInfoLog.AppendFormatLine("CasterAuraStateNot = {0} ({1})", m_spellInfo.CasterAuraStateNot, (AuraState)m_spellInfo.CasterAuraStateNot);
+                m_spellInfoLog.AppendFormatLine("Requires caster to not have CasterAuraStateNot state = {0} ({1})", m_spellInfo.CasterAuraStateNot, (AuraState)m_spellInfo.CasterAuraStateNot);
 
             if (m_spellInfo.TargetAuraStateNot != 0)
-                m_spellInfoLog.AppendFormatLine("TargetAuraStateNot = {0} ({1})", m_spellInfo.TargetAuraStateNot, (AuraState)m_spellInfo.TargetAuraStateNot);
+                m_spellInfoLog.AppendFormatLine("Requires target to not have TargetAuraStateNot state = {0} ({1})", m_spellInfo.TargetAuraStateNot, (AuraState)m_spellInfo.TargetAuraStateNot);
 
             if (m_spellInfo.MaxAffectedTargets != 0)
                 m_spellInfoLog.AppendFormatLine("MaxAffectedTargets = {0}", m_spellInfo.MaxAffectedTargets);
@@ -587,7 +587,6 @@ namespace SpellWork.Spell
                         {
                             m_spellInfoLog.Append("Effected mechanic types: ");
                             bool isFirst = true;
-                            m_spellInfoLog.SetStyle(Color.Chocolate, FontStyle.Bold);
                             //DispelType
                             for (int x = (int)Mechanics.MECHANIC_CHARM; x < StaticConstants.MAX_MECHANIC_TYPES; ++x)
                             {
