@@ -691,6 +691,9 @@ namespace SpellWork.Spell
                     }
                     m_spellInfoLog.AppendLine();
                     break;
+                case AuraType.SPELL_AURA_MOD_DAMAGE_DONE_VERSUS_AURASTATE:
+                    m_spellInfoLog.AppendFormatLine("Effected aura state: {0}", (AuraState)miscValueA);
+                    break;
                 default:
                     break;
             }
