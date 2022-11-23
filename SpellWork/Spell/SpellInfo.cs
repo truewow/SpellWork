@@ -554,7 +554,7 @@ namespace SpellWork.Spell
                     switch ((SpellEffects)m_spellInfo.Effect[index])
                     {
                         case SpellEffects.SPELL_EFFECT_ACTIVATE_OBJECT:
-                            m_spellInfoLog.AppendFormat(" ({0})", (GameObjectActions)miscValueA);
+                            m_spellInfoLog.AppendFormat(" (Action: {0})", (GameObjectActions)miscValueA);
                             break;
                         case SpellEffects.SPELL_EFFECT_SUMMON:
                             m_spellInfoLog.AppendFormat(" (Object entry: {0})", miscValueA);
