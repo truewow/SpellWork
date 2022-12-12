@@ -708,7 +708,6 @@ namespace SpellWork.Spell
                 case AuraType.SPELL_AURA_MOD_DAMAGE_TAKEN:
                     {
                         m_spellInfoLog.Append("Effected spell schools: ");
-                        m_spellInfoLog.SetStyle(Color.Chocolate, FontStyle.Bold);
                         bool isFirst = true;
                         for (int x = (int)SpellSchools.SPELL_SCHOOL_NORMAL; x < StaticConstants.MAX_SPELL_SCHOOLS; ++x)
                         {
