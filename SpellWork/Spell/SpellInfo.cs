@@ -704,8 +704,10 @@ namespace SpellWork.Spell
                 case AuraType.SPELL_AURA_MOD_MECHANIC_DAMAGE_TAKEN_PERCENT:
                     m_spellInfoLog.AppendFormatLine("Effected mechanic: {0}", (Mechanics)miscValueA);
                     break;
+                case AuraType.SPELL_AURA_MOD_RESISTANCE:
                 case AuraType.SPELL_AURA_MOD_DAMAGE_DONE:
                 case AuraType.SPELL_AURA_MOD_DAMAGE_TAKEN:
+                case AuraType.SPELL_AURA_SCHOOL_IMMUNITY:
                     {
                         m_spellInfoLog.Append("Effected spell schools: ");
                         bool isFirst = true;
