@@ -680,28 +680,50 @@ namespace SpellWork.Spell
                         DBC.DBCStore.ScreenEffect.ContainsKey((uint)miscValueA) ? DBC.DBCStore.ScreenEffect[(uint)miscValueA].Name : "?????");
                     break;
                 case AuraType.SPELL_AURA_MECHANIC_IMMUNITY_MASK:
-                    m_spellInfoLog.Append("Effected mechanic immunities: ");
-                    m_spellInfoLog.SetStyle(Color.Chocolate, FontStyle.Bold);
-                    bool isFirst = true;
-                    for (int x = (int)Mechanics.MECHANIC_CHARM; x < StaticConstants.MAX_MECHANIC_TYPES; ++x)
                     {
-                        if ((miscValueA & (1 << (x - 1))) != 0)
+                        m_spellInfoLog.Append("Effected mechanic immunities: ");
+                        bool isFirst = true;
+                        for (int x = (int)Mechanics.MECHANIC_CHARM; x < StaticConstants.MAX_MECHANIC_TYPES; ++x)
                         {
-                            if (!isFirst)
-                                m_spellInfoLog.Append(", ");
-                            else
-                                isFirst = false;
+                            if ((miscValueA & (1 << (x - 1))) != 0)
+                            {
+                                if (!isFirst)
+                                    m_spellInfoLog.Append(", ");
+                                else
+                                    isFirst = false;
 
-                            m_spellInfoLog.AppendFormat("{0}", (Mechanics)x);
+                                m_spellInfoLog.AppendFormat("{0}", (Mechanics)x);
+                            }
                         }
+                        m_spellInfoLog.AppendLine();
                     }
-                    m_spellInfoLog.AppendLine();
                     break;
                 case AuraType.SPELL_AURA_MOD_DAMAGE_DONE_VERSUS_AURASTATE:
                     m_spellInfoLog.AppendFormatLine("Effected aura state: {0}", (AuraState)miscValueA);
                     break;
                 case AuraType.SPELL_AURA_MOD_MECHANIC_DAMAGE_TAKEN_PERCENT:
                     m_spellInfoLog.AppendFormatLine("Effected mechanic: {0}", (Mechanics)miscValueA);
+                    break;
+                case AuraType.SPELL_AURA_MOD_DAMAGE_DONE:
+                case AuraType.SPELL_AURA_MOD_DAMAGE_TAKEN:
+                    {
+                        m_spellInfoLog.Append("Effected spell schools: ");
+                        m_spellInfoLog.SetStyle(Color.Chocolate, FontStyle.Bold);
+                        bool isFirst = true;
+                        for (int x = (int)SpellSchools.SPELL_SCHOOL_NORMAL; x < StaticConstants.MAX_SPELL_SCHOOLS; ++x)
+                        {
+                            if ((miscValueA & (1 << x)) != 0)
+                            {
+                                if (!isFirst)
+                                    m_spellInfoLog.Append(", ");
+                                else
+                                    isFirst = false;
+
+                                m_spellInfoLog.AppendFormat("{0}", (SpellSchools)x);
+                            }
+                        }
+                        m_spellInfoLog.AppendLine();
+                    }
                     break;
                 default:
                     break;
