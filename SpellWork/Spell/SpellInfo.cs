@@ -88,7 +88,6 @@ namespace SpellWork.Spell
             if (DBC.DBCStore._spellCustomAttributes.ContainsKey(m_spellInfo.ID))
                 m_spellInfoLog.AppendFormatLine("AttributesCu: 0x{0:X8} ({1})", DBC.DBCStore._spellCustomAttributes[m_spellInfo.ID], (SpellCustomAttributes)(DBC.DBCStore._spellCustomAttributes[m_spellInfo.ID]));
 
-
             m_spellInfoLog.AppendLine(_line);
             if (m_spellInfo.Targets != 0)
                 m_spellInfoLog.AppendFormatLine("Targets Mask = 0x{0:X8} ({1})", m_spellInfo.Targets, (SpellCastTargetFlags)m_spellInfo.Targets);
@@ -603,8 +602,15 @@ namespace SpellWork.Spell
                         }
                         break;
                     case SpellEffects.SPELL_EFFECT_SUMMON:
-                        if (DBC.DBCStore.SummonProperties.ContainsKey((uint)miscValueB))
-                            m_spellInfoLog.AppendFormat("Summon property category - {0}, type - {1}", (SummonCategory)DBC.DBCStore.SummonProperties[(uint)miscValueB].Category, (SummonType)DBC.DBCStore.SummonProperties[(uint)miscValueB].Type);
+                        {
+                            if (DBC.DBCStore.SummonProperties.ContainsKey((uint)miscValueB))
+                            {
+                                m_spellInfoLog.AppendFormat("Summon property (entry: {0}) category - {1}, type - {2}",
+                                                            miscValueB,
+                                                            (SummonCategory)DBC.DBCStore.SummonProperties[(uint)miscValueB].Category,
+                                                            (SummonType)DBC.DBCStore.SummonProperties[(uint)miscValueB].Type);
+                            }
+                        }
                         break;
                     default:
                         break;
