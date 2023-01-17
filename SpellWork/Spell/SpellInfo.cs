@@ -709,7 +709,8 @@ namespace SpellWork.Spell
                 case AuraType.SPELL_AURA_MOD_DAMAGE_TAKEN:
                 case AuraType.SPELL_AURA_SCHOOL_IMMUNITY:
                 case AuraType.SPELL_AURA_SCHOOL_ABSORB:
-                    {
+                case AuraType.SPELL_AURA_MOD_IGNORE_TARGET_RESIST:
+                {
                         m_spellInfoLog.Append("Effected spell schools: ");
                         bool isFirst = true;
                         for (int x = (int)SpellSchools.SPELL_SCHOOL_NORMAL; x < StaticConstants.MAX_SPELL_SCHOOLS; ++x)
