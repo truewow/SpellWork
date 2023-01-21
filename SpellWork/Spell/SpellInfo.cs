@@ -612,6 +612,11 @@ namespace SpellWork.Spell
                             }
                         }
                         break;
+                    case SpellEffects.SPELL_EFFECT_DURABILITY_DAMAGE:
+                        {
+                            m_spellInfoLog.AppendFormat("Effected equiped item slot: {0}({1})", (miscValueA <= -1) ? (EquipmentSlots)EquipmentSlots.EQUIPMENT_SLOT_ALL : (EquipmentSlots)miscValueA, miscValueA);
+                        }
+                        break;
                     default:
                         break;
                 }
