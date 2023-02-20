@@ -617,6 +617,11 @@ namespace SpellWork.Spell
                             m_spellInfoLog.AppendFormat("Effected equiped item slot: {0}({1})", (miscValueA <= -1) ? (EquipmentSlots)EquipmentSlots.EQUIPMENT_SLOT_ALL : (EquipmentSlots)miscValueA, miscValueA);
                         }
                         break;
+                    case SpellEffects.SPELL_EFFECT_OPEN_LOCK:
+                        {
+                            m_spellInfoLog.AppendFormat("Effected lock type: {0}", (LockType)miscValueA);
+                        }
+                        break;
                     default:
                         break;
                 }
